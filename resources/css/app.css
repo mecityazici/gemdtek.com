@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-navy:    #0B2545;
+        --color-petrol:  #13315C;
+        --color-brass:   #B87333;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-cream text-graphite font-sans antialiased;
+    }
+
+    h1, h2, h3, h4 {
+        @apply font-display tracking-tight;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-md bg-navy-800 text-white hover:bg-navy-700 transition-colors;
+    }
+
+    .btn-accent {
+        @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-md bg-brass-500 text-white hover:bg-brass-600 transition-colors;
+    }
+
+    .container-tight {
+        @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+}
