@@ -48,33 +48,38 @@
 </section>
 
 {{-- GERİ SAYIM CTA ----------------------------------------------------- --}}
-<section class="bg-petrol text-cream py-20">
-    <div class="container-tight md:flex md:items-center md:justify-between gap-12">
-        <div class="md:max-w-xl mb-8 md:mb-0">
-            <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-3">
-                Yaklaşan etkinlik
-            </p>
-            <h2 class="text-3xl md:text-4xl font-display font-bold mb-3">
-                {{ $nextEventTitle }}
-            </h2>
-            <p class="text-cream/80">
-                Türkiye'nin en kapsamlı öğrenci odaklı denizcilik zirvesi. Tersane mühendislerinden klas kuruluşu uzmanlarına oturumlar, panel ve kariyer fuarı.
-            </p>
-        </div>
+@if ($nextEvent)
+    <section class="bg-petrol text-cream py-20">
+        <div class="container-tight md:flex md:items-center md:justify-between gap-12">
+            <div class="md:max-w-xl mb-8 md:mb-0">
+                <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-3">
+                    Yaklaşan etkinlik
+                </p>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-3">
+                    {{ $nextEventTitle }}
+                </h2>
+                @if ($nextEvent->summary)
+                    <p class="text-cream/80">{{ $nextEvent->summary }}</p>
+                @endif
+            </div>
 
-        <div x-data="countdown('{{ $nextEventDate }}')" x-init="start()" class="grid grid-cols-4 gap-3 text-center min-w-[280px] md:min-w-[360px]">
-            @foreach (['days' => 'Gün', 'hours' => 'Saat', 'minutes' => 'Dakika', 'seconds' => 'Saniye'] as $key => $label)
-                <div class="bg-navy-900/50 rounded-lg py-4 px-2">
-                    <p class="font-display text-3xl md:text-4xl font-bold tabular-nums" x-text="String({{ $key }}).padStart(2, '0')">--</p>
-                    <p class="text-[10px] uppercase tracking-wider text-cream/60 mt-1">{{ $label }}</p>
-                </div>
-            @endforeach
+            <div x-data="countdown('{{ $nextEventDate }}')" x-init="start()" class="grid grid-cols-4 gap-3 text-center min-w-[280px] md:min-w-[360px]">
+                @foreach (['days' => 'Gün', 'hours' => 'Saat', 'minutes' => 'Dakika', 'seconds' => 'Saniye'] as $key => $label)
+                    <div class="bg-navy-900/50 rounded-lg py-4 px-2">
+                        <p class="font-display text-3xl md:text-4xl font-bold tabular-nums" x-text="String({{ $key }}).padStart(2, '0')">--</p>
+                        <p class="text-[10px] uppercase tracking-wider text-cream/60 mt-1">{{ $label }}</p>
+                    </div>
+                @endforeach
+            </div>
         </div>
-    </div>
-    <div class="container-tight mt-10">
-        <a href="#" class="btn-accent">Şimdi kayıt ol</a>
-    </div>
-</section>
+        <div class="container-tight mt-10 flex flex-wrap gap-3">
+            <a href="{{ route('events.show', $nextEvent) }}" class="btn-accent">Detaylar</a>
+            @if ($nextEvent->registration_url)
+                <a href="{{ $nextEvent->registration_url }}" target="_blank" rel="noopener" class="btn-primary border border-cream/20">Kayıt ol</a>
+            @endif
+        </div>
+    </section>
+@endif
 
 {{-- SPONSOR BANDI ------------------------------------------------------ --}}
 <section id="sponsorlar" class="bg-cream py-20">

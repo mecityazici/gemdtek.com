@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             TeamAndTimelineSeeder::class,
             ProjectSeeder::class,
             FormSeeder::class,
+            EventAndNewsSeeder::class,
         ]);
     }
 }
