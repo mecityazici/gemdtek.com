@@ -152,7 +152,8 @@
     <footer class="bg-navy-950 text-cream/70 py-10 mt-20">
         <div class="container-tight text-sm flex flex-col md:flex-row items-center justify-between gap-6">
             <p>&copy; {{ date('Y') }} GEMDTEK — {{ __('site.footer.rights') }}.</p>
-            <div class="flex items-center gap-6">
+            <div class="flex flex-wrap items-center gap-6">
+                <a href="{{ route('alumni.index') }}" class="hover:text-cream">{{ __('pages.alumni.eyebrow') }}</a>
                 <a href="{{ route('legal.privacy') }}" class="hover:text-cream">{{ __('site.footer.privacy') }}</a>
                 <p class="font-mono text-xs">{{ __('site.footer.tagline') }}</p>
             </div>

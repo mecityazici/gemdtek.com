@@ -31,6 +31,17 @@ return [
             'performans' => 'Performance',
         ],
     ],
+    'alumni' => [
+        'sectors' => [
+            'tersane'        => 'Shipyard',
+            'klas'           => 'Classification Society',
+            'tasarim-ofisi'  => 'Design Office',
+            'armator'        => 'Shipowner',
+            'akademik'       => 'Academic',
+            'yazilim'        => 'Software / Automation',
+            'diger'          => 'Other',
+        ],
+    ],
     'sponsor' => [
         'tiers' => [
             'platinum' => 'Platinum',

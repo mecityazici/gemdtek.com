@@ -26,20 +26,24 @@
 </section>
 
 {{-- METRİK SAYAÇ ------------------------------------------------------- --}}
+@php
+    $fallbackMetrics = collect([
+        (object) ['key' => 'members',  'value' => 120, 'label' => __('pages.home.metrics.members')],
+        (object) ['key' => 'projects', 'value' =>  28, 'label' => __('pages.home.metrics.projects')],
+        (object) ['key' => 'events',   'value' =>  14, 'label' => __('pages.home.metrics.events')],
+        (object) ['key' => 'partners', 'value' =>  22, 'label' => __('pages.home.metrics.partners')],
+    ]);
+    $displayMetrics = $metrics->isNotEmpty() ? $metrics : $fallbackMetrics;
+@endphp
 <section class="bg-cream py-16">
     <div class="container-tight grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        @foreach ([
-            ['value' => 120, 'key' => 'members'],
-            ['value' =>  28, 'key' => 'projects'],
-            ['value' =>  14, 'key' => 'events'],
-            ['value' =>  22, 'key' => 'partners'],
-        ] as $stat)
+        @foreach ($displayMetrics as $stat)
             <div>
                 <p class="font-display text-5xl md:text-6xl font-bold text-navy-800 tabular-nums">
-                    {{ $stat['value'] }}+
+                    {{ $stat->value }}+
                 </p>
                 <p class="mt-2 text-sm uppercase tracking-wider text-graphite/60">
-                    {{ __('pages.home.metrics.' . $stat['key']) }}
+                    {{ $stat->label }}
                 </p>
             </div>
         @endforeach

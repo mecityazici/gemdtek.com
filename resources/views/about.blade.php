@@ -111,4 +111,20 @@
     @endif
 </section>
 
+{{-- ALUMNI CTA --}}
+<section class="bg-petrol text-cream py-16">
+    <div class="container-tight md:flex md:items-center md:justify-between gap-8">
+        <div class="mb-6 md:mb-0">
+            <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-2">{{ __('pages.alumni.eyebrow') }}</p>
+            <h2 class="font-display text-2xl md:text-3xl font-bold mb-2">
+                {{ __('pages.alumni.headline_lead') }} <span class="text-brass-400">{{ __('pages.alumni.headline_accent') }}</span>
+            </h2>
+            <p class="text-cream/80 max-w-2xl">{{ __('pages.alumni.subline') }}</p>
+        </div>
+        <a href="{{ route('alumni.index') }}" class="btn-accent shrink-0">
+            {{ __('pages.alumni.cta_about') }}
+        </a>
+    </div>
+</section>
+
 @endsection

@@ -106,6 +106,16 @@ return [
         'select_placeholder' => '— seçin —',
         'required_marker'    => '*',
     ],
+    'alumni' => [
+        'eyebrow'         => 'Mezunlarımız',
+        'headline_lead'   => 'Denizcilikte iz bırakan',
+        'headline_accent' => 'GEMDTEK mezunları.',
+        'subline'         => 'Tersane mühendislerinden klas sörveyörlerine, akademisyenlerden otonom sistem geliştiricilerine — sektörün her köşesinde mezunlarımız var.',
+        'year_label'      => 'Yıl',
+        'year_all'        => 'Tüm yıllar',
+        'empty'           => 'Bu filtreyle eşleşen mezun bulunamadı.',
+        'cta_about'       => 'Mezunlarımıza göz at',
+    ],
     'contact' => [
         'eyebrow'          => 'İletişim',
         'headline_lead'    => 'Bizimle',

@@ -15,11 +15,13 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesAndAdminSeeder::class,
+            SiteMetricSeeder::class,
             SponsorSeeder::class,
             TeamAndTimelineSeeder::class,
             ProjectSeeder::class,
             FormSeeder::class,
             EventAndNewsSeeder::class,
+            AlumniSeeder::class,
         ]);
     }
 }

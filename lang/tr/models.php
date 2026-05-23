@@ -31,6 +31,17 @@ return [
             'performans' => 'Performans',
         ],
     ],
+    'alumni' => [
+        'sectors' => [
+            'tersane'        => 'Tersane',
+            'klas'           => 'Klas Kuruluşu',
+            'tasarim-ofisi'  => 'Tasarım Ofisi',
+            'armator'        => 'Armatör',
+            'akademik'       => 'Akademik',
+            'yazilim'        => 'Yazılım / Otomasyon',
+            'diger'          => 'Diğer',
+        ],
+    ],
     'sponsor' => [
         'tiers' => [
             'platinum' => 'Platin',

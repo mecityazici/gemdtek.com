@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\ContactController;
+use App\Models\Alumni;
 use App\Models\Event;
 use App\Models\NewsPost;
 use App\Models\Project;
+use App\Models\SiteMetric;
 use App\Models\Sponsor;
 use App\Models\TeamMember;
 use App\Models\TimelineEvent;
@@ -15,6 +17,7 @@ Route::get('/', function () {
     $nextEvent = Event::active()->upcoming()->first();
 
     return view('home', [
+        'metrics'        => SiteMetric::active()->get(),
         'sponsors'       => Sponsor::active()->get(),
         'nextEvent'      => $nextEvent,
         'nextEventDate'  => $nextEvent?->event_date?->toIso8601String(),
@@ -101,6 +104,26 @@ Route::post('/iletisim', [ContactController::class, 'submit'])
     ->middleware('throttle:5,1')
     ->name('contact.submit');
 
+Route::get('/mezunlar', function (Request $request) {
+    $sector = $request->string('sector')->toString();
+    $year   = (int) $request->integer('year');
+
+    $query = Alumni::public()->orderBy('order')->orderByDesc('graduation_year');
+    if ($sector && array_key_exists($sector, Alumni::SECTORS)) {
+        $query->where('sector', $sector);
+    }
+    if ($year >= 1980 && $year <= 2100) {
+        $query->where('graduation_year', $year);
+    }
+
+    return view('alumni.index', [
+        'alumni'     => $query->paginate(24)->withQueryString(),
+        'activeSec'  => $sector,
+        'activeYear' => $year ?: null,
+        'years'      => Alumni::public()->whereNotNull('graduation_year')->distinct()->orderByDesc('graduation_year')->pluck('graduation_year'),
+    ]);
+})->name('alumni.index');
+
 Route::get('/sitemap.xml', function () {
     $urls = collect();
 
@@ -147,6 +170,9 @@ Route::get('/sitemap.xml', function () {
             'priority'   => '0.5',
         ]);
     });
+
+    $urls->push(['loc' => route('alumni.index'), 'changefreq' => 'weekly', 'priority' => '0.5']);
+    $urls->push(['loc' => route('contact'),      'changefreq' => 'yearly', 'priority' => '0.4']);
 
     return response()
         ->view('sitemap', ['urls' => $urls])

@@ -106,6 +106,16 @@ return [
         'select_placeholder' => '— select —',
         'required_marker'    => '*',
     ],
+    'alumni' => [
+        'eyebrow'         => 'Our Alumni',
+        'headline_lead'   => 'GEMDTEK graduates',
+        'headline_accent' => 'across the maritime world.',
+        'subline'         => 'From shipyard engineers to classification surveyors, from academics to autonomous systems developers — our alumni are in every corner of the industry.',
+        'year_label'      => 'Year',
+        'year_all'        => 'All years',
+        'empty'           => 'No alumni match this filter.',
+        'cta_about'       => 'Meet our alumni',
+    ],
     'contact' => [
         'eyebrow'          => 'Contact',
         'headline_lead'    => 'Get in',
