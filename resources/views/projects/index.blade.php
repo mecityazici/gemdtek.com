@@ -1,25 +1,24 @@
 @extends('layouts.app')
 
-@section('title', 'Ar-Ge & Projeler — GEMDTEK')
+@section('title', __('pages.projects.eyebrow') . ' — GEMDTEK')
 
 @section('content')
 
 <section class="bg-navy-900 text-cream">
     <div class="container-tight py-20 md:py-28">
-        <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-4">Ar-Ge & Projeler</p>
+        <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-4">{{ __('pages.projects.eyebrow') }}</p>
         <h1 class="text-4xl md:text-5xl font-display font-bold mb-6 max-w-3xl leading-tight">
-            Mühendislik <span class="text-brass-400">vitrinimiz.</span>
+            {{ __('pages.projects.headline_lead') }} <span class="text-brass-400">{{ __('pages.projects.headline_accent') }}</span>
         </h1>
         <p class="text-lg text-cream/80 max-w-3xl">
-            Aktif Ar-Ge takımlarımız, alternatif yakıtlı tasarımlarımız ve otonom denizcilik projelerimiz —
-            sektör paydaşlarımızla birlikte sürdürdüğümüz mühendislik çalışmaları.
+            {{ __('pages.projects.subline') }}
         </p>
     </div>
 </section>
 
 <section class="container-tight py-20">
     @if ($projects->isEmpty())
-        <p class="text-center text-graphite/60 italic">Aktif proje yayında değil.</p>
+        <p class="text-center text-graphite/60 italic">{{ __('pages.projects.empty') }}</p>
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach ($projects as $project)
@@ -49,7 +48,7 @@
                         </h2>
                         <p class="text-graphite/70 text-sm leading-relaxed">{{ $project->summary }}</p>
                         <p class="mt-4 text-sm font-medium text-brass-600 inline-flex items-center gap-1">
-                            İncele
+                            {{ __('pages.projects.details') }}
                             <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </p>
                     </div>

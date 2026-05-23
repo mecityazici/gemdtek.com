@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'GEMDTEK — Gemi İnşaatı ve Deniz Teknolojileri Kulübü')</title>
-    <meta name="description" content="@yield('meta_description', 'GEMDTEK; Ar-Ge takımları, sektör etkinlikleri ve kurumsal partnerlikleriyle gemi inşaatı ve deniz teknolojileri alanında öğrenci platformu.')">
+    <title>@yield('title', 'GEMDTEK — ' . __('site.footer.tagline'))</title>
+    <meta name="description" content="@yield('meta_description', __('pages.home.subline'))">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

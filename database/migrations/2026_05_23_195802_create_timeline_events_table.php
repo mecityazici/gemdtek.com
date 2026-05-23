@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('timeline_events', function (Blueprint $table) {
             $table->id();
             $table->unsignedSmallInteger('year');
-            $table->string('title');
-            $table->text('description')->nullable();
+            $table->json('title');
+            $table->json('description')->nullable();
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
 

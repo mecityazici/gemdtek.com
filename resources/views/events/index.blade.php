@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Etkinlikler — GEMDTEK')
+@section('title', __('pages.events.eyebrow') . ' — GEMDTEK')
 
 @php
     $categories = \App\Models\Event::CATEGORIES;
@@ -10,12 +10,12 @@
 
 <section class="bg-navy-900 text-cream">
     <div class="container-tight py-20 md:py-28">
-        <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-4">Etkinlikler</p>
+        <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-4">{{ __('pages.events.eyebrow') }}</p>
         <h1 class="text-4xl md:text-5xl font-display font-bold mb-6 max-w-3xl leading-tight">
-            Zirveler, atölyeler, <span class="text-brass-400">kariyer günleri.</span>
+            {{ __('pages.events.headline_lead') }} <span class="text-brass-400">{{ __('pages.events.headline_accent') }}</span>
         </h1>
         <p class="text-lg text-cream/80 max-w-3xl">
-            Sektörden uzmanları, tersane mühendislerini ve mezunlarımızı bir araya getiren etkinliklerimiz.
+            {{ __('pages.events.subline') }}
         </p>
     </div>
 </section>
@@ -24,7 +24,7 @@
     <div class="flex flex-wrap gap-2">
         <a href="{{ route('events.index') }}"
            class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ $activeCat === '' ? 'bg-navy-800 text-cream' : 'bg-cream text-navy-800 hover:bg-navy-100' }}">
-            Tümü
+            {{ __('site.cta.all') }}
         </a>
         @foreach ($categories as $key => $label)
             <a href="{{ route('events.index', ['cat' => $key]) }}"
@@ -38,7 +38,7 @@
 <section class="container-tight pb-20">
 
     @if ($upcoming->isNotEmpty())
-        <h2 class="font-display font-bold text-2xl md:text-3xl text-navy-800 mb-6 mt-6">Yaklaşan etkinlikler</h2>
+        <h2 class="font-display font-bold text-2xl md:text-3xl text-navy-800 mb-6 mt-6">{{ __('pages.events.upcoming') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             @foreach ($upcoming as $event)
                 @include('events._card', ['event' => $event, 'large' => true])
@@ -47,7 +47,7 @@
     @endif
 
     @if ($past->isNotEmpty())
-        <h2 class="font-display font-bold text-2xl md:text-3xl text-navy-800 mb-6">Geçmiş etkinlikler</h2>
+        <h2 class="font-display font-bold text-2xl md:text-3xl text-navy-800 mb-6">{{ __('pages.events.past') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($past as $event)
                 @include('events._card', ['event' => $event, 'large' => false])
@@ -57,7 +57,7 @@
 
     @if ($upcoming->isEmpty() && $past->isEmpty())
         <div class="max-w-2xl mx-auto text-center bg-cream rounded-xl p-12 border border-graphite/10">
-            <p class="font-display text-xl text-navy-800 font-bold">Bu kategoride etkinlik yok.</p>
+            <p class="font-display text-xl text-navy-800 font-bold">{{ __('pages.events.empty') }}</p>
         </div>
     @endif
 </section>

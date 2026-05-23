@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Translatable\HasTranslations;
 
 class Sponsor extends Model implements HasMedia
 {
+    use HasTranslations;
     use InteractsWithMedia;
+
+    public array $translatable = ['name'];
 
     public const TIERS = [
         'platinum' => 'Platin',

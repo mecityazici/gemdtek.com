@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('sponsors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->json('name');
             $table->string('url')->nullable();
             $table->string('tier')->default('destek');
             $table->boolean('is_active')->default(true);

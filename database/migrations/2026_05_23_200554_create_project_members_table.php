@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('role');
+            $table->json('role');
             $table->string('linkedin_url')->nullable();
             $table->boolean('is_captain')->default(false);
             $table->unsignedInteger('order')->default(0);

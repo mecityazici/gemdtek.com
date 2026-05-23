@@ -6,13 +6,21 @@ use App\Filament\Resources\SponsorResource\Pages;
 use App\Models\Sponsor;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 class SponsorResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = Sponsor::class;
+
+    public static function getTranslatableLocales(): array
+    {
+        return ['tr', 'en'];
+    }
 
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 

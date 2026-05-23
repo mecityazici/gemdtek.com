@@ -10,18 +10,18 @@ class SponsorSeeder extends Seeder
     public function run(): void
     {
         $sponsors = [
-            ['name' => 'Tersane İstanbul',      'tier' => 'platinum', 'url' => 'https://example.com', 'order' => 10],
-            ['name' => 'DenizMarin A.Ş.',       'tier' => 'platinum', 'url' => 'https://example.com', 'order' => 20],
-            ['name' => 'Yıldız Tasarım Ofisi',  'tier' => 'gold',     'url' => 'https://example.com', 'order' => 30],
-            ['name' => 'Aegean Klas',           'tier' => 'gold',     'url' => 'https://example.com', 'order' => 40],
-            ['name' => 'Boğaz Mühendislik',     'tier' => 'silver',   'url' => 'https://example.com', 'order' => 50],
-            ['name' => 'Karasu Teknik',         'tier' => 'silver',   'url' => 'https://example.com', 'order' => 60],
-            ['name' => 'Marmara Sanayi',        'tier' => 'bronze',   'url' => 'https://example.com', 'order' => 70],
-            ['name' => 'Çelik Döküm A.Ş.',      'tier' => 'destek',   'url' => 'https://example.com', 'order' => 80],
+            ['name' => ['tr' => 'Tersane İstanbul',     'en' => 'Tersane İstanbul'],      'tier' => 'platinum', 'url' => 'https://example.com/tersane-istanbul',    'order' => 10],
+            ['name' => ['tr' => 'DenizMarin A.Ş.',      'en' => 'DenizMarin Inc.'],       'tier' => 'platinum', 'url' => 'https://example.com/denizmarin',          'order' => 20],
+            ['name' => ['tr' => 'Yıldız Tasarım Ofisi', 'en' => 'Yıldız Design Office'],  'tier' => 'gold',     'url' => 'https://example.com/yildiz-tasarim',      'order' => 30],
+            ['name' => ['tr' => 'Aegean Klas',          'en' => 'Aegean Class'],          'tier' => 'gold',     'url' => 'https://example.com/aegean-klas',         'order' => 40],
+            ['name' => ['tr' => 'Boğaz Mühendislik',    'en' => 'Boğaz Engineering'],     'tier' => 'silver',   'url' => 'https://example.com/bogaz-muhendislik',   'order' => 50],
+            ['name' => ['tr' => 'Karasu Teknik',        'en' => 'Karasu Technical'],      'tier' => 'silver',   'url' => 'https://example.com/karasu-teknik',       'order' => 60],
+            ['name' => ['tr' => 'Marmara Sanayi',       'en' => 'Marmara Industry'],      'tier' => 'bronze',   'url' => 'https://example.com/marmara-sanayi',      'order' => 70],
+            ['name' => ['tr' => 'Çelik Döküm A.Ş.',     'en' => 'Çelik Foundry Inc.'],    'tier' => 'destek',   'url' => 'https://example.com/celik-dokum',         'order' => 80],
         ];
 
         foreach ($sponsors as $data) {
-            Sponsor::firstOrCreate(['name' => $data['name']], $data);
+            Sponsor::firstOrCreate(['url' => $data['url']], $data);
         }
     }
 }

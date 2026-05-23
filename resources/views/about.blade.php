@@ -1,19 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Hakkımızda — GEMDTEK')
+@section('title', __('pages.about.eyebrow') . ' — GEMDTEK')
 
 @section('content')
 
 {{-- HERO INTRO --------------------------------------------------------- --}}
 <section class="bg-navy-900 text-cream">
     <div class="container-tight py-20 md:py-28">
-        <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-4">Hakkımızda</p>
+        <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-4">{{ __('pages.about.eyebrow') }}</p>
         <h1 class="text-4xl md:text-5xl font-display font-bold mb-6 max-w-3xl leading-tight">
-            Gemi inşaatı ve deniz teknolojileri alanında <span class="text-brass-400">öğrenci platformu.</span>
+            {{ __('pages.about.headline_lead') }} <span class="text-brass-400">{{ __('pages.about.headline_accent') }}</span>
         </h1>
         <p class="text-lg text-cream/80 max-w-3xl">
-            GEMDTEK; üniversite öğrencilerini denizcilik endüstrisiyle buluşturan,
-            mühendislik projeleri ve kurumsal işbirlikleriyle Türkiye'nin denizdeki geleceğine katkı veren bir öğrenci kulübüdür.
+            {{ __('pages.about.subline') }}
         </p>
     </div>
 </section>
@@ -21,25 +20,21 @@
 {{-- MİSYON VİZYON ------------------------------------------------------ --}}
 <section class="container-tight py-20 grid md:grid-cols-2 gap-12">
     <div>
-        <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">Misyonumuz</p>
+        <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">{{ __('pages.about.mission_eyebrow') }}</p>
         <h2 class="text-2xl md:text-3xl font-display font-bold text-navy-800 mb-4">
-            Üniversiteyi denizcilik sektörüne bağlamak.
+            {{ __('pages.about.mission_title') }}
         </h2>
         <p class="text-graphite/80 leading-relaxed">
-            Akademik bilginin sektörel pratiğe dönüşmesi için Ar-Ge takımları,
-            staj ağı ve mentorluk programları organize ediyoruz. Tersaneler, klas kuruluşları
-            ve tasarım ofisleriyle kalıcı işbirlikleri kurmayı hedefliyoruz.
+            {{ __('pages.about.mission_body') }}
         </p>
     </div>
     <div>
-        <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">Vizyonumuz</p>
+        <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">{{ __('pages.about.vision_eyebrow') }}</p>
         <h2 class="text-2xl md:text-3xl font-display font-bold text-navy-800 mb-4">
-            Mühendislik kabiliyeti için referans nokta.
+            {{ __('pages.about.vision_title') }}
         </h2>
         <p class="text-graphite/80 leading-relaxed">
-            Otonom denizaltı sistemleri, alternatif yakıtlı gemi tasarımları ve dijital
-            denizcilik teknolojileri alanında öğrenci mühendislerin ulusal ve uluslararası
-            arenada söz sahibi olduğu bir kulüp olmak.
+            {{ __('pages.about.vision_body') }}
         </p>
     </div>
 </section>
@@ -47,13 +42,13 @@
 {{-- YÖNETİM KARTLARI ---------------------------------------------------- --}}
 <section class="bg-cream py-20">
     <div class="container-tight">
-        <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3 text-center">Yönetim kurulu</p>
+        <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3 text-center">{{ __('pages.about.team_eyebrow') }}</p>
         <h2 class="text-3xl md:text-4xl font-display font-bold text-navy-800 mb-12 text-center">
-            Ekibimizle tanışın
+            {{ __('pages.about.team_title') }}
         </h2>
 
         @if ($team->isEmpty())
-            <p class="text-center text-graphite/60 italic">Yönetim üyeleri yakında listelenecek.</p>
+            <p class="text-center text-graphite/60 italic">{{ __('pages.about.team_empty') }}</p>
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($team as $member)
@@ -89,13 +84,13 @@
 
 {{-- TIMELINE ----------------------------------------------------------- --}}
 <section class="container-tight py-20">
-    <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3 text-center">Kurumsal hafıza</p>
+    <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3 text-center">{{ __('pages.about.timeline_eyebrow') }}</p>
     <h2 class="text-3xl md:text-4xl font-display font-bold text-navy-800 mb-12 text-center">
-        Kilometre taşlarımız
+        {{ __('pages.about.timeline_title') }}
     </h2>
 
     @if ($timeline->isEmpty())
-        <p class="text-center text-graphite/60 italic">Timeline yakında eklenecek.</p>
+        <p class="text-center text-graphite/60 italic">{{ __('pages.about.timeline_empty') }}</p>
     @else
         <div class="relative max-w-3xl mx-auto pl-12 md:pl-20">
             <div class="absolute left-3 md:left-6 top-2 bottom-2 w-0.5 bg-navy-200"></div>

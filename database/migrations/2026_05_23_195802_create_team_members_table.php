@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('team_members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('position');
-            $table->text('bio')->nullable();
+            $table->json('position');
+            $table->json('bio')->nullable();
             $table->string('linkedin_url')->nullable();
             $table->boolean('is_active')->default(true);
             $table->unsignedInteger('order')->default(0);

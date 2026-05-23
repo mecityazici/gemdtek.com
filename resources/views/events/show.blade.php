@@ -15,7 +15,7 @@
     <div class="relative container-tight py-20 md:py-28">
         <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 text-brass-300 hover:text-brass-200 text-sm mb-6 font-mono">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            Tüm etkinlikler
+            {{ __('pages.events.all_events') }}
         </a>
         <div class="flex flex-wrap items-center gap-3 mb-4">
             <span class="bg-navy-700/60 text-cream px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider">

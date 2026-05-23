@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('category')->default('genel');
-            $table->string('key');
-            $table->string('value');
+            $table->json('key');
+            $table->json('value');
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
 

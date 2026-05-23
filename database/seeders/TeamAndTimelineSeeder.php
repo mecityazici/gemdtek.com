@@ -13,36 +13,51 @@ class TeamAndTimelineSeeder extends Seeder
         $team = [
             [
                 'name'         => 'Mehmet Demir',
-                'position'     => 'Başkan',
-                'bio'          => 'Gemi inşaatı mühendisliği bölümü 4. sınıf öğrencisi. Kulübün stratejik yönetiminden ve dış paydaş ilişkilerinden sorumlu.',
+                'position'     => ['tr' => 'Başkan', 'en' => 'President'],
+                'bio'          => [
+                    'tr' => 'Gemi inşaatı mühendisliği bölümü 4. sınıf öğrencisi. Kulübün stratejik yönetiminden ve dış paydaş ilişkilerinden sorumlu.',
+                    'en' => 'Senior naval architecture student. Responsible for the club\'s strategic direction and external stakeholder relations.',
+                ],
                 'linkedin_url' => 'https://www.linkedin.com/in/example',
                 'order'        => 10,
             ],
             [
                 'name'         => 'Elif Yıldız',
-                'position'     => 'Başkan Yardımcısı',
-                'bio'          => 'Deniz teknolojileri 3. sınıf. Ar-Ge takımları arasında koordinasyonu yürütür.',
+                'position'     => ['tr' => 'Başkan Yardımcısı', 'en' => 'Vice President'],
+                'bio'          => [
+                    'tr' => 'Deniz teknolojileri 3. sınıf. Ar-Ge takımları arasında koordinasyonu yürütür.',
+                    'en' => 'Junior in marine technologies. Coordinates between the R&D teams.',
+                ],
                 'linkedin_url' => 'https://www.linkedin.com/in/example',
                 'order'        => 20,
             ],
             [
                 'name'         => 'Burak Aksoy',
-                'position'     => 'Ar-Ge Koordinatörü',
-                'bio'          => 'TEKNOFEST ROV takımı eski kaptanı. Otonom denizaltı sistemleri üzerine çalışıyor.',
+                'position'     => ['tr' => 'Ar-Ge Koordinatörü', 'en' => 'R&D Coordinator'],
+                'bio'          => [
+                    'tr' => 'TEKNOFEST ROV takımı eski kaptanı. Otonom denizaltı sistemleri üzerine çalışıyor.',
+                    'en' => 'Former captain of the TEKNOFEST ROV team. Focuses on autonomous underwater systems.',
+                ],
                 'linkedin_url' => 'https://www.linkedin.com/in/example',
                 'order'        => 30,
             ],
             [
                 'name'         => 'Selin Kara',
-                'position'     => 'Sponsorluk & PR Sorumlusu',
-                'bio'          => 'Endüstri sponsorlukları ve kurumsal iletişim süreçlerini yürütür.',
+                'position'     => ['tr' => 'Sponsorluk & PR Sorumlusu', 'en' => 'Sponsorship & PR Lead'],
+                'bio'          => [
+                    'tr' => 'Endüstri sponsorlukları ve kurumsal iletişim süreçlerini yürütür.',
+                    'en' => 'Runs industry sponsorships and corporate communications.',
+                ],
                 'linkedin_url' => 'https://www.linkedin.com/in/example',
                 'order'        => 40,
             ],
             [
                 'name'         => 'Can Özkan',
-                'position'     => 'Etkinlik & Kariyer Komisyonu Başkanı',
-                'bio'          => 'Yıllık zirve organizasyonu ve kariyer günlerini koordine eder.',
+                'position'     => ['tr' => 'Etkinlik & Kariyer Komisyonu Başkanı', 'en' => 'Events & Career Commission Chair'],
+                'bio'          => [
+                    'tr' => 'Yıllık zirve organizasyonu ve kariyer günlerini koordine eder.',
+                    'en' => 'Coordinates the annual summit and career days.',
+                ],
                 'linkedin_url' => 'https://www.linkedin.com/in/example',
                 'order'        => 50,
             ],
@@ -53,18 +68,50 @@ class TeamAndTimelineSeeder extends Seeder
         }
 
         $timeline = [
-            ['year' => 2014, 'title' => 'Kulüp kuruluşu',                    'description' => 'Gemi inşaatı ve deniz teknolojileri öğrencilerinin inisiyatifiyle kurumsal olarak kuruldu.'],
-            ['year' => 2017, 'title' => 'İlk sektör zirvesi',                 'description' => 'Tersane ve klas kuruluşu temsilcilerinin katılımıyla ilk Denizcilik Kariyer Zirvesi düzenlendi.'],
-            ['year' => 2019, 'title' => 'TEKNOFEST katılımı',                 'description' => 'İnsansız Sualtı Sistemleri yarışmasında ilk derecemizi aldık.'],
-            ['year' => 2022, 'title' => 'Alternatif yakıtlı gemi tasarımı',   'description' => 'Hidrojen yakıt hücreli kıyı gemisi konsept tasarımı uluslararası yarışmada finalist oldu.'],
-            ['year' => 2024, 'title' => 'Endüstri ortaklığı protokolü',       'description' => 'Üç büyük tersane ile uzun vadeli mentorluk ve staj programı imzalandı.'],
+            [
+                'year'        => 2014,
+                'title'       => ['tr' => 'Kulüp kuruluşu',                     'en' => 'Club founded'],
+                'description' => [
+                    'tr' => 'Gemi inşaatı ve deniz teknolojileri öğrencilerinin inisiyatifiyle kurumsal olarak kuruldu.',
+                    'en' => 'Officially founded through the initiative of naval architecture and marine technology students.',
+                ],
+            ],
+            [
+                'year'        => 2017,
+                'title'       => ['tr' => 'İlk sektör zirvesi',                  'en' => 'First industry summit'],
+                'description' => [
+                    'tr' => 'Tersane ve klas kuruluşu temsilcilerinin katılımıyla ilk Denizcilik Kariyer Zirvesi düzenlendi.',
+                    'en' => 'First Maritime Career Summit hosted shipyard and classification society representatives.',
+                ],
+            ],
+            [
+                'year'        => 2019,
+                'title'       => ['tr' => 'TEKNOFEST katılımı',                  'en' => 'TEKNOFEST participation'],
+                'description' => [
+                    'tr' => 'İnsansız Sualtı Sistemleri yarışmasında ilk derecemizi aldık.',
+                    'en' => 'Earned our first ranking in the Unmanned Underwater Systems competition.',
+                ],
+            ],
+            [
+                'year'        => 2022,
+                'title'       => ['tr' => 'Alternatif enerjili gemi tasarımı',   'en' => 'Alternative-energy vessel design'],
+                'description' => [
+                    'tr' => 'Hidrojen yakıt hücreli kıyı gemisi konsept tasarımı uluslararası yarışmada finalist oldu.',
+                    'en' => 'Hydrogen fuel-cell coastal vessel concept design reached the finals of an international competition.',
+                ],
+            ],
+            [
+                'year'        => 2024,
+                'title'       => ['tr' => 'Endüstri ortaklığı protokolü',        'en' => 'Industry partnership protocol'],
+                'description' => [
+                    'tr' => 'Üç büyük tersane ile uzun vadeli mentorluk ve staj programı imzalandı.',
+                    'en' => 'Signed long-term mentorship and internship program with three major shipyards.',
+                ],
+            ],
         ];
 
         foreach ($timeline as $data) {
-            TimelineEvent::firstOrCreate(
-                ['year' => $data['year'], 'title' => $data['title']],
-                $data,
-            );
+            TimelineEvent::firstOrCreate(['year' => $data['year']], $data);
         }
     }
 }

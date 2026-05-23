@@ -59,6 +59,7 @@ class NewsPost extends Model implements HasMedia
 
     public function getCategoryLabelAttribute(): string
     {
-        return self::CATEGORIES[$this->category] ?? $this->category;
+        return __('models.news.categories.' . $this->category, [], app()->getLocale())
+            ?: ($this->category);
     }
 }

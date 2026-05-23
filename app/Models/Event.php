@@ -66,7 +66,8 @@ class Event extends Model implements HasMedia
 
     public function getCategoryLabelAttribute(): string
     {
-        return self::CATEGORIES[$this->category] ?? $this->category;
+        return __('models.event.categories.' . $this->category, [], app()->getLocale())
+            ?: ($this->category);
     }
 
     public function getIsUpcomingAttribute(): bool

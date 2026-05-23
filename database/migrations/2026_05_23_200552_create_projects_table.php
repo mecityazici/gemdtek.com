@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('name');
-            $table->string('summary');
-            $table->longText('description')->nullable();
-            $table->text('problem_statement')->nullable();
+            $table->json('name');
+            $table->json('summary');
+            $table->json('description')->nullable();
+            $table->json('problem_statement')->nullable();
             $table->unsignedSmallInteger('year')->nullable();
             $table->string('status')->default('active');
             $table->foreignId('captain_user_id')->nullable()->constrained('users')->nullOnDelete();

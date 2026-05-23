@@ -16,7 +16,7 @@
     <div class="relative container-tight py-24 md:py-36">
         <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-2 text-brass-300 hover:text-brass-200 text-sm mb-6 font-mono">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            Tüm projeler
+            {{ __('pages.projects.all_projects') }}
         </a>
         <div class="flex flex-wrap items-center gap-3 mb-4">
             @if ($project->year)

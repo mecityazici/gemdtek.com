@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Translatable\HasTranslations;
 
 class Project extends Model implements HasMedia
 {
+    use HasTranslations;
     use InteractsWithMedia;
+
+    public array $translatable = ['name', 'summary', 'description', 'problem_statement'];
 
     public const STATUSES = [
         'active'    => 'Aktif',
@@ -78,6 +82,7 @@ class Project extends Model implements HasMedia
 
     public function getStatusLabelAttribute(): string
     {
-        return self::STATUSES[$this->status] ?? $this->status;
+        return __('models.project.statuses.' . $this->status, [], app()->getLocale())
+            ?: ($this->status);
     }
 }

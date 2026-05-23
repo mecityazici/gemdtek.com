@@ -13,7 +13,7 @@
         </span>
         @if ($event->is_upcoming)
             <span class="absolute top-3 right-3 bg-brass-500 text-white px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider">
-                Yaklaşıyor
+                {{ __('pages.events.badge_upcoming') }}
             </span>
         @endif
     </div>
