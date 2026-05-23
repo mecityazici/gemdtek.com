@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationFormController;
 use App\Models\Project;
 use App\Models\Sponsor;
 use App\Models\TeamMember;
@@ -37,3 +38,9 @@ Route::get('/ar-ge/{project:slug}', function (Project $project) {
         'crew' => $project->members->where('is_captain', false)->values(),
     ]);
 })->name('projects.show');
+
+Route::get('/basvuru',                 [ApplicationFormController::class, 'index'])->name('forms.index');
+Route::get('/basvuru/{form:slug}',     [ApplicationFormController::class, 'show'])->name('forms.show');
+Route::post('/basvuru/{form:slug}',    [ApplicationFormController::class, 'submit'])
+    ->middleware('throttle:5,1')
+    ->name('forms.submit');

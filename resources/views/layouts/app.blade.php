@@ -17,7 +17,7 @@
             ['label' => 'Hakkımızda',       'href' => route('about'),            'active' => request()->routeIs('about')],
             ['label' => 'Ar-Ge & Projeler', 'href' => route('projects.index'),   'active' => request()->routeIs('projects.*')],
             ['label' => 'Etkinlikler',      'href' => '#',                       'active' => false],
-            ['label' => 'Başvurular',       'href' => '#',                       'active' => false],
+            ['label' => 'Başvurular',       'href' => route('forms.index'),      'active' => request()->routeIs('forms.*')],
             ['label' => 'İletişim',         'href' => '#',                       'active' => false],
         ];
     @endphp
