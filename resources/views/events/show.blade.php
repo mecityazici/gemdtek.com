@@ -43,20 +43,20 @@
 <section class="bg-petrol text-cream">
     <div class="container-tight py-10 grid md:grid-cols-3 gap-6">
         <div>
-            <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-2">Tarih</p>
+            <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-2">{{ __('pages.events.date_label') }}</p>
             <p class="font-display text-xl font-bold">{{ $event->event_date->isoFormat('D MMMM YYYY') }}</p>
             <p class="text-cream/70 text-sm">{{ $event->event_date->isoFormat('HH:mm') }}</p>
         </div>
         @if ($event->location)
             <div>
-                <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-2">Lokasyon</p>
+                <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-2">{{ __('pages.events.location_label') }}</p>
                 <p class="font-display text-xl font-bold">{{ $event->location }}</p>
             </div>
         @endif
         @if ($event->registration_url)
             <div class="flex items-center md:justify-end">
                 <a href="{{ $event->registration_url }}" target="_blank" rel="noopener" class="btn-accent">
-                    Kayıt ol
+                    {{ __('site.cta.register') }}
                 </a>
             </div>
         @endif

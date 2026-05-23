@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FormSubmissionReceived;
 use App\Models\Form;
 use App\Models\FormSubmission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class ApplicationFormController extends Controller
@@ -73,6 +75,11 @@ class ApplicationFormController extends Controller
                     ->withCustomProperties(['field_name' => $field->name])
                     ->toMediaCollection('attachments');
             }
+        }
+
+        $to = env('FORM_NOTIFICATION_EMAIL', config('mail.from.address'));
+        if ($to) {
+            Mail::to($to)->queue(new FormSubmissionReceived($submission));
         }
 
         return redirect()

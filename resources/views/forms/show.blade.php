@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $form->title . ' — Başvuru — GEMDTEK')
+@section('title', $form->title . ' — ' . __('pages.forms.eyebrow') . ' — GEMDTEK')
 
 @php
     $hasFileFields = $form->fields->contains(fn ($f) => $f->type === 'file');
@@ -13,7 +13,7 @@
     <div class="container-tight py-16">
         <a href="{{ route('forms.index') }}" class="inline-flex items-center gap-2 text-brass-300 hover:text-brass-200 text-sm mb-6 font-mono">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            Tüm başvurular
+            {{ __('pages.forms.all_forms') }}
         </a>
         <h1 class="text-3xl md:text-4xl font-display font-bold mb-4">{{ $form->title }}</h1>
         @if ($form->description)
@@ -26,21 +26,21 @@
 
     @if (session('submitted'))
         <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-lg mb-10">
-            <p class="font-display font-bold text-emerald-900 mb-1">Başvurunuz iletildi.</p>
+            <p class="font-display font-bold text-emerald-900 mb-1">{{ __('pages.forms.submitted_title') }}</p>
             <p class="text-emerald-900/80 text-sm">{{ session('successMessage') }}</p>
         </div>
     @endif
 
     @if (! $isOpen)
         <div class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-lg">
-            <p class="font-display font-bold text-amber-900 mb-1">Başvuru şu anda kapalı.</p>
+            <p class="font-display font-bold text-amber-900 mb-1">{{ __('pages.forms.closed_title') }}</p>
             <p class="text-amber-900/80 text-sm">
-                {{ $form->closed_message ?: 'Bu form şu anda açık değil. Yeni dönem için bizi takipte kal.' }}
+                {{ $form->closed_message ?: __('pages.forms.closed_default') }}
             </p>
         </div>
     @elseif ($form->fields->isEmpty())
         <div class="bg-graphite/5 p-6 rounded-lg text-center text-graphite/60 italic">
-            Bu form henüz alan içermiyor.
+            {{ __('pages.forms.empty_form') }}
         </div>
     @else
         <form action="{{ route('forms.submit', $form) }}"
@@ -85,7 +85,7 @@
                                     name="{{ $field->name }}"
                                     @if ($field->is_required) required @endif
                                     class="{{ $inputClass }}">
-                                <option value="">— seçin —</option>
+                                <option value="">{{ __('pages.common.select_placeholder') }}</option>
                                 @foreach ($field->options ?? [] as $opt)
                                     <option value="{{ $opt }}" @selected($old === $opt)>{{ $opt }}</option>
                                 @endforeach
@@ -152,11 +152,11 @@
             @endforeach
 
             <button type="submit" class="btn-accent w-full md:w-auto">
-                Başvuruyu gönder
+                {{ __('pages.forms.submit_button') }}
             </button>
 
             <p class="text-xs text-graphite/50">
-                Kişisel verilerin GEMDTEK Aydınlatma Metni çerçevesinde, yalnızca bu başvurunun değerlendirilmesi amacıyla işlenir.
+                {{ __('pages.forms.kvkk_note') }}
             </p>
         </form>
     @endif

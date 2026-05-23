@@ -44,7 +44,7 @@
 @if ($project->problem_statement)
     <section class="bg-petrol text-cream">
         <div class="container-tight py-12">
-            <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-3">Çözdüğü problem</p>
+            <p class="font-mono text-xs uppercase tracking-widest text-brass-300 mb-3">{{ __('pages.projects.problem_eyebrow') }}</p>
             <p class="text-xl md:text-2xl font-display leading-snug max-w-4xl">
                 {{ $project->problem_statement }}
             </p>
@@ -63,15 +63,15 @@
 
     @if ($specsByCategory->isNotEmpty())
         <aside class="{{ $project->description ? 'lg:col-span-1' : 'lg:col-span-3' }}">
-            <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">Teknik özellikler</p>
-            <h2 class="text-2xl font-display font-bold text-navy-800 mb-6">Spesifikasyonlar</h2>
+            <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">{{ __('pages.projects.specs_eyebrow') }}</p>
+            <h2 class="text-2xl font-display font-bold text-navy-800 mb-6">{{ __('pages.projects.specs_title') }}</h2>
 
             <div class="space-y-6">
                 @foreach ($specsByCategory as $category => $specs)
                     <div class="bg-white rounded-lg border border-graphite/10 overflow-hidden">
                         <div class="bg-navy-50 px-4 py-2 border-b border-graphite/10">
                             <p class="font-mono text-xs uppercase tracking-wider text-navy-700 font-semibold">
-                                {{ \App\Models\Project::SPEC_CATEGORIES[$category] ?? $category }}
+                                {{ __('models.project.spec_categories.' . $category) }}
                             </p>
                         </div>
                         <dl class="divide-y divide-graphite/5">
@@ -93,14 +93,14 @@
 @if ($captain || $crew->isNotEmpty())
     <section class="bg-cream py-20">
         <div class="container-tight">
-            <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3 text-center">Takım yapısı</p>
+            <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3 text-center">{{ __('pages.projects.team_eyebrow') }}</p>
             <h2 class="text-3xl md:text-4xl font-display font-bold text-navy-800 mb-12 text-center">
-                Bu projenin arkasındaki ekip
+                {{ __('pages.projects.team_title') }}
             </h2>
 
             @if ($captain)
                 <div class="max-w-md mx-auto mb-12 bg-white rounded-xl shadow-md p-6 text-center border-2 border-brass-400">
-                    <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-2">Takım Kaptanı</p>
+                    <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-2">{{ __('pages.projects.captain') }}</p>
                     <h3 class="font-display font-bold text-2xl text-navy-800">{{ $captain->name }}</h3>
                     <p class="text-graphite/70 mt-1">{{ $captain->role }}</p>
                     @if ($captain->linkedin_url)
@@ -139,8 +139,8 @@
 
 @if ($gallery->isNotEmpty())
     <section class="container-tight py-20">
-        <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">Görseller</p>
-        <h2 class="text-3xl md:text-4xl font-display font-bold text-navy-800 mb-8">Üretim & test kareleri</h2>
+        <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">{{ __('pages.projects.gallery_eyebrow') }}</p>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-navy-800 mb-8">{{ __('pages.projects.gallery_title') }}</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             @foreach ($gallery as $image)
                 <a href="{{ $image->getUrl() }}" target="_blank" rel="noopener" class="block aspect-square rounded-lg overflow-hidden bg-navy-50 hover:shadow-lg transition-shadow">
@@ -154,8 +154,8 @@
 @if ($documents->isNotEmpty())
     <section class="bg-cream py-20">
         <div class="container-tight">
-            <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">Dokümantasyon</p>
-            <h2 class="text-3xl md:text-4xl font-display font-bold text-navy-800 mb-8">Teknik raporlar</h2>
+            <p class="font-mono text-xs uppercase tracking-widest text-brass-600 mb-3">{{ __('pages.projects.docs_eyebrow') }}</p>
+            <h2 class="text-3xl md:text-4xl font-display font-bold text-navy-800 mb-8">{{ __('pages.projects.docs_title') }}</h2>
             <ul class="space-y-3 max-w-2xl">
                 @foreach ($documents as $doc)
                     <li>

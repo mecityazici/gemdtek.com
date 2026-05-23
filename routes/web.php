@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationFormController;
+use App\Http\Controllers\ContactController;
 use App\Models\Event;
 use App\Models\NewsPost;
 use App\Models\Project;
@@ -94,6 +95,11 @@ Route::get('/lang/{locale}', function (string $locale, Request $request) {
 })->name('lang.switch');
 
 Route::view('/kvkk', 'legal.privacy')->name('legal.privacy');
+
+Route::get('/iletisim',  [ContactController::class, 'show'])->name('contact');
+Route::post('/iletisim', [ContactController::class, 'submit'])
+    ->middleware('throttle:5,1')
+    ->name('contact.submit');
 
 Route::get('/sitemap.xml', function () {
     $urls = collect();
