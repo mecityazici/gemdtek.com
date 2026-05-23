@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Project;
 use App\Models\Sponsor;
 use App\Models\TeamMember;
 use App\Models\TimelineEvent;
@@ -19,3 +20,20 @@ Route::get('/hakkimizda', function () {
         'timeline' => TimelineEvent::orderBy('year')->orderBy('order')->get(),
     ]);
 })->name('about');
+
+Route::get('/ar-ge', function () {
+    return view('projects.index', [
+        'projects' => Project::active()->orderBy('order')->get(),
+    ]);
+})->name('projects.index');
+
+Route::get('/ar-ge/{project:slug}', function (Project $project) {
+    abort_unless($project->is_active, 404);
+    $project->load(['specs', 'members']);
+    return view('projects.show', [
+        'project' => $project,
+        'specsByCategory' => $project->specs->groupBy('category'),
+        'captain' => $project->members->firstWhere('is_captain', true),
+        'crew' => $project->members->where('is_captain', false)->values(),
+    ]);
+})->name('projects.show');

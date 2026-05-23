@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RolesAndAdminSeeder::class,
             SponsorSeeder::class,
             TeamAndTimelineSeeder::class,
+            ProjectSeeder::class,
         ]);
     }
 }
