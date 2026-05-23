@@ -26,7 +26,7 @@
                    class="group bg-white rounded-xl overflow-hidden shadow-sm border border-graphite/5 hover:shadow-xl hover:-translate-y-1 transition-all">
                     <div class="aspect-[4/3] bg-navy-100 relative overflow-hidden">
                         @if ($project->hero_url)
-                            <img src="{{ $project->hero_url }}" alt="{{ $project->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <img src="{{ $project->hero_url }}" alt="{{ $project->name }}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                         @else
                             <div class="w-full h-full bg-gradient-to-br from-navy-800 to-petrol flex items-center justify-center">
                                 <span class="font-display text-5xl text-brass-400/40 font-bold">GEMDTEK</span>

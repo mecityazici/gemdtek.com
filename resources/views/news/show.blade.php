@@ -2,6 +2,10 @@
 
 @section('title', $post->title . ' — GEMDTEK')
 @section('meta_description', $post->excerpt)
+@section('og_type', 'article')
+@if ($post->cover_url)
+    @section('og_image', $post->cover_url)
+@endif
 
 @section('content')
 

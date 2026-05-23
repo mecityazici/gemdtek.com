@@ -2,6 +2,10 @@
 
 @section('title', $event->title . ' — GEMDTEK')
 @section('meta_description', $event->summary)
+@section('og_type', 'event')
+@if ($event->cover_url)
+    @section('og_image', $event->cover_url)
+@endif
 
 @section('content')
 

@@ -92,3 +92,57 @@ Route::get('/lang/{locale}', function (string $locale, Request $request) {
     }
     return redirect($request->headers->get('referer') ?: route('home'));
 })->name('lang.switch');
+
+Route::view('/kvkk', 'legal.privacy')->name('legal.privacy');
+
+Route::get('/sitemap.xml', function () {
+    $urls = collect();
+
+    $urls->push(['loc' => route('home'),             'changefreq' => 'daily',  'priority' => '1.0']);
+    $urls->push(['loc' => route('about'),            'changefreq' => 'monthly','priority' => '0.8']);
+    $urls->push(['loc' => route('projects.index'),   'changefreq' => 'weekly', 'priority' => '0.8']);
+    $urls->push(['loc' => route('events.index'),     'changefreq' => 'weekly', 'priority' => '0.7']);
+    $urls->push(['loc' => route('news.index'),       'changefreq' => 'daily',  'priority' => '0.7']);
+    $urls->push(['loc' => route('forms.index'),      'changefreq' => 'weekly', 'priority' => '0.6']);
+    $urls->push(['loc' => route('legal.privacy'),    'changefreq' => 'yearly', 'priority' => '0.3']);
+
+    Project::active()->each(function ($p) use ($urls) {
+        $urls->push([
+            'loc'        => route('projects.show', $p),
+            'lastmod'    => $p->updated_at?->toAtomString(),
+            'changefreq' => 'monthly',
+            'priority'   => '0.7',
+        ]);
+    });
+
+    Event::active()->each(function ($e) use ($urls) {
+        $urls->push([
+            'loc'        => route('events.show', $e),
+            'lastmod'    => $e->updated_at?->toAtomString(),
+            'changefreq' => 'weekly',
+            'priority'   => '0.6',
+        ]);
+    });
+
+    NewsPost::published()->each(function ($n) use ($urls) {
+        $urls->push([
+            'loc'        => route('news.show', $n),
+            'lastmod'    => $n->updated_at?->toAtomString(),
+            'changefreq' => 'monthly',
+            'priority'   => '0.6',
+        ]);
+    });
+
+    \App\Models\Form::open()->each(function ($f) use ($urls) {
+        $urls->push([
+            'loc'        => route('forms.show', $f),
+            'lastmod'    => $f->updated_at?->toAtomString(),
+            'changefreq' => 'weekly',
+            'priority'   => '0.5',
+        ]);
+    });
+
+    return response()
+        ->view('sitemap', ['urls' => $urls])
+        ->header('Content-Type', 'application/xml; charset=utf-8');
+})->name('sitemap');

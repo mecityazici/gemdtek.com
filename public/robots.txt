@@ -1,2 +1,12 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Admin and auth routes
+Disallow: /admin
+Disallow: /lang/
+
+# Form submission endpoint (POST only, but discourage GET access)
+Disallow: /basvuru/*?
+
+# Sitemap
+Sitemap: https://gemdtek.com/sitemap.xml

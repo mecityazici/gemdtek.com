@@ -21,5 +21,6 @@ return [
     'footer' => [
         'rights'   => 'All rights reserved',
         'tagline'  => 'Naval Architecture and Marine Technologies Club',
+        'privacy'  => 'Privacy Notice',
     ],
 ];

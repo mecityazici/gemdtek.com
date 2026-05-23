@@ -106,4 +106,66 @@ return [
         'select_placeholder' => '— seçin —',
         'required_marker'    => '*',
     ],
+    'privacy' => [
+        'eyebrow'        => 'Yasal',
+        'headline'       => 'KVKK Aydınlatma Metni',
+        'updated'        => 'Son güncelleme',
+        'intro'          => 'Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında, GEMDTEK olarak kişisel verilerinizi nasıl işlediğimiz hakkında sizi bilgilendirmek amacıyla hazırlanmıştır.',
+        'sections' => [
+            'controller' => [
+                'heading' => 'Veri Sorumlusu',
+                'body'    => 'Veri sorumlusu, GEMDTEK Gemi İnşaatı ve Deniz Teknolojileri Kulübü\'dür. İletişim bilgileri ana sayfa altındadır.',
+            ],
+            'data' => [
+                'heading' => 'İşlenen Kişisel Veriler',
+                'body'    => 'Başvuru formları aracılığıyla: ad, soyad, e-posta, telefon, bölüm, sınıf, deneyim açıklaması ve isteğe bağlı CV dosyası. Site ziyaretinde teknik veriler: IP adresi, tarayıcı bilgisi, oturum çerezleri.',
+            ],
+            'purpose' => [
+                'heading' => 'İşleme Amaçları',
+                'body'    => 'Üyelik, komisyon ve Ar-Ge takım başvurularının değerlendirilmesi; etkinlik organizasyonu; kulüp içi iletişim; site güvenliğinin sağlanması. Verileriniz pazarlama amacıyla işlenmez.',
+            ],
+            'transfer' => [
+                'heading' => 'Aktarım',
+                'body'    => 'Kişisel verileriniz, yalnızca yasal yükümlülükler ve teknik altyapı (hosting sağlayıcısı) zorunluluğu durumunda üçüncü taraflarla paylaşılır. Yurt dışına aktarım yapılmaz.',
+            ],
+            'retention' => [
+                'heading' => 'Saklama Süresi',
+                'body'    => 'Başvuru verileri, ilgili dönem değerlendirmesi tamamlandıktan sonra en fazla 2 yıl saklanır. Üyelik verileri üyelik süresince ve sonrasında 5 yıl saklanır.',
+            ],
+            'rights' => [
+                'heading' => 'Haklarınız',
+                'body'    => 'KVKK md. 11 uyarınca; verilerinizin işlenip işlenmediğini öğrenme, düzeltme, silme, aktarımına itiraz etme haklarına sahipsiniz. Talep için iletişim adresimizden bize ulaşabilirsiniz.',
+            ],
+            'cookies' => [
+                'heading' => 'Çerez Kullanımı',
+                'body'    => 'Site, yalnızca oturum yönetimi ve tercih saklama (dil) için zorunlu çerezler kullanır. Üçüncü taraf analitik veya reklam çerezleri çalıştırılmaz.',
+            ],
+        ],
+        'disclaimer' => 'Not: Bu metin örnek bir taslaktır; canlıya çıkmadan önce bir avukat tarafından kulübünüzün gerçek veri işleme süreçlerine göre revize edilmesi önerilir.',
+    ],
+    'cookie' => [
+        'message' => 'Bu site, oturum yönetimi ve dil tercihinizi hatırlamak için yalnızca zorunlu çerezler kullanır. Detaylar için KVKK Aydınlatma Metni\'ne göz atabilirsiniz.',
+        'accept'  => 'Anladım',
+        'learn'   => 'Detaylar',
+    ],
+    'errors' => [
+        '404' => [
+            'title' => '404 — Sayfa Bulunamadı',
+            'lead'  => 'Aradığın sayfa kayma yapmış olabilir.',
+            'body'  => 'Belki link değişti, belki yanlış bir yere yelken açtık. Anasayfadan tekrar başlayalım.',
+            'cta'   => 'Anasayfaya dön',
+        ],
+        '500' => [
+            'title' => '500 — Sunucu Hatası',
+            'lead'  => 'Beklenmeyen bir motor arızası.',
+            'body'  => 'Kısa süre içinde toparlanacağız. Sorun devam ederse bizimle iletişime geçin.',
+            'cta'   => 'Anasayfaya dön',
+        ],
+        '503' => [
+            'title' => '503 — Bakımdayız',
+            'lead'  => 'Sistemler bakım modunda.',
+            'body'  => 'Birkaç dakika içinde tekrar denizdeyiz. Sabrın için teşekkürler.',
+            'cta'   => 'Tekrar dene',
+        ],
+    ],
 ];

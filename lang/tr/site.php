@@ -21,5 +21,6 @@ return [
     'footer' => [
         'rights'   => 'Tüm hakları saklıdır',
         'tagline'  => 'Gemi İnşaatı ve Deniz Teknolojileri Kulübü',
+        'privacy'  => 'KVKK Aydınlatma Metni',
     ],
 ];

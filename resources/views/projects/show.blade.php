@@ -2,6 +2,10 @@
 
 @section('title', $project->name . ' — GEMDTEK')
 @section('meta_description', $project->summary)
+@section('og_type', 'article')
+@if ($project->hero_url)
+    @section('og_image', $project->hero_url)
+@endif
 
 @section('content')
 
@@ -140,7 +144,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             @foreach ($gallery as $image)
                 <a href="{{ $image->getUrl() }}" target="_blank" rel="noopener" class="block aspect-square rounded-lg overflow-hidden bg-navy-50 hover:shadow-lg transition-shadow">
-                    <img src="{{ $image->getUrl() }}" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform">
+                    <img src="{{ $image->getUrl() }}" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover hover:scale-105 transition-transform">
                 </a>
             @endforeach
         </div>

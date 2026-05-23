@@ -47,7 +47,7 @@
                    class="group bg-white rounded-xl overflow-hidden shadow-sm border border-graphite/5 hover:shadow-lg transition-all">
                     <div class="aspect-[16/9] bg-navy-100 relative overflow-hidden">
                         @if ($post->cover_url)
-                            <img src="{{ $post->cover_url }}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            <img src="{{ $post->cover_url }}" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                         @else
                             <div class="w-full h-full bg-gradient-to-br from-navy-800 to-petrol flex items-center justify-center">
                                 <span class="font-display text-3xl text-brass-400/40 font-bold">{{ Str::upper(substr($post->title, 0, 1)) }}</span>

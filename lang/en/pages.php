@@ -106,4 +106,66 @@ return [
         'select_placeholder' => '— select —',
         'required_marker'    => '*',
     ],
+    'privacy' => [
+        'eyebrow'        => 'Legal',
+        'headline'       => 'Privacy Notice',
+        'updated'        => 'Last updated',
+        'intro'          => 'This notice is prepared under Turkish Law No. 6698 on the Protection of Personal Data (KVKK) to inform you about how GEMDTEK processes your personal data.',
+        'sections' => [
+            'controller' => [
+                'heading' => 'Data Controller',
+                'body'    => 'The data controller is GEMDTEK Naval Architecture and Marine Technologies Club. Contact details are at the bottom of the home page.',
+            ],
+            'data' => [
+                'heading' => 'Personal Data Processed',
+                'body'    => 'Through application forms: name, email, phone, department, year, experience description, and optional CV file. During site visit, technical data: IP address, browser info, session cookies.',
+            ],
+            'purpose' => [
+                'heading' => 'Purposes of Processing',
+                'body'    => 'Evaluating membership, commission, and R&D team applications; event organization; intra-club communication; site security. Your data is not processed for marketing purposes.',
+            ],
+            'transfer' => [
+                'heading' => 'Transfer',
+                'body'    => 'Your personal data is shared with third parties only when required by law or technical infrastructure (hosting provider). No transfer outside Turkey is performed.',
+            ],
+            'retention' => [
+                'heading' => 'Retention Period',
+                'body'    => 'Application data is retained for up to 2 years after the relevant term evaluation. Membership data is retained during membership and 5 years thereafter.',
+            ],
+            'rights' => [
+                'heading' => 'Your Rights',
+                'body'    => 'Under KVKK Article 11, you have the right to learn whether your data is processed, correct it, delete it, or object to its transfer. Reach us via the contact channels for any request.',
+            ],
+            'cookies' => [
+                'heading' => 'Cookie Use',
+                'body'    => 'The site uses only essential cookies for session management and preference storage (language). No third-party analytics or advertising cookies run.',
+            ],
+        ],
+        'disclaimer' => 'Note: This text is a sample template; before going live, it should be revised by a lawyer based on the club\'s actual data processing flow.',
+    ],
+    'cookie' => [
+        'message' => 'This site uses only essential cookies for session management and remembering your language preference. See the Privacy Notice for details.',
+        'accept'  => 'Got it',
+        'learn'   => 'Details',
+    ],
+    'errors' => [
+        '404' => [
+            'title' => '404 — Page Not Found',
+            'lead'  => 'The page you\'re looking for seems to have drifted away.',
+            'body'  => 'Maybe the link changed, or we charted the wrong course. Let\'s set sail from the home page.',
+            'cta'   => 'Back to home',
+        ],
+        '500' => [
+            'title' => '500 — Server Error',
+            'lead'  => 'An unexpected engine failure.',
+            'body'  => 'We\'ll be back on course shortly. If the issue persists, please get in touch.',
+            'cta'   => 'Back to home',
+        ],
+        '503' => [
+            'title' => '503 — Under Maintenance',
+            'lead'  => 'Systems are in maintenance mode.',
+            'body'  => 'We\'ll be back at sea in a few minutes. Thanks for your patience.',
+            'cta'   => 'Try again',
+        ],
+    ],
 ];
