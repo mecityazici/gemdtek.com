@@ -78,7 +78,32 @@
                             {{ __('site.nav.' . $item['key']) }}
                         </a>
                     @endforeach
-                    <div class="flex items-center gap-1 font-mono text-xs border-l border-cream/20 pl-4 ml-1">
+                    {{-- Search trigger --}}
+                    <div x-data="{ searchOpen: false }" class="relative border-l border-cream/20 pl-4 ml-1">
+                        <button @click="searchOpen = !searchOpen; $nextTick(() => searchOpen && $refs.searchInput.focus())"
+                                class="p-1.5 text-cream/70 hover:text-cream transition-colors"
+                                aria-label="{{ __('pages.search.eyebrow') }}">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </button>
+                        <div x-show="searchOpen"
+                             x-cloak
+                             @click.outside="searchOpen = false"
+                             @keydown.escape.window="searchOpen = false"
+                             x-transition.origin.top.right
+                             class="absolute right-0 top-full mt-2 bg-navy-950 border border-cream/10 rounded-lg shadow-2xl p-3 w-80">
+                            <form action="{{ route('search') }}" method="GET">
+                                <input type="search"
+                                       name="q"
+                                       x-ref="searchInput"
+                                       placeholder="{{ __('pages.search.placeholder') }}"
+                                       class="w-full bg-navy-900 border border-cream/10 text-cream placeholder:text-cream/40 rounded-md px-3 py-2 text-sm focus:border-brass-400 focus:ring-brass-400/20 focus:outline-none">
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-1 font-mono text-xs border-l border-cream/20 pl-4">
                         @foreach (['tr', 'en'] as $loc)
                             <a href="{{ route('lang.switch', $loc) }}"
                                class="px-2 py-1 rounded {{ $currentLocale === $loc ? 'bg-brass-500 text-white' : 'text-cream/70 hover:text-cream' }}">
@@ -123,6 +148,18 @@
                 </div>
 
                 <nav class="flex flex-col py-4 flex-1 overflow-y-auto">
+                    <form action="{{ route('search') }}" method="GET" class="px-6 mb-3">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-cream/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input type="search"
+                                   name="q"
+                                   placeholder="{{ __('pages.search.placeholder') }}"
+                                   class="w-full bg-navy-950 border border-cream/10 text-cream placeholder:text-cream/40 rounded-md pl-9 pr-3 py-2 text-sm focus:border-brass-400 focus:ring-brass-400/20 focus:outline-none">
+                        </div>
+                    </form>
+
                     @foreach ($nav as $item)
                         <a href="{{ $item['href'] }}"
                            @click="open = false"

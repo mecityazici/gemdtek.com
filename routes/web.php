@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SponsorLeadController;
 use App\Models\Alumni;
 use App\Models\Event;
@@ -109,6 +110,8 @@ Route::get('/sponsor-ol',  [SponsorLeadController::class, 'show'])->name('sponso
 Route::post('/sponsor-ol', [SponsorLeadController::class, 'submit'])
     ->middleware('throttle:5,1')
     ->name('sponsor.submit');
+
+Route::get('/arama', [SearchController::class, 'index'])->name('search');
 
 Route::get('/mezunlar', function (Request $request) {
     $sector = $request->string('sector')->toString();
