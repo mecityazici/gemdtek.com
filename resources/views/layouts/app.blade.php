@@ -12,17 +12,28 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <header class="bg-navy-900 text-cream">
+    @php
+        $nav = [
+            ['label' => 'Hakkımızda',       'href' => route('about'),  'active' => request()->routeIs('about')],
+            ['label' => 'Ar-Ge & Projeler', 'href' => '#',             'active' => false],
+            ['label' => 'Etkinlikler',      'href' => '#',             'active' => false],
+            ['label' => 'Başvurular',       'href' => '#',             'active' => false],
+            ['label' => 'İletişim',         'href' => '#',             'active' => false],
+        ];
+    @endphp
+
+    <header class="bg-navy-900 text-cream sticky top-0 z-50">
         <div class="container-tight flex items-center justify-between py-5">
-            <a href="{{ url('/') }}" class="font-display text-xl tracking-wide">
+            <a href="{{ route('home') }}" class="font-display text-xl tracking-wide">
                 GEMDTEK
             </a>
             <nav class="hidden md:flex items-center gap-8 text-sm">
-                <a href="#" class="hover:text-brass-300">Hakkımızda</a>
-                <a href="#" class="hover:text-brass-300">Ar-Ge & Projeler</a>
-                <a href="#" class="hover:text-brass-300">Etkinlikler</a>
-                <a href="#" class="hover:text-brass-300">Başvurular</a>
-                <a href="#" class="hover:text-brass-300">İletişim</a>
+                @foreach ($nav as $item)
+                    <a href="{{ $item['href'] }}"
+                       class="transition-colors {{ $item['active'] ? 'text-brass-400' : 'hover:text-brass-300' }}">
+                        {{ $item['label'] }}
+                    </a>
+                @endforeach
             </nav>
         </div>
     </header>

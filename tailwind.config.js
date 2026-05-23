@@ -51,6 +51,20 @@ export default {
                 display: ['"Space Grotesk"', ...defaultTheme.fontFamily.sans],
                 mono:    ['"JetBrains Mono"', ...defaultTheme.fontFamily.mono],
             },
+            keyframes: {
+                'scroll-x': {
+                    '0%':   { transform: 'translateX(0)' },
+                    '100%': { transform: 'translateX(-50%)' },
+                },
+                'fade-up': {
+                    '0%':   { opacity: '0', transform: 'translateY(12px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+            },
+            animation: {
+                'scroll-x':  'scroll-x 40s linear infinite',
+                'fade-up':   'fade-up 0.6s ease-out both',
+            },
         },
     },
     plugins: [forms, typography],
