@@ -19,7 +19,7 @@
             {{ __('pages.home.subline') }}
         </p>
         <div class="flex flex-wrap gap-4">
-            <a href="#sponsorlar" class="btn-accent">{{ __('pages.home.cta_sponsor') }}</a>
+            <a href="{{ route('sponsor.show') }}" class="btn-accent">{{ __('pages.home.cta_sponsor') }}</a>
             <a href="{{ route('about') }}" class="btn-primary border border-cream/20">{{ __('pages.home.cta_explore') }}</a>
         </div>
     </div>

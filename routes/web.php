@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\SponsorLeadController;
 use App\Models\Alumni;
 use App\Models\Event;
 use App\Models\NewsPost;
@@ -104,6 +105,11 @@ Route::post('/iletisim', [ContactController::class, 'submit'])
     ->middleware('throttle:5,1')
     ->name('contact.submit');
 
+Route::get('/sponsor-ol',  [SponsorLeadController::class, 'show'])->name('sponsor.show');
+Route::post('/sponsor-ol', [SponsorLeadController::class, 'submit'])
+    ->middleware('throttle:5,1')
+    ->name('sponsor.submit');
+
 Route::get('/mezunlar', function (Request $request) {
     $sector = $request->string('sector')->toString();
     $year   = (int) $request->integer('year');
@@ -171,8 +177,9 @@ Route::get('/sitemap.xml', function () {
         ]);
     });
 
-    $urls->push(['loc' => route('alumni.index'), 'changefreq' => 'weekly', 'priority' => '0.5']);
-    $urls->push(['loc' => route('contact'),      'changefreq' => 'yearly', 'priority' => '0.4']);
+    $urls->push(['loc' => route('alumni.index'),  'changefreq' => 'weekly', 'priority' => '0.5']);
+    $urls->push(['loc' => route('contact'),       'changefreq' => 'yearly', 'priority' => '0.4']);
+    $urls->push(['loc' => route('sponsor.show'),  'changefreq' => 'monthly','priority' => '0.7']);
 
     return response()
         ->view('sitemap', ['urls' => $urls])
