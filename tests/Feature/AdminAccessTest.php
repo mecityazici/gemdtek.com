@@ -58,7 +58,7 @@ class AdminAccessTest extends TestCase
         $this->actingAs($admin);
 
         $visible = ProjectResource::getEloquentQuery()->get();
-        $total   = Project::count();
+        $total = Project::count();
 
         $this->assertSame($total, $visible->count(), 'Super admin should see every project');
         $this->assertGreaterThan(1, $total, 'Seeder should produce multiple projects');

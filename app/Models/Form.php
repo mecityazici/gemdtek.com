@@ -17,7 +17,7 @@ class Form extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'starts_at' => 'datetime',
-        'ends_at'   => 'datetime',
+        'ends_at' => 'datetime',
     ];
 
     public function getRouteKeyName(): string
@@ -38,6 +38,7 @@ class Form extends Model
     public function scopeOpen(Builder $query): Builder
     {
         $now = now();
+
         return $query
             ->where('is_active', true)
             ->where(function ($q) use ($now) {
@@ -60,6 +61,7 @@ class Form extends Model
         if ($this->ends_at && $this->ends_at->isBefore($now)) {
             return false;
         }
+
         return true;
     }
 }

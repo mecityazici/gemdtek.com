@@ -14,11 +14,11 @@ class Event extends Model implements HasMedia
     use InteractsWithMedia;
 
     public const CATEGORIES = [
-        'zirve'         => 'Zirve',
-        'kariyer-gunu'  => 'Kariyer Günü',
-        'atolye'        => 'Atölye',
-        'panel'         => 'Panel',
-        'etkinlik'      => 'Etkinlik',
+        'zirve' => 'Zirve',
+        'kariyer-gunu' => 'Kariyer Günü',
+        'atolye' => 'Atölye',
+        'panel' => 'Panel',
+        'etkinlik' => 'Etkinlik',
     ];
 
     public array $translatable = ['title', 'summary', 'description'];
@@ -30,8 +30,8 @@ class Event extends Model implements HasMedia
 
     protected $casts = [
         'event_date' => 'datetime',
-        'is_active'  => 'boolean',
-        'order'      => 'integer',
+        'is_active' => 'boolean',
+        'order' => 'integer',
     ];
 
     public function getRouteKeyName(): string
@@ -66,7 +66,7 @@ class Event extends Model implements HasMedia
 
     public function getCategoryLabelAttribute(): string
     {
-        return __('models.event.categories.' . $this->category, [], app()->getLocale())
+        return __('models.event.categories.'.$this->category, [], app()->getLocale())
             ?: ($this->category);
     }
 

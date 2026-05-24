@@ -14,12 +14,12 @@ class SponsorLeadFlowTest extends TestCase
         Mail::fake();
 
         $response = $this->post('/sponsor-ol', [
-            'company_name'  => 'Test Tersane A.Ş.',
-            'contact_name'  => 'Ali Yetkili',
+            'company_name' => 'Test Tersane A.Ş.',
+            'contact_name' => 'Ali Yetkili',
             'contact_email' => 'ali@tersane.example',
-            'contact_role'  => 'CFO',
+            'contact_role' => 'CFO',
             'interest_tier' => 'gold',
-            'message'       => 'Altın paket detayları için bizimle görüşelim.',
+            'message' => 'Altın paket detayları için bizimle görüşelim.',
         ]);
 
         $response->assertRedirect('/sponsor-ol')
@@ -37,7 +37,7 @@ class SponsorLeadFlowTest extends TestCase
     public function test_sponsor_lead_validation_fails_without_company(): void
     {
         $response = $this->from('/sponsor-ol')->post('/sponsor-ol', [
-            'contact_name'  => 'Test',
+            'contact_name' => 'Test',
             'contact_email' => 'test@example.com',
         ]);
 
@@ -48,8 +48,8 @@ class SponsorLeadFlowTest extends TestCase
     public function test_invalid_tier_value_rejected(): void
     {
         $response = $this->from('/sponsor-ol')->post('/sponsor-ol', [
-            'company_name'  => 'X',
-            'contact_name'  => 'X',
+            'company_name' => 'X',
+            'contact_name' => 'X',
             'contact_email' => 'x@x.com',
             'interest_tier' => 'diamond', // not in TIERS enum
         ]);

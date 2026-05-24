@@ -112,9 +112,9 @@ class NewsPostResource extends Resource
                     ->formatStateUsing(fn (string $state): string => NewsPost::CATEGORIES[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
                         'duyuru' => 'primary',
-                        'blog'   => 'success',
-                        'basin'  => 'warning',
-                        default  => 'gray',
+                        'blog' => 'success',
+                        'basin' => 'warning',
+                        default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('published_at')->label('Yayın')->dateTime('d M Y H:i')->placeholder('—')->sortable(),
                 Tables\Columns\IconColumn::make('is_published')->label('Yayında')->boolean(),
@@ -138,9 +138,9 @@ class NewsPostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListNewsPosts::route('/'),
+            'index' => Pages\ListNewsPosts::route('/'),
             'create' => Pages\CreateNewsPost::route('/create'),
-            'edit'   => Pages\EditNewsPost::route('/{record}/edit'),
+            'edit' => Pages\EditNewsPost::route('/{record}/edit'),
         ];
     }
 }

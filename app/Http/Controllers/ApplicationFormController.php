@@ -23,7 +23,7 @@ class ApplicationFormController extends Controller
         $form->load('fields');
 
         return view('forms.show', [
-            'form'   => $form,
+            'form' => $form,
             'isOpen' => $form->isOpen(),
         ]);
     }
@@ -56,14 +56,15 @@ class ApplicationFormController extends Controller
                 if ($file = $request->file($field->name)) {
                     $dataPayload[$field->name] = $file->getClientOriginalName();
                 }
+
                 continue;
             }
             $dataPayload[$field->name] = $validated[$field->name] ?? null;
         }
 
         $submission = FormSubmission::create([
-            'form_id'    => $form->id,
-            'data'       => $dataPayload,
+            'form_id' => $form->id,
+            'data' => $dataPayload,
             'ip_address' => $request->ip(),
             'user_agent' => substr((string) $request->userAgent(), 0, 255),
         ]);

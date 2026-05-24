@@ -57,10 +57,10 @@ class SponsorLeadResource extends Resource
                     ->formatStateUsing(fn (?string $state): string => $state ? (SponsorLead::TIERS[$state] ?? $state) : '—')
                     ->color(fn (?string $state): string => match ($state) {
                         'platinum' => 'primary',
-                        'gold'     => 'warning',
-                        'silver'   => 'gray',
-                        'bronze'   => 'danger',
-                        default    => 'info',
+                        'gold' => 'warning',
+                        'silver' => 'gray',
+                        'bronze' => 'danger',
+                        default => 'info',
                     }),
             ])
             ->defaultSort('created_at', 'desc')
@@ -73,7 +73,8 @@ class SponsorLeadResource extends Resource
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
                     ->action(function () {
-                        $filename = 'sponsor-leadleri-' . now()->format('Ymd-Hi') . '.csv';
+                        $filename = 'sponsor-leadleri-'.now()->format('Ymd-Hi').'.csv';
+
                         return response()->streamDownload(function () {
                             $out = fopen('php://output', 'w');
                             fputcsv($out, ['#', 'Tarih', 'Şirket', 'Kişi', 'Görev', 'E-posta', 'Seviye', 'Mesaj', 'IP', 'Kaynak']);
@@ -112,9 +113,9 @@ class SponsorLeadResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSponsorLeads::route('/'),
+            'index' => Pages\ListSponsorLeads::route('/'),
             'create' => Pages\CreateSponsorLead::route('/create'),
-            'edit'   => Pages\EditSponsorLead::route('/{record}/edit'),
+            'edit' => Pages\EditSponsorLead::route('/{record}/edit'),
         ];
     }
 }

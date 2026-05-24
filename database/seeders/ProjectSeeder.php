@@ -14,8 +14,8 @@ class ProjectSeeder extends Seeder
         $captain = User::firstOrCreate(
             ['email' => 'kaptan@gemdtek.com'],
             [
-                'name'              => 'Burak Aksoy (Test Kaptan)',
-                'password'          => Hash::make('Captain!2026'),
+                'name' => 'Burak Aksoy (Test Kaptan)',
+                'password' => Hash::make('Captain!2026'),
                 'email_verified_at' => now(),
             ],
         );
@@ -24,20 +24,20 @@ class ProjectSeeder extends Seeder
             $captain->assignRole('team_captain');
         }
 
-        $this->command->line("Test takım kaptanı: kaptan@gemdtek.com / Captain!2026");
+        $this->command->line('Test takım kaptanı: kaptan@gemdtek.com / Captain!2026');
 
         $projects = [
             [
-                'slug'              => 'teknofest-rov',
-                'name'              => [
+                'slug' => 'teknofest-rov',
+                'name' => [
                     'tr' => 'TEKNOFEST İnsansız Sualtı Sistemleri ROV Takımı',
                     'en' => 'TEKNOFEST Unmanned Underwater Systems ROV Team',
                 ],
-                'summary'           => [
+                'summary' => [
                     'tr' => 'TEKNOFEST insansız sualtı sistemleri yarışması için tasarlanan, otonom görev yürütebilen orta sınıf ROV.',
                     'en' => 'A mid-class ROV designed for the TEKNOFEST unmanned underwater systems competition, capable of executing autonomous missions.',
                 ],
-                'description'       => [
+                'description' => [
                     'tr' => '<p>Tasarımı, hem teleoperasyon hem de görüntü işleme tabanlı otonom mod destekleyen modüler bir mimari üzerine kuruludur. ROS 2 omurgası, sualtı koşullarına dayanıklı sızdırmaz gövde ve değiştirilebilir görev paketleri sayesinde farklı yarışma kategorilerine uyarlanabilir.</p>',
                     'en' => '<p>The design is built on a modular architecture supporting both teleoperation and computer-vision-based autonomous mode. With a ROS 2 backbone, watertight hull built for underwater conditions, and swappable mission payloads, it adapts to different competition categories.</p>',
                 ],
@@ -45,13 +45,13 @@ class ProjectSeeder extends Seeder
                     'tr' => 'Sualtı yapılarının (iskele ayakları, deniz kabloları, akuakültür ağları) periyodik denetimi, insanlı dalışlara göre çok daha güvenli ve maliyet etkin bir şekilde otonom ROV ile yapılabilir.',
                     'en' => 'Periodic inspection of underwater structures (pier legs, submarine cables, aquaculture nets) can be done much more safely and cost-effectively with autonomous ROVs than with crewed dives.',
                 ],
-                'year'              => 2025,
-                'status'            => 'active',
-                'order'             => 10,
-                'captain_user_id'   => $captain->id,
-                'specs'             => [
+                'year' => 2025,
+                'status' => 'active',
+                'order' => 10,
+                'captain_user_id' => $captain->id,
+                'specs' => [
                     ['category' => 'mekanik',    'key' => ['tr' => 'Gövde materyali',  'en' => 'Hull material'],     'value' => ['tr' => 'Karbon fiber kompozit',          'en' => 'Carbon fiber composite']],
-                    ['category' => 'mekanik',    'key' => ['tr' => 'Boyut (LxWxH)',    'en' => 'Dimensions (LxWxH)'],'value' => ['tr' => '850 × 600 × 450 mm',             'en' => '850 × 600 × 450 mm']],
+                    ['category' => 'mekanik',    'key' => ['tr' => 'Boyut (LxWxH)',    'en' => 'Dimensions (LxWxH)'], 'value' => ['tr' => '850 × 600 × 450 mm',             'en' => '850 × 600 × 450 mm']],
                     ['category' => 'mekanik',    'key' => ['tr' => 'Ağırlık',          'en' => 'Weight'],            'value' => ['tr' => '18 kg',                          'en' => '18 kg']],
                     ['category' => 'elektronik', 'key' => ['tr' => 'Pil sistemi',      'en' => 'Battery'],           'value' => ['tr' => '22.2V 16Ah LiPo',                'en' => '22.2V 16Ah LiPo']],
                     ['category' => 'elektronik', 'key' => ['tr' => 'Tahrik',           'en' => 'Propulsion'],        'value' => ['tr' => '6 × T200 BlueRobotics thruster', 'en' => '6 × T200 BlueRobotics thrusters']],
@@ -63,23 +63,23 @@ class ProjectSeeder extends Seeder
                 ],
                 'members' => [
                     ['name' => 'Burak Aksoy',   'role' => ['tr' => 'Takım Kaptanı',         'en' => 'Team Captain'],         'is_captain' => true],
-                    ['name' => 'Zeynep Aydın',  'role' => ['tr' => 'Mekanik Tasarım Lideri','en' => 'Mechanical Design Lead'], 'is_captain' => false],
+                    ['name' => 'Zeynep Aydın',  'role' => ['tr' => 'Mekanik Tasarım Lideri', 'en' => 'Mechanical Design Lead'], 'is_captain' => false],
                     ['name' => 'Ali Şahin',     'role' => ['tr' => 'Otonom Yazılım Lideri', 'en' => 'Autonomy Software Lead'], 'is_captain' => false],
                     ['name' => 'Deniz Aksoy',   'role' => ['tr' => 'Elektronik Donanım',    'en' => 'Electronics Hardware'],   'is_captain' => false],
                     ['name' => 'Eda Korkmaz',   'role' => ['tr' => 'Görüntü İşleme',        'en' => 'Computer Vision'],        'is_captain' => false],
                 ],
             ],
             [
-                'slug'              => 'hidrojen-kiyi-gemisi',
-                'name'              => [
+                'slug' => 'hidrojen-kiyi-gemisi',
+                'name' => [
                     'tr' => 'Alternatif Yakıtlı Kıyı Gemisi Tasarımı',
                     'en' => 'Alternative-Fuel Coastal Vessel Design',
                 ],
-                'summary'           => [
+                'summary' => [
                     'tr' => 'PEM yakıt hücreli, sıfır emisyonlu kıyı gemisi konsept tasarımı. Uluslararası öğrenci yarışmasında finalist.',
                     'en' => 'PEM fuel-cell, zero-emission coastal vessel concept. Finalist in an international student competition.',
                 ],
-                'description'       => [
+                'description' => [
                     'tr' => '<p>İç sularda ve kısa mesafeli kıyı seferlerinde fosil yakıt kullanımına alternatif olarak tasarlanan hidrojen yakıt hücreli kıyı gemisi konseptidir.</p>',
                     'en' => '<p>A hydrogen fuel-cell coastal vessel concept designed as an alternative to fossil fuels in inland waters and short-distance coastal routes.</p>',
                 ],
@@ -87,11 +87,11 @@ class ProjectSeeder extends Seeder
                     'tr' => 'Türkiye kıyı taşımacılığında karbon emisyonu azaltımı için pratik, ölçeklenebilir ve maliyet öngörülebilir bir alternatif yakıt mimarisi.',
                     'en' => 'A practical, scalable, cost-predictable alternative-fuel architecture for reducing carbon emissions in Turkish coastal transport.',
                 ],
-                'year'              => 2024,
-                'status'            => 'completed',
-                'order'             => 20,
-                'captain_user_id'   => null,
-                'specs'             => [
+                'year' => 2024,
+                'status' => 'completed',
+                'order' => 20,
+                'captain_user_id' => null,
+                'specs' => [
                     ['category' => 'mekanik',    'key' => ['tr' => 'Boy (LOA)',         'en' => 'Length (LOA)'],   'value' => ['tr' => '24 m',                          'en' => '24 m']],
                     ['category' => 'mekanik',    'key' => ['tr' => 'Genişlik',          'en' => 'Beam'],           'value' => ['tr' => '7.2 m',                         'en' => '7.2 m']],
                     ['category' => 'mekanik',    'key' => ['tr' => 'Hafif tonaj',       'en' => 'Lightship tonnage'], 'value' => ['tr' => '85 t',                       'en' => '85 t']],
@@ -104,21 +104,21 @@ class ProjectSeeder extends Seeder
                 'members' => [
                     ['name' => 'Mehmet Demir',  'role' => ['tr' => 'Proje Yöneticisi',     'en' => 'Project Manager'],     'is_captain' => true],
                     ['name' => 'Selin Kara',    'role' => ['tr' => 'Gemi Tasarımı',        'en' => 'Naval Architecture'],  'is_captain' => false],
-                    ['name' => 'Can Özkan',     'role' => ['tr' => 'Yakıt Sistemi Analizi','en' => 'Fuel System Analysis'],'is_captain' => false],
-                    ['name' => 'Elif Yıldız',   'role' => ['tr' => 'Hidrostatik Analiz',   'en' => 'Hydrostatic Analysis'],'is_captain' => false],
+                    ['name' => 'Can Özkan',     'role' => ['tr' => 'Yakıt Sistemi Analizi', 'en' => 'Fuel System Analysis'], 'is_captain' => false],
+                    ['name' => 'Elif Yıldız',   'role' => ['tr' => 'Hidrostatik Analiz',   'en' => 'Hydrostatic Analysis'], 'is_captain' => false],
                 ],
             ],
             [
-                'slug'              => 'otonom-yelkenli',
-                'name'              => [
+                'slug' => 'otonom-yelkenli',
+                'name' => [
                     'tr' => 'Otonom Yelkenli Tekne Projesi',
                     'en' => 'Autonomous Sailing Vessel Project',
                 ],
-                'summary'           => [
+                'summary' => [
                     'tr' => 'Rüzgâr enerjisiyle otonom seyir yapabilen, 6 metrelik konsept yelkenli — yıl içinde havuz testlerine başlayacak.',
                     'en' => 'A 6-meter concept sailboat capable of autonomous wind-powered voyaging — pool testing starts this year.',
                 ],
-                'description'       => [
+                'description' => [
                     'tr' => '<p>Düşük güç tüketimiyle uzun süre denizde kalabilen otonom yelkenli platformu. Hedef uygulamalar: oşinografik veri toplama, deniz koruma alanı izleme, balıkçılık dışı bölge gözetimi.</p>',
                     'en' => '<p>An autonomous sailboat platform capable of long endurance at sea with very low power draw. Target applications: oceanographic data collection, marine protected area monitoring, no-fishing zone surveillance.</p>',
                 ],
@@ -126,11 +126,11 @@ class ProjectSeeder extends Seeder
                     'tr' => 'Geniş deniz alanlarında uzun soluklu sensör görevleri için yakıt bağımsız, sessiz ve düşük maliyetli otonom platform ihtiyacı.',
                     'en' => 'The need for a fuel-independent, silent, low-cost autonomous platform for long-duration sensor missions across large sea areas.',
                 ],
-                'year'              => 2026,
-                'status'            => 'upcoming',
-                'order'             => 30,
-                'captain_user_id'   => null,
-                'specs'             => [
+                'year' => 2026,
+                'status' => 'upcoming',
+                'order' => 30,
+                'captain_user_id' => null,
+                'specs' => [
                     ['category' => 'mekanik',    'key' => ['tr' => 'LOA',           'en' => 'LOA'],           'value' => ['tr' => '6 m',                                 'en' => '6 m']],
                     ['category' => 'mekanik',    'key' => ['tr' => 'Yelken alanı',  'en' => 'Sail area'],     'value' => ['tr' => '18 m²',                               'en' => '18 m²']],
                     ['category' => 'elektronik', 'key' => ['tr' => 'Sensör paketi', 'en' => 'Sensor suite'],  'value' => ['tr' => 'IMU + GPS RTK + 2D Lidar + AIS',       'en' => 'IMU + GPS RTK + 2D Lidar + AIS']],
@@ -147,7 +147,7 @@ class ProjectSeeder extends Seeder
         ];
 
         foreach ($projects as $data) {
-            $specs   = $data['specs'];
+            $specs = $data['specs'];
             $members = $data['members'];
             unset($data['specs'], $data['members']);
 

@@ -11,12 +11,12 @@ class FormSeeder extends Seeder
     {
         $blueprint = [
             [
-                'slug'            => 'uyelik',
-                'title'           => 'Kulüp Üyelik Başvurusu',
-                'description'     => 'GEMDTEK\'e dönem üyesi olmak için doldurman gereken kısa form. Bilgilerin ekibimiz ile paylaşılır, mülakat gerekmez.',
-                'is_active'       => true,
+                'slug' => 'uyelik',
+                'title' => 'Kulüp Üyelik Başvurusu',
+                'description' => 'GEMDTEK\'e dönem üyesi olmak için doldurman gereken kısa form. Bilgilerin ekibimiz ile paylaşılır, mülakat gerekmez.',
+                'is_active' => true,
                 'success_message' => 'Üyelik başvurun alındı. Birkaç gün içinde e-posta ile dönüş yapacağız.',
-                'closed_message'  => 'Dönem üye alımları kapandı. Bir sonraki dönem için bizi takipte kal.',
+                'closed_message' => 'Dönem üye alımları kapandı. Bir sonraki dönem için bizi takipte kal.',
                 'fields' => [
                     ['type' => 'text',     'name' => 'ad_soyad',   'label' => 'Ad Soyad',    'is_required' => true],
                     ['type' => 'email',    'name' => 'email',      'label' => 'E-posta',     'is_required' => true],
@@ -31,12 +31,12 @@ class FormSeeder extends Seeder
                 ],
             ],
             [
-                'slug'            => 'komisyon',
-                'title'           => 'Komisyon Başvurusu (PR / Kariyer / Sponsorluk / Etkinlik)',
-                'description'     => 'Komisyonlarda görev almak istiyorsan bu formu doldur. Başvurun sonrası kısa bir online mülakat planlanır.',
-                'is_active'       => true,
+                'slug' => 'komisyon',
+                'title' => 'Komisyon Başvurusu (PR / Kariyer / Sponsorluk / Etkinlik)',
+                'description' => 'Komisyonlarda görev almak istiyorsan bu formu doldur. Başvurun sonrası kısa bir online mülakat planlanır.',
+                'is_active' => true,
                 'success_message' => 'Başvurun alındı. Mülakat takvimi için 1 hafta içinde dönüş yapacağız.',
-                'closed_message'  => 'Komisyon başvuruları bu dönem için kapandı.',
+                'closed_message' => 'Komisyon başvuruları bu dönem için kapandı.',
                 'fields' => [
                     ['type' => 'text',     'name' => 'ad_soyad',   'label' => 'Ad Soyad',  'is_required' => true],
                     ['type' => 'email',    'name' => 'email',      'label' => 'E-posta',   'is_required' => true],
@@ -55,12 +55,12 @@ class FormSeeder extends Seeder
                 ],
             ],
             [
-                'slug'            => 'ar-ge-basvuru',
-                'title'           => 'Ar-Ge Takım Başvurusu',
-                'description'     => 'Aktif Ar-Ge takımlarımıza katılmak için. Teknik seviyene uygun bir takıma yönlendirilirsin.',
-                'is_active'       => true,
+                'slug' => 'ar-ge-basvuru',
+                'title' => 'Ar-Ge Takım Başvurusu',
+                'description' => 'Aktif Ar-Ge takımlarımıza katılmak için. Teknik seviyene uygun bir takıma yönlendirilirsin.',
+                'is_active' => true,
                 'success_message' => 'Teknik başvurun alındı. Takım kaptanı 1 hafta içinde seninle iletişime geçecek.',
-                'closed_message'  => 'Ar-Ge alımları kapalı. Yeni proje açıldığında duyuracağız.',
+                'closed_message' => 'Ar-Ge alımları kapalı. Yeni proje açıldığında duyuracağız.',
                 'fields' => [
                     ['type' => 'text',     'name' => 'ad_soyad',   'label' => 'Ad Soyad',  'is_required' => true],
                     ['type' => 'email',    'name' => 'email',      'label' => 'E-posta',   'is_required' => true],

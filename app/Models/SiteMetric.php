@@ -15,9 +15,9 @@ class SiteMetric extends Model
     protected $fillable = ['key', 'label', 'value', 'is_active', 'order'];
 
     protected $casts = [
-        'value'     => 'integer',
+        'value' => 'integer',
         'is_active' => 'boolean',
-        'order'     => 'integer',
+        'order' => 'integer',
     ];
 
     public function scopeActive(Builder $query): Builder

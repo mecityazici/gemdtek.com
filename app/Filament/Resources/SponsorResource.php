@@ -82,10 +82,10 @@ class SponsorResource extends Resource
                     ->formatStateUsing(fn (string $state): string => Sponsor::TIERS[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
                         'platinum' => 'primary',
-                        'gold'     => 'warning',
-                        'silver'   => 'gray',
-                        'bronze'   => 'danger',
-                        default    => 'info',
+                        'gold' => 'warning',
+                        'silver' => 'gray',
+                        'bronze' => 'danger',
+                        default => 'info',
                     }),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Aktif')
@@ -114,9 +114,9 @@ class SponsorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSponsors::route('/'),
+            'index' => Pages\ListSponsors::route('/'),
             'create' => Pages\CreateSponsor::route('/create'),
-            'edit'   => Pages\EditSponsor::route('/{record}/edit'),
+            'edit' => Pages\EditSponsor::route('/{record}/edit'),
         ];
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class FormSubmission extends Model implements HasMedia
 {
@@ -27,7 +28,7 @@ class FormSubmission extends Model implements HasMedia
         $this->addMediaCollection('attachments');
     }
 
-    public function attachmentFor(string $fieldName): ?\Spatie\MediaLibrary\MediaCollections\Models\Media
+    public function attachmentFor(string $fieldName): ?Media
     {
         return $this->getMedia('attachments')
             ->firstWhere(fn ($m) => ($m->getCustomProperty('field_name') ?? null) === $fieldName);

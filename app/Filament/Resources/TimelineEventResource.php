@@ -80,9 +80,9 @@ class TimelineEventResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListTimelineEvents::route('/'),
+            'index' => Pages\ListTimelineEvents::route('/'),
             'create' => Pages\CreateTimelineEvent::route('/create'),
-            'edit'   => Pages\EditTimelineEvent::route('/{record}/edit'),
+            'edit' => Pages\EditTimelineEvent::route('/{record}/edit'),
         ];
     }
 }

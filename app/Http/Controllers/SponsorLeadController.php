@@ -12,8 +12,8 @@ class SponsorLeadController extends Controller
     public function show()
     {
         return view('sponsor.show', [
-            'tiers'      => SponsorLead::TIERS,
-            'kitUrl'     => asset('docs/sponsorship-kit.pdf'),
+            'tiers' => SponsorLead::TIERS,
+            'kitUrl' => asset('docs/sponsorship-kit.pdf'),
         ]);
     }
 
@@ -24,18 +24,18 @@ class SponsorLeadController extends Controller
         }
 
         $data = $request->validate([
-            'website'         => 'prohibited',
-            'company_name'    => 'required|string|max:160',
-            'contact_name'    => 'required|string|max:120',
-            'contact_email'   => 'required|email:rfc|max:160',
-            'contact_role'    => 'nullable|string|max:120',
-            'interest_tier'   => 'nullable|in:' . implode(',', array_keys(SponsorLead::TIERS)),
-            'message'         => 'nullable|string|max:2000',
+            'website' => 'prohibited',
+            'company_name' => 'required|string|max:160',
+            'contact_name' => 'required|string|max:120',
+            'contact_email' => 'required|email:rfc|max:160',
+            'contact_role' => 'nullable|string|max:120',
+            'interest_tier' => 'nullable|in:'.implode(',', array_keys(SponsorLead::TIERS)),
+            'message' => 'nullable|string|max:2000',
         ]);
 
         $lead = SponsorLead::create($data + [
             'ip_address' => $request->ip(),
-            'source'     => 'site',
+            'source' => 'site',
         ]);
 
         $to = env('FORM_NOTIFICATION_EMAIL', config('mail.from.address'));

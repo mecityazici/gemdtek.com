@@ -20,22 +20,22 @@ class ContactController extends Controller
         }
 
         $data = $request->validate([
-            'website'  => 'prohibited',
-            'name'     => 'required|string|max:120',
-            'email'    => 'required|email:rfc|max:160',
-            'subject'  => 'required|string|max:160',
-            'message'  => 'required|string|max:4000',
+            'website' => 'prohibited',
+            'name' => 'required|string|max:120',
+            'email' => 'required|email:rfc|max:160',
+            'subject' => 'required|string|max:160',
+            'message' => 'required|string|max:4000',
         ]);
 
         $to = env('FORM_NOTIFICATION_EMAIL', config('mail.from.address'));
 
         Mail::to($to)
             ->queue(new ContactMessageReceived(
-                name:           $data['name'],
-                email:          $data['email'],
+                name: $data['name'],
+                email: $data['email'],
                 messageSubject: $data['subject'],
-                body:           $data['message'],
-                ip:             (string) $request->ip(),
+                body: $data['message'],
+                ip: (string) $request->ip(),
             ));
 
         return redirect()

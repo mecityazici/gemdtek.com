@@ -17,17 +17,17 @@ class Sponsor extends Model implements HasMedia
 
     public const TIERS = [
         'platinum' => 'Platin',
-        'gold'     => 'Altın',
-        'silver'   => 'Gümüş',
-        'bronze'   => 'Bronz',
-        'destek'   => 'Destekleyen',
+        'gold' => 'Altın',
+        'silver' => 'Gümüş',
+        'bronze' => 'Bronz',
+        'destek' => 'Destekleyen',
     ];
 
     protected $fillable = ['name', 'url', 'tier', 'is_active', 'order'];
 
     protected $casts = [
         'is_active' => 'boolean',
-        'order'     => 'integer',
+        'order' => 'integer',
     ];
 
     public function registerMediaCollections(): void

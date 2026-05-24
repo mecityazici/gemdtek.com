@@ -6,6 +6,7 @@ use App\Mail\FormSubmissionReceived;
 use App\Models\Form;
 use App\Models\FormSubmission;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
 
 class FormSubmissionTest extends TestCase
@@ -15,13 +16,13 @@ class FormSubmissionTest extends TestCase
         Mail::fake();
 
         $payload = [
-            'ad_soyad'       => 'Test Aday',
-            'email'          => 'aday@example.com',
-            'telefon'        => '+90 555 111 22 33',
-            'bolum'          => 'Gemi İnşaatı',
-            'sinif'          => '3. sınıf',
-            'ilgi_alanlari'  => ['Mekanik tasarım', 'Otonom yazılım'],
-            'motivasyon'     => 'Test motivation text.',
+            'ad_soyad' => 'Test Aday',
+            'email' => 'aday@example.com',
+            'telefon' => '+90 555 111 22 33',
+            'bolum' => 'Gemi İnşaatı',
+            'sinif' => '3. sınıf',
+            'ilgi_alanlari' => ['Mekanik tasarım', 'Otonom yazılım'],
+            'motivasyon' => 'Test motivation text.',
         ];
 
         $response = $this->post('/basvuru/uyelik', $payload);
@@ -52,14 +53,14 @@ class FormSubmissionTest extends TestCase
     public function test_honeypot_field_rejects_submission(): void
     {
         $this->withoutExceptionHandling();
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $this->expectException(HttpException::class);
 
         $this->post('/basvuru/uyelik', [
-            'website'   => 'http://spam.example',
-            'ad_soyad'  => 'Spammy',
-            'email'     => 'spam@example.com',
-            'bolum'     => 'X',
-            'sinif'     => '1. sınıf',
+            'website' => 'http://spam.example',
+            'ad_soyad' => 'Spammy',
+            'email' => 'spam@example.com',
+            'bolum' => 'X',
+            'sinif' => '1. sınıf',
         ]);
     }
 
@@ -69,7 +70,7 @@ class FormSubmissionTest extends TestCase
         $form->update(['is_active' => false]);
 
         $this->withoutExceptionHandling();
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $this->expectException(HttpException::class);
 
         $this->post('/basvuru/uyelik', [
             'ad_soyad' => 'X', 'email' => 'x@x.com', 'bolum' => 'X', 'sinif' => '1. sınıf',
@@ -80,9 +81,9 @@ class FormSubmissionTest extends TestCase
     {
         $response = $this->from('/basvuru/uyelik')->post('/basvuru/uyelik', [
             'ad_soyad' => 'Test',
-            'email'    => 'test@example.com',
-            'bolum'    => 'Test',
-            'sinif'    => 'Geçersiz seçenek', // not in options
+            'email' => 'test@example.com',
+            'bolum' => 'Test',
+            'sinif' => 'Geçersiz seçenek', // not in options
         ]);
 
         $response->assertRedirect('/basvuru/uyelik')

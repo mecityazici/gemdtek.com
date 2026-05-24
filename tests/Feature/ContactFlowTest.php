@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Mail\ContactMessageReceived;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
 
 class ContactFlowTest extends TestCase
@@ -13,8 +14,8 @@ class ContactFlowTest extends TestCase
         Mail::fake();
 
         $response = $this->post('/iletisim', [
-            'name'    => 'Endüstri Temsilcisi',
-            'email'   => 'temsilci@example.com',
+            'name' => 'Endüstri Temsilcisi',
+            'email' => 'temsilci@example.com',
             'subject' => 'Sponsorluk hakkında',
             'message' => 'Merhaba, sponsorluk paketleriniz hakkında bilgi almak isterim.',
         ]);
@@ -42,12 +43,12 @@ class ContactFlowTest extends TestCase
     public function test_contact_honeypot_blocks_spam(): void
     {
         $this->withoutExceptionHandling();
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $this->expectException(HttpException::class);
 
         $this->post('/iletisim', [
             'website' => 'spam-payload',
-            'name'    => 'X',
-            'email'   => 'x@x.com',
+            'name' => 'X',
+            'email' => 'x@x.com',
             'subject' => 'X',
             'message' => 'X',
         ]);

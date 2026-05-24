@@ -4,8 +4,8 @@ namespace App\Filament\Resources\FormResource\RelationManagers;
 
 use App\Exports\FormSubmissionsExport;
 use App\Models\Form as FormModel;
-use App\Models\FormSubmission;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -41,6 +41,7 @@ class SubmissionsRelationManager extends RelationManager
                     if (is_array($state)) {
                         return implode(', ', $state);
                     }
+
                     return (string) ($state ?? '—');
                 })
                 ->limit(40)
@@ -59,7 +60,8 @@ class SubmissionsRelationManager extends RelationManager
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
                     ->action(function () use ($ownerForm) {
-                        $filename = $ownerForm->slug . '-basvurular-' . now()->format('Ymd-Hi') . '.xlsx';
+                        $filename = $ownerForm->slug.'-basvurular-'.now()->format('Ymd-Hi').'.xlsx';
+
                         return Excel::download(new FormSubmissionsExport($ownerForm), $filename);
                     }),
             ])
@@ -73,14 +75,15 @@ class SubmissionsRelationManager extends RelationManager
                             if (is_array($value)) {
                                 $value = implode(', ', $value);
                             }
-                            $entries[] = \Filament\Infolists\Components\TextEntry::make("data.{$field->name}")
+                            $entries[] = TextEntry::make("data.{$field->name}")
                                 ->label($field->label)
                                 ->state($value ?? '—');
                         }
-                        $entries[] = \Filament\Infolists\Components\TextEntry::make('created_at')
+                        $entries[] = TextEntry::make('created_at')
                             ->label('Gönderim zamanı')
                             ->dateTime('d M Y H:i:s');
-                        $entries[] = \Filament\Infolists\Components\TextEntry::make('ip_address')->label('IP');
+                        $entries[] = TextEntry::make('ip_address')->label('IP');
+
                         return $entries;
                     }),
                 Tables\Actions\DeleteAction::make(),

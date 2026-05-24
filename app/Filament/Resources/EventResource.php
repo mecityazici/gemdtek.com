@@ -120,11 +120,11 @@ class EventResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => Event::CATEGORIES[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
-                        'zirve'        => 'primary',
+                        'zirve' => 'primary',
                         'kariyer-gunu' => 'success',
-                        'atolye'       => 'warning',
-                        'panel'        => 'info',
-                        default        => 'gray',
+                        'atolye' => 'warning',
+                        'panel' => 'info',
+                        default => 'gray',
                     }),
                 Tables\Columns\IconColumn::make('is_active')->label('Aktif')->boolean(),
             ])
@@ -147,9 +147,9 @@ class EventResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListEvents::route('/'),
+            'index' => Pages\ListEvents::route('/'),
             'create' => Pages\CreateEvent::route('/create'),
-            'edit'   => Pages\EditEvent::route('/{record}/edit'),
+            'edit' => Pages\EditEvent::route('/{record}/edit'),
         ];
     }
 }

@@ -8,10 +8,10 @@ class SponsorLead extends Model
 {
     public const TIERS = [
         'platinum' => 'Platin',
-        'gold'     => 'Altın',
-        'silver'   => 'Gümüş',
-        'bronze'   => 'Bronz',
-        'destek'   => 'Destekleyen',
+        'gold' => 'Altın',
+        'silver' => 'Gümüş',
+        'bronze' => 'Bronz',
+        'destek' => 'Destekleyen',
         'belirsiz' => 'Henüz karar verilmedi',
     ];
 

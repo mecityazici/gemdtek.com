@@ -19,7 +19,7 @@ class TeamMember extends Model implements HasMedia
 
     protected $casts = [
         'is_active' => 'boolean',
-        'order'     => 'integer',
+        'order' => 'integer',
     ];
 
     public function registerMediaCollections(): void

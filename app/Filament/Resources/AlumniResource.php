@@ -120,13 +120,13 @@ class AlumniResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => Alumni::SECTORS[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
-                        'tersane'        => 'primary',
-                        'klas'           => 'success',
-                        'tasarim-ofisi'  => 'warning',
-                        'armator'        => 'info',
-                        'akademik'       => 'gray',
-                        'yazilim'        => 'danger',
-                        default          => 'gray',
+                        'tersane' => 'primary',
+                        'klas' => 'success',
+                        'tasarim-ofisi' => 'warning',
+                        'armator' => 'info',
+                        'akademik' => 'gray',
+                        'yazilim' => 'danger',
+                        default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('graduation_year')->label('Yıl')->sortable(),
                 Tables\Columns\IconColumn::make('is_public')->label('Public')->boolean(),
@@ -150,9 +150,9 @@ class AlumniResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListAlumnis::route('/'),
+            'index' => Pages\ListAlumnis::route('/'),
             'create' => Pages\CreateAlumni::route('/create'),
-            'edit'   => Pages\EditAlumni::route('/{record}/edit'),
+            'edit' => Pages\EditAlumni::route('/{record}/edit'),
         ];
     }
 }

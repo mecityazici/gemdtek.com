@@ -3,16 +3,13 @@
 namespace App\Exports;
 
 use App\Models\Form as FormModel;
-use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
 class FormSubmissionsExport implements FromCollection, WithHeadings, WithMapping
 {
-    public function __construct(private FormModel $form)
-    {
-    }
+    public function __construct(private FormModel $form) {}
 
     public function collection()
     {
@@ -25,6 +22,7 @@ class FormSubmissionsExport implements FromCollection, WithHeadings, WithMapping
         foreach ($this->form->fields as $field) {
             $headings[] = $field->label;
         }
+
         return $headings;
     }
 

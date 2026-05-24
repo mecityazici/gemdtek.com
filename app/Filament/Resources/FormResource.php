@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -159,8 +160,8 @@ class FormResource extends Resource
                     ->icon('heroicon-o-link')
                     ->color('gray')
                     ->action(function (FormModel $record) {
-                        $url = url('/basvuru/' . $record->slug);
-                        \Filament\Notifications\Notification::make()
+                        $url = url('/basvuru/'.$record->slug);
+                        Notification::make()
                             ->title('Public URL')
                             ->body($url)
                             ->success()
@@ -186,9 +187,9 @@ class FormResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListForms::route('/'),
+            'index' => Pages\ListForms::route('/'),
             'create' => Pages\CreateForm::route('/create'),
-            'edit'   => Pages\EditForm::route('/{record}/edit'),
+            'edit' => Pages\EditForm::route('/{record}/edit'),
         ];
     }
 }

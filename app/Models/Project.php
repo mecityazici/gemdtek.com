@@ -18,15 +18,15 @@ class Project extends Model implements HasMedia
     public array $translatable = ['name', 'summary', 'description', 'problem_statement'];
 
     public const STATUSES = [
-        'active'    => 'Aktif',
+        'active' => 'Aktif',
         'completed' => 'Tamamlandı',
-        'upcoming'  => 'Yaklaşan',
+        'upcoming' => 'Yaklaşan',
     ];
 
     public const SPEC_CATEGORIES = [
-        'genel'      => 'Genel',
-        'mekanik'    => 'Mekanik',
-        'yazilim'    => 'Yazılım',
+        'genel' => 'Genel',
+        'mekanik' => 'Mekanik',
+        'yazilim' => 'Yazılım',
         'elektronik' => 'Elektronik',
         'performans' => 'Performans',
     ];
@@ -37,9 +37,9 @@ class Project extends Model implements HasMedia
     ];
 
     protected $casts = [
-        'year'      => 'integer',
+        'year' => 'integer',
         'is_active' => 'boolean',
-        'order'     => 'integer',
+        'order' => 'integer',
     ];
 
     public function getRouteKeyName(): string
@@ -82,7 +82,7 @@ class Project extends Model implements HasMedia
 
     public function getStatusLabelAttribute(): string
     {
-        return __('models.project.statuses.' . $this->status, [], app()->getLocale())
+        return __('models.project.statuses.'.$this->status, [], app()->getLocale())
             ?: ($this->status);
     }
 }

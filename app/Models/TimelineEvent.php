@@ -14,7 +14,7 @@ class TimelineEvent extends Model
     protected $fillable = ['year', 'title', 'description', 'order'];
 
     protected $casts = [
-        'year'  => 'integer',
+        'year' => 'integer',
         'order' => 'integer',
     ];
 }

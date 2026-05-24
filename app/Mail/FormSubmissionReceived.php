@@ -30,15 +30,16 @@ class FormSubmissionReceived extends Mailable implements ShouldQueue
 
     public function content(): Content
     {
-        $form     = $this->submission->form;
-        $fields   = $form?->fields ?? collect();
-        $data     = $this->submission->data ?? [];
+        $form = $this->submission->form;
+        $fields = $form?->fields ?? collect();
+        $data = $this->submission->data ?? [];
 
         $rows = $fields->map(function ($field) use ($data) {
             $value = $data[$field->name] ?? null;
             if (is_array($value)) {
                 $value = implode(', ', $value);
             }
+
             return [
                 'label' => $field->getTranslation('label', 'tr'),
                 'value' => $value !== null && $value !== '' ? $value : '—',
@@ -47,18 +48,18 @@ class FormSubmissionReceived extends Mailable implements ShouldQueue
 
         $attachments = $this->submission->getMedia('attachments')->map(fn ($m) => [
             'field' => $m->getCustomProperty('field_name') ?? 'attachment',
-            'name'  => $m->file_name,
-            'size'  => round($m->size / 1024, 1) . ' KB',
+            'name' => $m->file_name,
+            'size' => round($m->size / 1024, 1).' KB',
         ]);
 
         return new Content(
             markdown: 'emails.form-submission',
             with: [
-                'formTitle'    => $form?->getTranslation('title', 'tr') ?? 'Form',
-                'submission'   => $this->submission,
-                'rows'         => $rows,
-                'attachments'  => $attachments,
-                'adminUrl'     => url('/admin/forms/' . $form?->id . '/edit'),
+                'formTitle' => $form?->getTranslation('title', 'tr') ?? 'Form',
+                'submission' => $this->submission,
+                'rows' => $rows,
+                'attachments' => $attachments,
+                'adminUrl' => url('/admin/forms/'.$form?->id.'/edit'),
             ],
         );
     }

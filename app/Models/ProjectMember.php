@@ -16,7 +16,7 @@ class ProjectMember extends Model
 
     protected $casts = [
         'is_captain' => 'boolean',
-        'order'      => 'integer',
+        'order' => 'integer',
     ];
 
     public function project(): BelongsTo

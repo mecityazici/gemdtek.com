@@ -51,6 +51,8 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
+    <a href="#main-content" class="skip-to-content">{{ app()->getLocale() === 'en' ? 'Skip to content' : 'İçeriğe atla' }}</a>
+
     @php
         $nav = [
             ['key' => 'about',    'href' => route('about'),          'active' => request()->routeIs('about')],
@@ -71,9 +73,10 @@
                 </a>
 
                 {{-- Desktop nav --}}
-                <nav class="hidden md:flex items-center gap-6 text-sm">
+                <nav class="hidden md:flex items-center gap-6 text-sm" aria-label="{{ __('site.nav.about') === 'About' ? 'Main navigation' : 'Ana navigasyon' }}">
                     @foreach ($nav as $item)
                         <a href="{{ $item['href'] }}"
+                           @if ($item['active']) aria-current="page" @endif
                            class="transition-colors {{ $item['active'] ? 'text-brass-400' : 'hover:text-brass-300' }}">
                             {{ __('site.nav.' . $item['key']) }}
                         </a>
@@ -182,7 +185,7 @@
         </div>
     </div>
 
-    <main class="flex-1">
+    <main id="main-content" class="flex-1" tabindex="-1">
         @yield('content')
     </main>
 
@@ -198,6 +201,7 @@
         </div>
     </footer>
 
+    @include('partials.back-to-top')
     @include('partials.cookie-banner')
 
 </body>

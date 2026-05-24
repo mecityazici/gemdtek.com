@@ -100,9 +100,9 @@ class TeamMemberResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListTeamMembers::route('/'),
+            'index' => Pages\ListTeamMembers::route('/'),
             'create' => Pages\CreateTeamMember::route('/create'),
-            'edit'   => Pages\EditTeamMember::route('/{record}/edit'),
+            'edit' => Pages\EditTeamMember::route('/{record}/edit'),
         ];
     }
 }

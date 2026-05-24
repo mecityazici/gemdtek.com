@@ -20,13 +20,12 @@ class ContactMessageReceived extends Mailable implements ShouldQueue
         public string $messageSubject,
         public string $body,
         public string $ip,
-    ) {
-    }
+    ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[GEMDTEK İletişim] ' . $this->messageSubject,
+            subject: '[GEMDTEK İletişim] '.$this->messageSubject,
             replyTo: [new Address($this->email, $this->name)],
         );
     }
@@ -36,11 +35,11 @@ class ContactMessageReceived extends Mailable implements ShouldQueue
         return new Content(
             markdown: 'emails.contact',
             with: [
-                'name'    => $this->name,
-                'email'   => $this->email,
+                'name' => $this->name,
+                'email' => $this->email,
                 'subject' => $this->messageSubject,
-                'body'    => $this->body,
-                'ip'      => $this->ip,
+                'body' => $this->body,
+                'ip' => $this->ip,
             ],
         );
     }

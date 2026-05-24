@@ -86,9 +86,9 @@ class SiteMetricResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSiteMetrics::route('/'),
+            'index' => Pages\ListSiteMetrics::route('/'),
             'create' => Pages\CreateSiteMetric::route('/create'),
-            'edit'   => Pages\EditSiteMetric::route('/{record}/edit'),
+            'edit' => Pages\EditSiteMetric::route('/{record}/edit'),
         ];
     }
 }

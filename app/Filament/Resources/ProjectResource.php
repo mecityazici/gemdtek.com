@@ -192,10 +192,10 @@ class ProjectResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => Project::STATUSES[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
-                        'active'    => 'success',
+                        'active' => 'success',
                         'completed' => 'gray',
-                        'upcoming'  => 'warning',
-                        default     => 'info',
+                        'upcoming' => 'warning',
+                        default => 'info',
                     }),
                 Tables\Columns\TextColumn::make('captainUser.name')->label('Kaptan')->placeholder('—'),
                 Tables\Columns\IconColumn::make('is_active')->label('Aktif')->boolean(),
@@ -233,9 +233,9 @@ class ProjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListProjects::route('/'),
+            'index' => Pages\ListProjects::route('/'),
             'create' => Pages\CreateProject::route('/create'),
-            'edit'   => Pages\EditProject::route('/{record}/edit'),
+            'edit' => Pages\EditProject::route('/{record}/edit'),
         ];
     }
 }

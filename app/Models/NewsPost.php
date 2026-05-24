@@ -15,8 +15,8 @@ class NewsPost extends Model implements HasMedia
 
     public const CATEGORIES = [
         'duyuru' => 'Duyuru',
-        'blog'   => 'Blog',
-        'basin'  => 'Basında Biz',
+        'blog' => 'Blog',
+        'basin' => 'Basında Biz',
     ];
 
     public array $translatable = ['title', 'excerpt', 'content'];
@@ -29,7 +29,7 @@ class NewsPost extends Model implements HasMedia
     protected $casts = [
         'published_at' => 'datetime',
         'is_published' => 'boolean',
-        'order'        => 'integer',
+        'order' => 'integer',
     ];
 
     public function getRouteKeyName(): string
@@ -59,7 +59,7 @@ class NewsPost extends Model implements HasMedia
 
     public function getCategoryLabelAttribute(): string
     {
-        return __('models.news.categories.' . $this->category, [], app()->getLocale())
+        return __('models.news.categories.'.$this->category, [], app()->getLocale())
             ?: ($this->category);
     }
 }

@@ -16,13 +16,13 @@ class Alumni extends Model implements HasMedia
     protected $table = 'alumni';
 
     public const SECTORS = [
-        'tersane'        => 'Tersane',
-        'klas'           => 'Klas Kuruluşu',
-        'tasarim-ofisi'  => 'Tasarım Ofisi',
-        'armator'        => 'Armatör',
-        'akademik'       => 'Akademik',
-        'yazilim'        => 'Yazılım / Otomasyon',
-        'diger'          => 'Diğer',
+        'tersane' => 'Tersane',
+        'klas' => 'Klas Kuruluşu',
+        'tasarim-ofisi' => 'Tasarım Ofisi',
+        'armator' => 'Armatör',
+        'akademik' => 'Akademik',
+        'yazilim' => 'Yazılım / Otomasyon',
+        'diger' => 'Diğer',
     ];
 
     public array $translatable = ['position', 'bio'];
@@ -34,8 +34,8 @@ class Alumni extends Model implements HasMedia
 
     protected $casts = [
         'graduation_year' => 'integer',
-        'is_public'       => 'boolean',
-        'order'           => 'integer',
+        'is_public' => 'boolean',
+        'order' => 'integer',
     ];
 
     public function registerMediaCollections(): void
@@ -55,7 +55,7 @@ class Alumni extends Model implements HasMedia
 
     public function getSectorLabelAttribute(): string
     {
-        return __('models.alumni.sectors.' . $this->sector, [], app()->getLocale())
+        return __('models.alumni.sectors.'.$this->sector, [], app()->getLocale())
             ?: $this->sector;
     }
 }
