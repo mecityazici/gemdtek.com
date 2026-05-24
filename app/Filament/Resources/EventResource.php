@@ -161,6 +161,13 @@ class EventResource extends Resource
             ]);
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            EventResource\RelationManagers\RegistrationsRelationManager::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [

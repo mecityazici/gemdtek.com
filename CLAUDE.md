@@ -9,7 +9,7 @@ Gemi İnşaatı ve Deniz Teknolojileri Kulübü kurumsal web platformu.
 | Framework | Laravel | 11.53 |
 | Admin panel | Filament | 3.3 |
 | RBAC | Filament Shield + Spatie Permission | 3.9 / 6.25 |
-| Medya | Spatie MediaLibrary | 11.22 |
+| Medya | Spatie MediaLibrary + Filament plugin | 11.22 / 3.3 |
 | i18n | Spatie Translatable + Filament plugin | 6.11 / 3.3 |
 | Export | Maatwebsite Excel | 3.1 |
 | CSS | Tailwind 3 + forms + typography | 3.4 |
@@ -100,6 +100,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 22** — Public etkinlik takvimi (`/etkinlikler/takvim`, ay görünümü, locale-aware)
 - [x] **Sprint 23** — PWA: manifest, service worker (network-first + offline), brand ikon üretici
 - [x] **Sprint 24** — Arama iyileştirmesi: type filter chips + match highlighting + smart excerpt
+- [x] **Sprint 25** — Event edit'inde inline RegistrationsRelationManager + Filament Spatie Media plugin kurulumu
 
 ## SRS özeti
 
@@ -172,7 +173,7 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 133 test, in-memory SQLite, ~9s
+tests/Feature/                 # 136 test, in-memory SQLite, ~11s
 ├─ PublicSmokeTest.php
 ├─ FormSubmissionTest.php
 ├─ ContactFlowTest.php
