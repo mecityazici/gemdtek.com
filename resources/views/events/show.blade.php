@@ -3,8 +3,8 @@
 @section('title', $event->title . ' — GEMDTEK')
 @section('meta_description', $event->summary)
 @section('og_type', 'event')
-@if ($event->cover_url)
-    @section('og_image', $event->cover_url)
+@if ($event->og_image_url)
+    @section('og_image', url($event->og_image_url))
 @endif
 
 @section('content')
@@ -12,7 +12,7 @@
 <section class="relative bg-navy-900 text-cream">
     @if ($event->cover_url)
         <div class="absolute inset-0">
-            <img src="{{ $event->cover_url }}" alt="" class="w-full h-full object-cover opacity-40">
+            <img src="{{ $event->cover_web_url }}" alt="" fetchpriority="high" decoding="async" width="1280" height="720" class="w-full h-full object-cover opacity-40">
             <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-900/70 to-transparent"></div>
         </div>
     @endif

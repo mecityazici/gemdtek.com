@@ -61,7 +61,7 @@
                 <article class="bg-white rounded-xl overflow-hidden shadow-sm border border-graphite/5 hover:shadow-md transition-shadow">
                     <div class="aspect-square bg-navy-50 flex items-center justify-center overflow-hidden">
                         @if ($person->photo_url)
-                            <img src="{{ $person->photo_url }}" alt="{{ $person->name }}" loading="lazy" decoding="async" class="w-full h-full object-cover">
+                            <img src="{{ $person->photo_thumb_url }}" srcset="{{ $person->photo_thumb_url }} 160w, {{ $person->photo_web_url }} 320w" sizes="(max-width: 768px) 33vw, 200px" alt="{{ $person->name }}" loading="lazy" decoding="async" width="320" height="320" class="w-full h-full object-cover">
                         @else
                             <span class="font-display text-4xl text-navy-300 font-bold">
                                 {{ collect(explode(' ', $person->name))->map(fn ($w) => mb_substr($w, 0, 1))->take(2)->implode('') }}

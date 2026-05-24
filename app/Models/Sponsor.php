@@ -5,8 +5,10 @@ namespace App\Models;
 use App\Concerns\LogsFillableActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
 
 class Sponsor extends Model implements HasMedia
@@ -37,6 +39,19 @@ class Sponsor extends Model implements HasMedia
         $this->addMediaCollection('logo')->singleFile();
     }
 
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->fit(Fit::Contain, 160, 80)
+            ->format('webp')
+            ->nonQueued();
+
+        $this->addMediaConversion('web')
+            ->fit(Fit::Contain, 320, 160)
+            ->format('webp')
+            ->nonQueued();
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true)->orderBy('order');
@@ -45,5 +60,15 @@ class Sponsor extends Model implements HasMedia
     public function getLogoUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('logo') ?: null;
+    }
+
+    public function getLogoThumbUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('logo', 'thumb') ?: $this->logo_url;
+    }
+
+    public function getLogoWebUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('logo', 'web') ?: $this->logo_url;
     }
 }

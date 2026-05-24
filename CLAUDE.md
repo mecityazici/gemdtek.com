@@ -72,7 +72,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - **Çeviri stratejisi**: Spatie HasTranslations (JSON kolon) — Astrotomic'ten Sprint 4'te geçildi (Filament entegrasyonu için). Translatable alanlar `public array $translatable = [...]` ile işaretlenir.
 - **Filament resource'larda** `Translatable` concern + `LocaleSwitcher` header action her Create/Edit/List page'inde — TR/EN düzenleme bağlamı toggle'lanır.
 - **Locale switcher** (public): `SetLocaleFromSession` middleware web grubunda, `/lang/{locale}` route session'a yazar.
-- **Media**: Spatie MediaLibrary, polymorphic `media` tablosu. Her modelde `registerMediaCollections()` (cover, hero, gallery, documents).
+- **Media**: Spatie MediaLibrary, polymorphic `media` tablosu. Her modelde `registerMediaCollections()` (cover, hero, gallery, documents). `registerMediaConversions()` ile `thumb` (400px), `web` (1280px) WebP ve `og` (1200×630) JPG üretiliyor (Sprint 21). View'lar `*_thumb_url` / `*_web_url` accessor'larıyla responsive `srcset` yayar; OG meta tag detay sayfalarında `og` dönüşümünü kullanır.
 - **Form motoru**: `Form` → `FormField` (type select, options) → `FormSubmission` (data json + Spatie media attachments). Dynamic validation `FormField::validationRules()`'ten.
 - **Sayfa SEO**: `layouts/app.blade.php` head'i @yield/@section tabanlı; detay sayfalar kendi `og_image`, `og_type`, `meta_description`'ını set eder.
 - **Sitemap**: `/sitemap.xml` dinamik route, tüm aktif/yayında içerikten oluşturulur.
@@ -96,6 +96,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 18** — Newsletter (double opt-in subscribe + Filament campaign sender)
 - [x] **Sprint 19** — Admin bildirim merkezi (Filament database notifications, 3 trigger)
 - [x] **Sprint 20** — Etkinlik kayıt sistemi (RSVP + kapasite + iCal + admin bildirim)
+- [x] **Sprint 21** — Görsel pipeline: MediaLibrary conversions (thumb/web/og) + WebP + responsive img
 
 ## SRS özeti
 
@@ -166,7 +167,7 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 104 test, in-memory SQLite, ~4.5s
+tests/Feature/                 # 110 test, in-memory SQLite, ~9s
 ├─ PublicSmokeTest.php
 ├─ FormSubmissionTest.php
 ├─ ContactFlowTest.php
@@ -179,5 +180,8 @@ tests/Feature/                 # 104 test, in-memory SQLite, ~4.5s
 ├─ ImporterTest.php            # Sponsor + Alumni CSV import + TR/EN translatable
 ├─ NewsletterTest.php          # Double opt-in subscribe + campaign dispatch
 ├─ NotificationsTest.php       # Admin DB notification triggers
-└─ EventRegistrationTest.php   # RSVP + capacity + iCal + admin notification
+├─ EventRegistrationTest.php   # RSVP + capacity + iCal + admin notification
+└─ MediaConversionTest.php     # MediaLibrary thumb/web/og + WebP dönüşümleri
+
+tests/fixtures/                # sample.png (400×300, conversion testleri için)
 ```

@@ -3,8 +3,8 @@
 @section('title', $post->title . ' — GEMDTEK')
 @section('meta_description', $post->excerpt)
 @section('og_type', 'article')
-@if ($post->cover_url)
-    @section('og_image', $post->cover_url)
+@if ($post->og_image_url)
+    @section('og_image', url($post->og_image_url))
 @endif
 
 @section('content')
@@ -32,7 +32,7 @@
 
 @if ($post->cover_url)
     <div class="container-tight -mt-8 mb-8">
-        <img src="{{ $post->cover_url }}" alt="" class="rounded-xl w-full aspect-[16/9] object-cover shadow-lg">
+        <img src="{{ $post->cover_web_url }}" alt="" fetchpriority="high" decoding="async" width="1280" height="720" class="rounded-xl w-full aspect-[16/9] object-cover shadow-lg">
     </div>
 @endif
 

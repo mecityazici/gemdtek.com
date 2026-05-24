@@ -6,8 +6,10 @@ use App\Concerns\LogsFillableActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
 
 class Event extends Model implements HasMedia
@@ -96,6 +98,24 @@ class Event extends Model implements HasMedia
         $this->addMediaCollection('cover')->singleFile();
     }
 
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->fit(Fit::Crop, 400, 225)
+            ->format('webp')
+            ->nonQueued();
+
+        $this->addMediaConversion('web')
+            ->fit(Fit::Crop, 1280, 720)
+            ->format('webp')
+            ->nonQueued();
+
+        $this->addMediaConversion('og')
+            ->fit(Fit::Crop, 1200, 630)
+            ->format('jpg')
+            ->nonQueued();
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
@@ -114,6 +134,21 @@ class Event extends Model implements HasMedia
     public function getCoverUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('cover') ?: null;
+    }
+
+    public function getCoverThumbUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('cover', 'thumb') ?: $this->cover_url;
+    }
+
+    public function getCoverWebUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('cover', 'web') ?: $this->cover_url;
+    }
+
+    public function getOgImageUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('cover', 'og') ?: $this->cover_url;
     }
 
     public function getCategoryLabelAttribute(): string

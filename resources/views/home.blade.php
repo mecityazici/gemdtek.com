@@ -109,7 +109,7 @@
                         class="flex items-center justify-center w-48 h-24 bg-white rounded-lg shadow-sm border border-graphite/5 px-4 hover:shadow-md transition-shadow"
                     >
                         @if ($sponsor->logo_url)
-                            <img src="{{ $sponsor->logo_url }}" alt="{{ $sponsor->name }}" loading="lazy" decoding="async" class="max-h-14 max-w-full object-contain">
+                            <img src="{{ $sponsor->logo_thumb_url }}" alt="{{ $sponsor->name }}" loading="lazy" decoding="async" width="160" height="80" class="max-h-14 max-w-full object-contain">
                         @else
                             <span class="font-display font-semibold text-navy-800 text-center text-sm">{{ $sponsor->name }}</span>
                         @endif
