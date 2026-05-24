@@ -74,6 +74,16 @@ Route::get('/etkinlikler', function (Request $request) {
     ]);
 })->name('events.index');
 
+Route::get('/etkinlikler/rss', function () {
+    $upcoming = Event::active()->upcoming()->limit(10)->get();
+    $past = Event::active()->past()->limit(10)->get();
+    $events = $upcoming->concat($past);
+
+    return response()
+        ->view('feeds.events', ['events' => $events])
+        ->header('Content-Type', 'application/rss+xml; charset=utf-8');
+})->name('events.rss');
+
 Route::get('/etkinlikler/{event:slug}', function (Event $event) {
     abort_unless($event->is_active, 404);
 
@@ -92,6 +102,14 @@ Route::get('/haberler', function (Request $request) {
         'activeCat' => $cat,
     ]);
 })->name('news.index');
+
+Route::get('/haberler/rss', function () {
+    $posts = NewsPost::published()->limit(20)->get();
+
+    return response()
+        ->view('feeds.news', ['posts' => $posts])
+        ->header('Content-Type', 'application/rss+xml; charset=utf-8');
+})->name('news.rss');
 
 Route::get('/haberler/{post:slug}', function (NewsPost $post) {
     abort_unless($post->is_published, 404);
@@ -191,6 +209,8 @@ Route::get('/sitemap.xml', function () {
     $urls->push(['loc' => route('alumni.index'),  'changefreq' => 'weekly', 'priority' => '0.5']);
     $urls->push(['loc' => route('contact'),       'changefreq' => 'yearly', 'priority' => '0.4']);
     $urls->push(['loc' => route('sponsor.show'),  'changefreq' => 'monthly', 'priority' => '0.7']);
+    $urls->push(['loc' => route('news.rss'),      'changefreq' => 'daily',   'priority' => '0.4']);
+    $urls->push(['loc' => route('events.rss'),    'changefreq' => 'weekly',  'priority' => '0.4']);
 
     return response()
         ->view('sitemap', ['urls' => $urls])

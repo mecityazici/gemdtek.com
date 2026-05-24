@@ -45,6 +45,10 @@
 
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
+    {{-- RSS feed auto-discovery --}}
+    <link rel="alternate" type="application/rss+xml" title="GEMDTEK — Haberler" href="{{ route('news.rss') }}">
+    <link rel="alternate" type="application/rss+xml" title="GEMDTEK — Etkinlikler" href="{{ route('events.rss') }}">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('head')
