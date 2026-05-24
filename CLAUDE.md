@@ -93,6 +93,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 15** — RSS feeds (haberler + etkinlikler)
 - [x] **Sprint 16** — Public REST API v1 (5 endpoint, throttle 60/min)
 - [x] **Sprint 17** — Bulk CSV import (Sponsor + Alumni, TR/EN translatable)
+- [x] **Sprint 18** — Newsletter (double opt-in subscribe + Filament campaign sender)
 
 ## SRS özeti
 
@@ -113,9 +114,10 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 
 ```
 app/
-├─ Filament/Resources/         # 10 resource: Sponsor, TeamMember, TimelineEvent,
+├─ Filament/Resources/         # 12 resource: Sponsor, TeamMember, TimelineEvent,
 │                              #              Project, Form, Event, NewsPost,
-│                              #              Alumni, SiteMetric, SponsorLead
+│                              #              Alumni, SiteMetric, SponsorLead,
+│                              #              NewsletterSubscriber, NewsletterCampaign
 ├─ Filament/Widgets/           # Dashboard KPI + table widget'ları
 ├─ Filament/Imports/           # SponsorImporter, AlumniImporter (CSV bulk import)
 ├─ Http/Controllers/           # ApplicationForm, Contact, SponsorLead, Search
@@ -123,9 +125,9 @@ app/
 ├─ Http/Middleware/            # SetLocaleFromSession, SetApiLocale
 ├─ Http/Resources/             # 5 JSON Resource (Event, News, Project, Alumni, Sponsor)
 ├─ Concerns/                   # LogsFillableActivity trait
-├─ Models/                     # 15 model
+├─ Models/                     # 17 model
 ├─ Policies/ProjectPolicy.php  # Captain izolasyonu
-├─ Mail/                       # Contact, FormSubmission, SponsorLead Mailable
+├─ Mail/                       # Contact, FormSubmission, SponsorLead, Newsletter (confirm+campaign) Mailable
 └─ Exports/                    # FormSubmissionsExport (Maatwebsite)
 
 public/templates/              # sponsors-template.csv, alumni-template.csv (import örnekleri)
@@ -157,7 +159,7 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 79 test, in-memory SQLite, ~3s
+tests/Feature/                 # 90 test, in-memory SQLite, ~3.5s
 ├─ PublicSmokeTest.php
 ├─ FormSubmissionTest.php
 ├─ ContactFlowTest.php
@@ -167,5 +169,6 @@ tests/Feature/                 # 79 test, in-memory SQLite, ~3s
 ├─ ActivityLogTest.php
 ├─ RssFeedTest.php
 ├─ ApiTest.php
-└─ ImporterTest.php            # Sponsor + Alumni CSV import + TR/EN translatable
+├─ ImporterTest.php            # Sponsor + Alumni CSV import + TR/EN translatable
+└─ NewsletterTest.php          # Double opt-in subscribe + campaign dispatch
 ```

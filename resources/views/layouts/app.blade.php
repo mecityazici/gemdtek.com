@@ -193,12 +193,39 @@
         @yield('content')
     </main>
 
-    <footer class="bg-navy-950 text-cream/70 py-10 mt-20">
-        <div class="container-tight text-sm flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer class="bg-navy-950 text-cream/70 mt-20">
+        <div class="container-tight py-12 grid md:grid-cols-[2fr_3fr] gap-10 items-start border-b border-cream/10">
+            <div>
+                <p class="font-display text-cream text-lg mb-2">{{ __('pages.newsletter.form.footer_label') }}</p>
+                <p class="text-sm text-cream/60">{{ __('pages.newsletter.frequency_note') }}</p>
+            </div>
+            <form action="{{ route('newsletter.subscribe') }}" method="POST" class="flex flex-col sm:flex-row gap-3">
+                @csrf
+                <input type="hidden" name="source" value="footer">
+                <div class="hidden" aria-hidden="true">
+                    <label>Web site (boş bırak): <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+                </div>
+                <label for="footer-newsletter" class="sr-only">{{ __('pages.newsletter.form.email') }}</label>
+                <input type="email" id="footer-newsletter" name="email" required maxlength="160"
+                       placeholder="{{ __('pages.newsletter.form.footer_placeholder') }}"
+                       class="flex-1 bg-navy-900 border border-cream/15 text-cream placeholder:text-cream/40 rounded-md px-4 py-2.5 text-sm focus:border-brass-400 focus:ring-brass-400/20 focus:outline-none">
+                <button type="submit" class="bg-brass-500 hover:bg-brass-400 text-white font-medium rounded-md px-5 py-2.5 text-sm transition-colors">
+                    {{ __('pages.newsletter.form.footer_submit') }}
+                </button>
+            </form>
+            @if (session('newsletter_status') === 'pending')
+                <p class="md:col-span-2 text-sm text-emerald-300">{{ __('pages.newsletter.form.pending_body') }}</p>
+            @endif
+            @if (session('newsletter_status') === 'already_confirmed')
+                <p class="md:col-span-2 text-sm text-amber-300">{{ __('pages.newsletter.form.already_body') }}</p>
+            @endif
+        </div>
+        <div class="container-tight py-6 text-sm flex flex-col md:flex-row items-center justify-between gap-4">
             <p>&copy; {{ date('Y') }} GEMDTEK — {{ __('site.footer.rights') }}.</p>
             <div class="flex flex-wrap items-center gap-6">
                 <a href="{{ route('sponsor.show') }}" class="hover:text-cream">{{ __('pages.sponsor.eyebrow') }}</a>
                 <a href="{{ route('alumni.index') }}" class="hover:text-cream">{{ __('pages.alumni.eyebrow') }}</a>
+                <a href="{{ route('newsletter.show') }}" class="hover:text-cream">{{ __('pages.newsletter.eyebrow') }}</a>
                 <a href="{{ route('legal.privacy') }}" class="hover:text-cream">{{ __('site.footer.privacy') }}</a>
                 <p class="font-mono text-xs">{{ __('site.footer.tagline') }}</p>
             </div>

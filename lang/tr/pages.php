@@ -269,4 +269,48 @@ return [
             'cta' => 'Tekrar dene',
         ],
     ],
+
+    'newsletter' => [
+        'eyebrow' => 'GEMDTEK Bülteni',
+        'headline_lead' => 'Sektörden ve kulüpten',
+        'headline_accent' => 'doğrudan gelen kutuna.',
+        'subline' => 'Yaklaşan etkinlikler, Ar-Ge projelerinden notlar ve sektörel duyurular için aylık bültenimize abone ol.',
+        'benefits_title' => 'Neden abone olmalısın?',
+        'benefits' => [
+            'events' => 'Yaklaşan etkinlikleri kayıt açılır açılmaz duy.',
+            'projects' => 'Ar-Ge takımlarının yayın ve raporlarına erken erişim.',
+            'industry' => 'Tersane, klas ve tasarım ofislerinden sektörel haberler.',
+            'alumni' => 'Mezunlardan kariyer hikâyeleri ve fırsatlar.',
+        ],
+        'frequency_note' => 'Ayda bir gönderim, spam yok. Tek tıkla abonelikten çıkabilirsin.',
+        'form' => [
+            'title' => 'Bültene abone ol',
+            'name' => 'Adın (opsiyonel)',
+            'email' => 'E-posta',
+            'consent' => 'Aboneliği onaylayarak verilerimin <a href=":url" class="underline hover:text-petrol">aydınlatma metni</a> kapsamında işlenmesini kabul ediyorum.',
+            'submit' => 'Abone ol',
+            'pending_title' => 'Onay e-postası gönderdik.',
+            'pending_body' => 'Aboneliği tamamlamak için gelen kutunu kontrol et ve onay linkine tıkla.',
+            'already_title' => 'Zaten abonesin.',
+            'already_body' => 'Bu e-posta adresi onaylı abone listesinde. Yeni bir aboneliğe gerek yok.',
+            'footer_label' => 'Bültene abone ol',
+            'footer_placeholder' => 'E-posta adresin',
+            'footer_submit' => 'Abone ol',
+        ],
+        'feedback' => [
+            'confirmed' => [
+                'title' => 'Aboneliğin onaylandı.',
+                'body' => 'Bültene başarıyla abone oldun. Bir sonraki sayımızda görüşmek üzere.',
+            ],
+            'unsubscribed' => [
+                'title' => 'Abonelikten çıktın.',
+                'body' => 'Artık GEMDTEK bültenini almayacaksın. Tekrar abone olmak istersen aşağıdaki butondan başlayabilirsin.',
+            ],
+            'invalid_token' => [
+                'title' => 'Geçersiz veya süresi dolmuş bağlantı.',
+                'body' => 'Bu link daha önce kullanılmış ya da geçersiz. Bültene tekrar abone olmayı dene veya bizimle iletişime geç.',
+            ],
+            'resubscribe' => 'Tekrar abone ol',
+        ],
+    ],
 ];

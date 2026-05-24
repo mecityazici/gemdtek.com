@@ -25,6 +25,7 @@ class EditorRolePermissionsSeeder extends Seeder
             'event',
             'timeline::event',
             'alumni',
+            'newsletter::campaign',
         ];
 
         $viewOnly = [
@@ -37,6 +38,10 @@ class EditorRolePermissionsSeeder extends Seeder
             'form::field',
             'form::submission',
             'sponsor::lead',
+        ];
+
+        $viewAndUpdate = [
+            'newsletter::subscriber',
         ];
 
         $names = collect();
@@ -53,6 +58,13 @@ class EditorRolePermissionsSeeder extends Seeder
         foreach ($viewOnly as $slug) {
             $names->push('view_'.$slug);
             $names->push('view_any_'.$slug);
+        }
+
+        foreach ($viewAndUpdate as $slug) {
+            $names->push('view_'.$slug);
+            $names->push('view_any_'.$slug);
+            $names->push('update_'.$slug);
+            $names->push('delete_'.$slug);
         }
 
         // Widget'lar — dashboard hepsi görünsün

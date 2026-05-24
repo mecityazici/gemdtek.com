@@ -118,6 +118,13 @@ class PublicSmokeTest extends TestCase
             ->assertSee('info@gemdtek.com');
     }
 
+    public function test_newsletter_page_returns_200(): void
+    {
+        $this->get('/bulten')
+            ->assertOk()
+            ->assertSee('GEMDTEK');
+    }
+
     public function test_privacy_page_returns_200(): void
     {
         $this->get('/kvkk')

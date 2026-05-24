@@ -17,6 +17,7 @@ return [
         'details' => 'Detaylar',
         'all' => 'Tümü',
         'back' => 'Geri',
+        'home' => 'Anasayfa',
     ],
     'footer' => [
         'rights' => 'Tüm hakları saklıdır',

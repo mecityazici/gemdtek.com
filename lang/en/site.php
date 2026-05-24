@@ -17,6 +17,7 @@ return [
         'details' => 'Details',
         'all' => 'All',
         'back' => 'Back',
+        'home' => 'Home',
     ],
     'footer' => [
         'rights' => 'All rights reserved',

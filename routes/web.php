@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SponsorLeadController;
 use App\Http\Middleware\SetLocaleFromSession;
@@ -139,6 +140,17 @@ Route::post('/sponsor-ol', [SponsorLeadController::class, 'submit'])
 
 Route::get('/arama', [SearchController::class, 'index'])->name('search');
 
+Route::get('/bulten', [NewsletterController::class, 'show'])->name('newsletter.show');
+Route::post('/bulten', [NewsletterController::class, 'subscribe'])
+    ->middleware('throttle:5,1')
+    ->name('newsletter.subscribe');
+Route::get('/bulten/onayla/{token}', [NewsletterController::class, 'confirm'])
+    ->where('token', '[A-Za-z0-9]{48}')
+    ->name('newsletter.confirm');
+Route::get('/bulten/cikis/{token}', [NewsletterController::class, 'unsubscribe'])
+    ->where('token', '[A-Za-z0-9]{48}')
+    ->name('newsletter.unsubscribe');
+
 Route::get('/mezunlar', function (Request $request) {
     $sector = $request->string('sector')->toString();
     $year = (int) $request->integer('year');
@@ -209,6 +221,7 @@ Route::get('/sitemap.xml', function () {
     $urls->push(['loc' => route('alumni.index'),  'changefreq' => 'weekly', 'priority' => '0.5']);
     $urls->push(['loc' => route('contact'),       'changefreq' => 'yearly', 'priority' => '0.4']);
     $urls->push(['loc' => route('sponsor.show'),  'changefreq' => 'monthly', 'priority' => '0.7']);
+    $urls->push(['loc' => route('newsletter.show'), 'changefreq' => 'monthly', 'priority' => '0.5']);
     $urls->push(['loc' => route('news.rss'),      'changefreq' => 'daily',   'priority' => '0.4']);
     $urls->push(['loc' => route('events.rss'),    'changefreq' => 'weekly',  'priority' => '0.4']);
 

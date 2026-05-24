@@ -269,4 +269,48 @@ return [
             'cta' => 'Try again',
         ],
     ],
+
+    'newsletter' => [
+        'eyebrow' => 'GEMDTEK Newsletter',
+        'headline_lead' => 'Industry and club updates,',
+        'headline_accent' => 'straight to your inbox.',
+        'subline' => 'Subscribe to our monthly newsletter for upcoming events, R&D project notes, and industry announcements.',
+        'benefits_title' => 'Why subscribe?',
+        'benefits' => [
+            'events' => 'Hear about upcoming events as soon as registration opens.',
+            'projects' => 'Early access to R&D publications and reports.',
+            'industry' => 'Industry news from shipyards, class societies, and design offices.',
+            'alumni' => 'Career stories and opportunities from alumni.',
+        ],
+        'frequency_note' => 'One email per month, no spam. Unsubscribe with a single click.',
+        'form' => [
+            'title' => 'Subscribe to the newsletter',
+            'name' => 'Your name (optional)',
+            'email' => 'Email',
+            'consent' => 'By subscribing I agree that my data may be processed under the <a href=":url" class="underline hover:text-petrol">privacy notice</a>.',
+            'submit' => 'Subscribe',
+            'pending_title' => 'Confirmation email sent.',
+            'pending_body' => 'Check your inbox and click the confirmation link to complete your subscription.',
+            'already_title' => 'You\'re already subscribed.',
+            'already_body' => 'This email address is on the confirmed subscriber list. No new subscription needed.',
+            'footer_label' => 'Subscribe to the newsletter',
+            'footer_placeholder' => 'Your email address',
+            'footer_submit' => 'Subscribe',
+        ],
+        'feedback' => [
+            'confirmed' => [
+                'title' => 'Subscription confirmed.',
+                'body' => 'You\'re successfully subscribed to the newsletter. See you in the next issue.',
+            ],
+            'unsubscribed' => [
+                'title' => 'You\'ve unsubscribed.',
+                'body' => 'You\'ll no longer receive the GEMDTEK newsletter. Use the button below if you want to subscribe again.',
+            ],
+            'invalid_token' => [
+                'title' => 'Invalid or expired link.',
+                'body' => 'This link has already been used or is invalid. Try subscribing again or contact us.',
+            ],
+            'resubscribe' => 'Subscribe again',
+        ],
+    ],
 ];
