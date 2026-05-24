@@ -94,6 +94,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 16** — Public REST API v1 (5 endpoint, throttle 60/min)
 - [x] **Sprint 17** — Bulk CSV import (Sponsor + Alumni, TR/EN translatable)
 - [x] **Sprint 18** — Newsletter (double opt-in subscribe + Filament campaign sender)
+- [x] **Sprint 19** — Admin bildirim merkezi (Filament database notifications, 3 trigger)
 
 ## SRS özeti
 
@@ -128,6 +129,8 @@ app/
 ├─ Models/                     # 17 model
 ├─ Policies/ProjectPolicy.php  # Captain izolasyonu
 ├─ Mail/                       # Contact, FormSubmission, SponsorLead, Newsletter (confirm+campaign) Mailable
+├─ Notifications/              # NewSponsorLead, NewFormSubmission, NewNewsletterSubscriber (Filament DB)
+├─ Support/                    # AdminNotifier (sends to super_admin + editor)
 └─ Exports/                    # FormSubmissionsExport (Maatwebsite)
 
 public/templates/              # sponsors-template.csv, alumni-template.csv (import örnekleri)
@@ -159,7 +162,7 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 90 test, in-memory SQLite, ~3.5s
+tests/Feature/                 # 94 test, in-memory SQLite, ~4s
 ├─ PublicSmokeTest.php
 ├─ FormSubmissionTest.php
 ├─ ContactFlowTest.php
@@ -170,5 +173,6 @@ tests/Feature/                 # 90 test, in-memory SQLite, ~3.5s
 ├─ RssFeedTest.php
 ├─ ApiTest.php
 ├─ ImporterTest.php            # Sponsor + Alumni CSV import + TR/EN translatable
-└─ NewsletterTest.php          # Double opt-in subscribe + campaign dispatch
+├─ NewsletterTest.php          # Double opt-in subscribe + campaign dispatch
+└─ NotificationsTest.php       # Admin DB notification triggers
 ```

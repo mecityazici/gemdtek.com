@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\NewsletterConfirmation;
 use App\Models\NewsletterSubscriber;
+use App\Notifications\NewNewsletterSubscriberNotification;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -67,6 +69,7 @@ class NewsletterController extends Controller
 
         if ($subscriber->status !== NewsletterSubscriber::STATUS_CONFIRMED) {
             $subscriber->confirm();
+            AdminNotifier::send(new NewNewsletterSubscriberNotification($subscriber));
         }
 
         return view('newsletter.feedback', ['state' => 'confirmed', 'subscriber' => $subscriber]);

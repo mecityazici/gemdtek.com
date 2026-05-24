@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\SponsorLeadReceived;
 use App\Models\SponsorLead;
+use App\Notifications\NewSponsorLeadNotification;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -42,6 +44,8 @@ class SponsorLeadController extends Controller
         if ($to) {
             Mail::to($to)->queue(new SponsorLeadReceived($lead));
         }
+
+        AdminNotifier::send(new NewSponsorLeadNotification($lead));
 
         return redirect()
             ->route('sponsor.show')

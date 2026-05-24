@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Mail\FormSubmissionReceived;
 use App\Models\Form;
 use App\Models\FormSubmission;
+use App\Notifications\NewFormSubmissionNotification;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -82,6 +84,8 @@ class ApplicationFormController extends Controller
         if ($to) {
             Mail::to($to)->queue(new FormSubmissionReceived($submission));
         }
+
+        AdminNotifier::send(new NewFormSubmissionNotification($submission));
 
         return redirect()
             ->route('forms.show', $form)
