@@ -182,7 +182,11 @@ return [
             'alumni' => 'Mezunlar',
         ],
         'see_all' => 'Tümünü gör',
+        'see_all_in_type' => 'Bu kategorinin tamamı',
         'group_empty' => 'Bu kategoride eşleşen yok.',
+        'types' => [
+            'all' => 'Tümü',
+        ],
     ],
     'sponsor' => [
         'eyebrow' => 'Sponsor Olun',

@@ -12,71 +12,101 @@ class SearchController extends Controller
 {
     private const MIN_LENGTH = 2;
 
-    private const LIMIT_PER_GROUP = 6;
+    private const LIMIT_OVERVIEW = 6;
+
+    private const LIMIT_FOCUSED = 25;
+
+    public const TYPES = ['projects', 'news', 'events', 'alumni'];
 
     public function index(Request $request)
     {
         $q = trim((string) $request->input('q', ''));
+        $type = (string) $request->input('type', '');
+        if (! in_array($type, self::TYPES, true)) {
+            $type = '';
+        }
 
-        $results = [
-            'projects' => collect(),
-            'news' => collect(),
-            'events' => collect(),
-            'alumni' => collect(),
-        ];
+        $results = array_fill_keys(self::TYPES, collect());
+        $totals = array_fill_keys(self::TYPES, 0);
         $total = 0;
 
         if (mb_strlen($q) >= self::MIN_LENGTH) {
             $like = '%'.$q.'%';
+            $limit = $type === '' ? self::LIMIT_OVERVIEW : self::LIMIT_FOCUSED;
 
-            $results['projects'] = Project::active()
-                ->where(function ($w) use ($like) {
-                    $w->where('name', 'like', $like)
+            $totals['projects'] = Project::active()
+                ->where(fn ($w) => $w->where('name', 'like', $like)
+                    ->orWhere('summary', 'like', $like)
+                    ->orWhere('description', 'like', $like)
+                    ->orWhere('problem_statement', 'like', $like))
+                ->count();
+
+            $totals['news'] = NewsPost::published()
+                ->where(fn ($w) => $w->where('title', 'like', $like)
+                    ->orWhere('excerpt', 'like', $like)
+                    ->orWhere('content', 'like', $like))
+                ->count();
+
+            $totals['events'] = Event::active()
+                ->where(fn ($w) => $w->where('title', 'like', $like)
+                    ->orWhere('summary', 'like', $like)
+                    ->orWhere('description', 'like', $like)
+                    ->orWhere('location', 'like', $like))
+                ->count();
+
+            $totals['alumni'] = Alumni::public()
+                ->where(fn ($w) => $w->where('name', 'like', $like)
+                    ->orWhere('position', 'like', $like)
+                    ->orWhere('company', 'like', $like))
+                ->count();
+
+            if ($type === '' || $type === 'projects') {
+                $results['projects'] = Project::active()
+                    ->where(fn ($w) => $w->where('name', 'like', $like)
                         ->orWhere('summary', 'like', $like)
                         ->orWhere('description', 'like', $like)
-                        ->orWhere('problem_statement', 'like', $like);
-                })
-                ->limit(self::LIMIT_PER_GROUP)
-                ->get();
+                        ->orWhere('problem_statement', 'like', $like))
+                    ->limit($limit)
+                    ->get();
+            }
 
-            $results['news'] = NewsPost::published()
-                ->where(function ($w) use ($like) {
-                    $w->where('title', 'like', $like)
+            if ($type === '' || $type === 'news') {
+                $results['news'] = NewsPost::published()
+                    ->where(fn ($w) => $w->where('title', 'like', $like)
                         ->orWhere('excerpt', 'like', $like)
-                        ->orWhere('content', 'like', $like);
-                })
-                ->limit(self::LIMIT_PER_GROUP)
-                ->get();
+                        ->orWhere('content', 'like', $like))
+                    ->limit($limit)
+                    ->get();
+            }
 
-            $results['events'] = Event::active()
-                ->where(function ($w) use ($like) {
-                    $w->where('title', 'like', $like)
+            if ($type === '' || $type === 'events') {
+                $results['events'] = Event::active()
+                    ->where(fn ($w) => $w->where('title', 'like', $like)
                         ->orWhere('summary', 'like', $like)
                         ->orWhere('description', 'like', $like)
-                        ->orWhere('location', 'like', $like);
-                })
-                ->orderByDesc('event_date')
-                ->limit(self::LIMIT_PER_GROUP)
-                ->get();
+                        ->orWhere('location', 'like', $like))
+                    ->orderByDesc('event_date')
+                    ->limit($limit)
+                    ->get();
+            }
 
-            $results['alumni'] = Alumni::public()
-                ->where(function ($w) use ($like) {
-                    $w->where('name', 'like', $like)
+            if ($type === '' || $type === 'alumni') {
+                $results['alumni'] = Alumni::public()
+                    ->where(fn ($w) => $w->where('name', 'like', $like)
                         ->orWhere('position', 'like', $like)
-                        ->orWhere('company', 'like', $like);
-                })
-                ->limit(self::LIMIT_PER_GROUP)
-                ->get();
+                        ->orWhere('company', 'like', $like))
+                    ->limit($limit)
+                    ->get();
+            }
 
-            $total = $results['projects']->count()
-                + $results['news']->count()
-                + $results['events']->count()
-                + $results['alumni']->count();
+            $total = array_sum($totals);
         }
 
         return view('search.index', [
             'q' => $q,
+            'type' => $type,
             'results' => $results,
+            'totals' => $totals,
             'total' => $total,
             'tooShort' => mb_strlen($q) > 0 && mb_strlen($q) < self::MIN_LENGTH,
             'minLength' => self::MIN_LENGTH,

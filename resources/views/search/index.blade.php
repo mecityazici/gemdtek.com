@@ -3,6 +3,18 @@
 @section('title', __('pages.search.heading') . ' — GEMDTEK')
 @section('no_index', true)
 
+@php
+    use App\Support\SearchHelper;
+
+    $typeLabels = [
+        '' => __('pages.search.types.all'),
+        'projects' => __('pages.search.groups.projects'),
+        'news' => __('pages.search.groups.news'),
+        'events' => __('pages.search.groups.events'),
+        'alumni' => __('pages.search.groups.alumni'),
+    ];
+@endphp
+
 @section('content')
 
 <section class="bg-navy-900 text-cream">
@@ -25,6 +37,9 @@
                     {{ __('pages.search.submit') }}
                 </button>
             </div>
+            @if ($type)
+                <input type="hidden" name="type" value="{{ $type }}">
+            @endif
         </form>
     </div>
 </section>
@@ -43,66 +58,50 @@
             <p class="text-graphite/70 text-sm">{{ __('pages.search.no_results_hint') }}</p>
         </div>
     @else
+        {{-- Type chips --}}
+        <div class="flex flex-wrap gap-2 mb-8">
+            @foreach ($typeLabels as $key => $label)
+                @php
+                    $count = $key === '' ? $total : ($totals[$key] ?? 0);
+                    $isActive = $type === $key;
+                @endphp
+                <a href="{{ route('search', array_filter(['q' => $q, 'type' => $key ?: null])) }}"
+                   @class([
+                       'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors',
+                       'bg-navy-800 text-cream' => $isActive,
+                       'bg-cream text-navy-800 hover:bg-navy-100' => ! $isActive,
+                       'opacity-50 pointer-events-none' => $count === 0 && $key !== '',
+                   ])
+                   @if ($count === 0 && $key !== '') aria-disabled="true" @endif>
+                    {{ $label }}
+                    <span class="font-mono text-xs {{ $isActive ? 'text-cream/70' : 'text-graphite/60' }}">{{ $count }}</span>
+                </a>
+            @endforeach
+        </div>
+
         <p class="text-sm text-graphite/60 font-mono mb-10">
             {{ __('pages.search.results_count', ['n' => $total, 'q' => '"' . $q . '"']) }}
         </p>
 
         {{-- PROJECTS --}}
-        @if ($results['projects']->isNotEmpty())
+        @if (($type === '' || $type === 'projects') && $results['projects']->isNotEmpty())
             <div class="mb-12">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="font-display text-xl font-bold text-navy-800">{{ __('pages.search.groups.projects') }} ({{ $results['projects']->count() }})</h2>
-                    <a href="{{ route('projects.index') }}" class="text-sm text-brass-600 hover:text-brass-700">{{ __('pages.search.see_all') }} →</a>
+                    <h2 class="font-display text-xl font-bold text-navy-800">
+                        {{ __('pages.search.groups.projects') }}
+                        <span class="font-mono text-sm text-graphite/60">({{ $totals['projects'] }})</span>
+                    </h2>
+                    @if ($type === '' && $totals['projects'] > $results['projects']->count())
+                        <a href="{{ route('search', ['q' => $q, 'type' => 'projects']) }}" class="text-sm text-brass-600 hover:text-brass-700">{{ __('pages.search.see_all_in_type') }} →</a>
+                    @endif
                 </div>
                 <ul class="space-y-2">
                     @foreach ($results['projects'] as $p)
                         <li>
                             <a href="{{ route('projects.show', $p) }}" class="block bg-white p-4 rounded-lg border border-graphite/10 hover:border-brass-300 transition-colors">
-                                <p class="font-display font-semibold text-navy-800">{{ $p->name }}</p>
-                                <p class="text-sm text-graphite/70 mt-1 line-clamp-2">{{ $p->summary }}</p>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        {{-- NEWS --}}
-        @if ($results['news']->isNotEmpty())
-            <div class="mb-12">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="font-display text-xl font-bold text-navy-800">{{ __('pages.search.groups.news') }} ({{ $results['news']->count() }})</h2>
-                    <a href="{{ route('news.index') }}" class="text-sm text-brass-600 hover:text-brass-700">{{ __('pages.search.see_all') }} →</a>
-                </div>
-                <ul class="space-y-2">
-                    @foreach ($results['news'] as $n)
-                        <li>
-                            <a href="{{ route('news.show', $n) }}" class="block bg-white p-4 rounded-lg border border-graphite/10 hover:border-brass-300 transition-colors">
-                                <p class="font-display font-semibold text-navy-800">{{ $n->title }}</p>
-                                @if ($n->excerpt)
-                                    <p class="text-sm text-graphite/70 mt-1 line-clamp-2">{{ $n->excerpt }}</p>
-                                @endif
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        {{-- EVENTS --}}
-        @if ($results['events']->isNotEmpty())
-            <div class="mb-12">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="font-display text-xl font-bold text-navy-800">{{ __('pages.search.groups.events') }} ({{ $results['events']->count() }})</h2>
-                    <a href="{{ route('events.index') }}" class="text-sm text-brass-600 hover:text-brass-700">{{ __('pages.search.see_all') }} →</a>
-                </div>
-                <ul class="space-y-2">
-                    @foreach ($results['events'] as $e)
-                        <li>
-                            <a href="{{ route('events.show', $e) }}" class="block bg-white p-4 rounded-lg border border-graphite/10 hover:border-brass-300 transition-colors">
-                                <p class="font-display font-semibold text-navy-800">{{ $e->title }}</p>
-                                <p class="text-xs font-mono text-brass-600 mt-1">
-                                    {{ $e->event_date->isoFormat('D MMM YYYY') }}@if ($e->location) · {{ $e->location }} @endif
+                                <p class="font-display font-semibold text-navy-800">{!! SearchHelper::highlight($p->name, $q) !!}</p>
+                                <p class="text-sm text-graphite/70 mt-1 line-clamp-3">
+                                    {!! SearchHelper::highlight(SearchHelper::excerpt($p->summary ?: $p->description, $q), $q) !!}
                                 </p>
                             </a>
                         </li>
@@ -111,19 +110,83 @@
             </div>
         @endif
 
-        {{-- ALUMNI --}}
-        @if ($results['alumni']->isNotEmpty())
+        {{-- NEWS --}}
+        @if (($type === '' || $type === 'news') && $results['news']->isNotEmpty())
             <div class="mb-12">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="font-display text-xl font-bold text-navy-800">{{ __('pages.search.groups.alumni') }} ({{ $results['alumni']->count() }})</h2>
-                    <a href="{{ route('alumni.index') }}" class="text-sm text-brass-600 hover:text-brass-700">{{ __('pages.search.see_all') }} →</a>
+                    <h2 class="font-display text-xl font-bold text-navy-800">
+                        {{ __('pages.search.groups.news') }}
+                        <span class="font-mono text-sm text-graphite/60">({{ $totals['news'] }})</span>
+                    </h2>
+                    @if ($type === '' && $totals['news'] > $results['news']->count())
+                        <a href="{{ route('search', ['q' => $q, 'type' => 'news']) }}" class="text-sm text-brass-600 hover:text-brass-700">{{ __('pages.search.see_all_in_type') }} →</a>
+                    @endif
+                </div>
+                <ul class="space-y-2">
+                    @foreach ($results['news'] as $n)
+                        <li>
+                            <a href="{{ route('news.show', $n) }}" class="block bg-white p-4 rounded-lg border border-graphite/10 hover:border-brass-300 transition-colors">
+                                <p class="font-display font-semibold text-navy-800">{!! SearchHelper::highlight($n->title, $q) !!}</p>
+                                <p class="text-sm text-graphite/70 mt-1 line-clamp-3">
+                                    {!! SearchHelper::highlight(SearchHelper::excerpt($n->excerpt ?: $n->content, $q), $q) !!}
+                                </p>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        {{-- EVENTS --}}
+        @if (($type === '' || $type === 'events') && $results['events']->isNotEmpty())
+            <div class="mb-12">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-display text-xl font-bold text-navy-800">
+                        {{ __('pages.search.groups.events') }}
+                        <span class="font-mono text-sm text-graphite/60">({{ $totals['events'] }})</span>
+                    </h2>
+                    @if ($type === '' && $totals['events'] > $results['events']->count())
+                        <a href="{{ route('search', ['q' => $q, 'type' => 'events']) }}" class="text-sm text-brass-600 hover:text-brass-700">{{ __('pages.search.see_all_in_type') }} →</a>
+                    @endif
+                </div>
+                <ul class="space-y-2">
+                    @foreach ($results['events'] as $e)
+                        <li>
+                            <a href="{{ route('events.show', $e) }}" class="block bg-white p-4 rounded-lg border border-graphite/10 hover:border-brass-300 transition-colors">
+                                <p class="font-display font-semibold text-navy-800">{!! SearchHelper::highlight($e->title, $q) !!}</p>
+                                <p class="text-xs font-mono text-brass-600 mt-1">
+                                    {{ $e->event_date->isoFormat('D MMM YYYY') }}@if ($e->location) · {!! SearchHelper::highlight($e->location, $q) !!} @endif
+                                </p>
+                                @if ($e->summary)
+                                    <p class="text-sm text-graphite/70 mt-2 line-clamp-2">
+                                        {!! SearchHelper::highlight(SearchHelper::excerpt($e->summary ?: $e->description, $q), $q) !!}
+                                    </p>
+                                @endif
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        {{-- ALUMNI --}}
+        @if (($type === '' || $type === 'alumni') && $results['alumni']->isNotEmpty())
+            <div class="mb-12">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-display text-xl font-bold text-navy-800">
+                        {{ __('pages.search.groups.alumni') }}
+                        <span class="font-mono text-sm text-graphite/60">({{ $totals['alumni'] }})</span>
+                    </h2>
+                    @if ($type === '' && $totals['alumni'] > $results['alumni']->count())
+                        <a href="{{ route('search', ['q' => $q, 'type' => 'alumni']) }}" class="text-sm text-brass-600 hover:text-brass-700">{{ __('pages.search.see_all_in_type') }} →</a>
+                    @endif
                 </div>
                 <ul class="space-y-2">
                     @foreach ($results['alumni'] as $a)
                         <li class="block bg-white p-4 rounded-lg border border-graphite/10">
-                            <p class="font-display font-semibold text-navy-800">{{ $a->name }}</p>
+                            <p class="font-display font-semibold text-navy-800">{!! SearchHelper::highlight($a->name, $q) !!}</p>
                             <p class="text-sm text-graphite/70 mt-1">
-                                {{ $a->position }}@if ($a->company) — {{ $a->company }} @endif
+                                {!! SearchHelper::highlight($a->position, $q) !!}@if ($a->company) — {!! SearchHelper::highlight($a->company, $q) !!} @endif
                                 @if ($a->graduation_year) <span class="text-xs font-mono text-graphite/50">· {{ $a->graduation_year }}</span> @endif
                             </p>
                         </li>

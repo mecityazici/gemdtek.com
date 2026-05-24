@@ -99,6 +99,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 21** — Görsel pipeline: MediaLibrary conversions (thumb/web/og) + WebP + responsive img
 - [x] **Sprint 22** — Public etkinlik takvimi (`/etkinlikler/takvim`, ay görünümü, locale-aware)
 - [x] **Sprint 23** — PWA: manifest, service worker (network-first + offline), brand ikon üretici
+- [x] **Sprint 24** — Arama iyileştirmesi: type filter chips + match highlighting + smart excerpt
 
 ## SRS özeti
 
@@ -137,7 +138,7 @@ app/
 │                              # EventRegistration (confirmation+confirmed-with-ics) Mailable
 ├─ Notifications/              # NewSponsorLead, NewFormSubmission, NewNewsletterSubscriber,
 │                              # NewEventRegistration (Filament DB)
-├─ Support/                    # AdminNotifier (sends to super_admin + editor), IcsGenerator
+├─ Support/                    # AdminNotifier (super_admin + editor), IcsGenerator, SearchHelper (highlight/excerpt)
 └─ Exports/                    # FormSubmissionsExport (Maatwebsite)
 
 public/templates/              # sponsors-template.csv, alumni-template.csv (import örnekleri)
@@ -171,7 +172,7 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 122 test, in-memory SQLite, ~9s
+tests/Feature/                 # 133 test, in-memory SQLite, ~9s
 ├─ PublicSmokeTest.php
 ├─ FormSubmissionTest.php
 ├─ ContactFlowTest.php

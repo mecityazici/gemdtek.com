@@ -182,7 +182,11 @@ return [
             'alumni' => 'Alumni',
         ],
         'see_all' => 'See all',
+        'see_all_in_type' => 'All in this category',
         'group_empty' => 'No matches in this category.',
+        'types' => [
+            'all' => 'All',
+        ],
     ],
     'sponsor' => [
         'eyebrow' => 'Sponsor Us',
