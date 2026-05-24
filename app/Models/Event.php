@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use App\Concerns\LogsFillableActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
@@ -12,6 +13,7 @@ class Event extends Model implements HasMedia
 {
     use HasTranslations;
     use InteractsWithMedia;
+    use LogsFillableActivity;
 
     public const CATEGORIES = [
         'zirve' => 'Zirve',

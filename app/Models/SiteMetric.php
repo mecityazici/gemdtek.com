@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\LogsFillableActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -9,6 +10,7 @@ use Spatie\Translatable\HasTranslations;
 class SiteMetric extends Model
 {
     use HasTranslations;
+    use LogsFillableActivity;
 
     public array $translatable = ['label'];
 

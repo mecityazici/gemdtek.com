@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\LogsFillableActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -12,6 +13,7 @@ class Alumni extends Model implements HasMedia
 {
     use HasTranslations;
     use InteractsWithMedia;
+    use LogsFillableActivity;
 
     protected $table = 'alumni';
 

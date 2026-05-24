@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Concerns\LogsFillableActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FormField extends Model
 {
+    use LogsFillableActivity;
+
     public const TYPES = [
         'text' => 'Kısa metin',
         'textarea' => 'Uzun metin',

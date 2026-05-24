@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Concerns\LogsFillableActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Form extends Model
 {
+    use LogsFillableActivity;
+
     protected $fillable = [
         'slug', 'title', 'description', 'is_active',
         'starts_at', 'ends_at', 'success_message', 'closed_message',
