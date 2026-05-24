@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -16,7 +17,7 @@ class ContactMessageReceived extends Mailable implements ShouldQueue
     public function __construct(
         public string $name,
         public string $email,
-        public string $subject,
+        public string $messageSubject,
         public string $body,
         public string $ip,
     ) {
@@ -25,7 +26,8 @@ class ContactMessageReceived extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[GEMDTEK İletişim] ' . $this->subject,
+            subject: '[GEMDTEK İletişim] ' . $this->messageSubject,
+            replyTo: [new Address($this->email, $this->name)],
         );
     }
 
@@ -36,7 +38,7 @@ class ContactMessageReceived extends Mailable implements ShouldQueue
             with: [
                 'name'    => $this->name,
                 'email'   => $this->email,
-                'subject' => $this->subject,
+                'subject' => $this->messageSubject,
                 'body'    => $this->body,
                 'ip'      => $this->ip,
             ],

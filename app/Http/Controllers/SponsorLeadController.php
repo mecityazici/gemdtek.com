@@ -40,9 +40,7 @@ class SponsorLeadController extends Controller
 
         $to = env('FORM_NOTIFICATION_EMAIL', config('mail.from.address'));
         if ($to) {
-            Mail::to($to)
-                ->replyTo($lead->contact_email, $lead->contact_name)
-                ->queue(new SponsorLeadReceived($lead));
+            Mail::to($to)->queue(new SponsorLeadReceived($lead));
         }
 
         return redirect()

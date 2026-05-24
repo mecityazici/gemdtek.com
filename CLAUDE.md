@@ -31,6 +31,11 @@ npm run dev
 
 # Production build
 npm run build
+
+# Testler (47 feature test, in-memory SQLite, ~2s)
+php artisan test
+# veya:
+composer test
 ```
 
 ## Erişim

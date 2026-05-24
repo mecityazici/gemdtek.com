@@ -30,13 +30,12 @@ class ContactController extends Controller
         $to = env('FORM_NOTIFICATION_EMAIL', config('mail.from.address'));
 
         Mail::to($to)
-            ->replyTo($data['email'], $data['name'])
             ->queue(new ContactMessageReceived(
-                name:    $data['name'],
-                email:   $data['email'],
-                subject: $data['subject'],
-                body:    $data['message'],
-                ip:      (string) $request->ip(),
+                name:           $data['name'],
+                email:          $data['email'],
+                messageSubject: $data['subject'],
+                body:           $data['message'],
+                ip:             (string) $request->ip(),
             ));
 
         return redirect()

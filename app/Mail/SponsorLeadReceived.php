@@ -6,6 +6,7 @@ use App\Models\SponsorLead;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -22,6 +23,7 @@ class SponsorLeadReceived extends Mailable implements ShouldQueue
     {
         return new Envelope(
             subject: '[GEMDTEK Sponsor Lead] ' . $this->lead->company_name,
+            replyTo: [new Address($this->lead->contact_email, $this->lead->contact_name)],
         );
     }
 
