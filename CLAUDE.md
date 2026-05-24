@@ -101,6 +101,17 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 23** — PWA: manifest, service worker (network-first + offline), brand ikon üretici
 - [x] **Sprint 24** — Arama iyileştirmesi: type filter chips + match highlighting + smart excerpt
 - [x] **Sprint 25** — Event edit'inde inline RegistrationsRelationManager + Filament Spatie Media plugin kurulumu
+- [x] **Sprint 26** — Production deployment paketi (Natro SSH): `.env.production.example`, sertleştirilmiş `public/.htaccess` (HTTPS + www→apex + HSTS + sensitive files block), `deploy/deploy.sh` + `deploy/first-time-setup.sh`, detaylı [DEPLOY.md](DEPLOY.md)
+
+## Production
+
+Canlı kurulum tüm adımlarıyla [DEPLOY.md](DEPLOY.md)'de. Özet:
+1. cPanel'de gemdtek.com'un Document Root'unu `~/gemdtek.com/public` yap
+2. SSH'la `git clone https://github.com/mecityazici/gemdtek.com.git ~/gemdtek.com`
+3. `cp .env.production.example .env` + DB/MAIL/ADMIN_PASSWORD doldur
+4. `bash deploy/first-time-setup.sh` (ilk seferlik)
+5. SSL: cPanel → AutoSSL → Let's Encrypt
+6. Sonraki deploy'lar: `bash deploy/deploy.sh`
 
 ## SRS özeti
 
