@@ -13,9 +13,8 @@ Gemi İnşaatı ve Deniz Teknolojileri Kulübü kurumsal web platformu.
 | i18n | Spatie Translatable + Filament plugin | 6.11 / 3.3 |
 | Export | Maatwebsite Excel | 3.1 |
 | CSS | Tailwind 3 + forms + typography | 3.4 |
-| JS | Alpine.js (countdown + cookie banner), Livewire (Filament) | 3.x |
+| JS | Alpine.js (countdown + cookie banner + back-to-top), Livewire (Filament) | 3.x |
 | DB local | SQLite | — |
-| DB prod | MySQL (Natro) | — |
 
 PHP 8.2.12 (XAMPP), Composer 2.9, Node 24, Vite 5.
 
@@ -36,6 +35,9 @@ npm run build
 php artisan test
 # veya:
 composer test
+
+# Code style
+./vendor/bin/pint
 ```
 
 ## Erişim
@@ -74,16 +76,18 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - **Form motoru**: `Form` → `FormField` (type select, options) → `FormSubmission` (data json + Spatie media attachments). Dynamic validation `FormField::validationRules()`'ten.
 - **Sayfa SEO**: `layouts/app.blade.php` head'i @yield/@section tabanlı; detay sayfalar kendi `og_image`, `og_type`, `meta_description`'ını set eder.
 - **Sitemap**: `/sitemap.xml` dinamik route, tüm aktif/yayında içerikten oluşturulur.
+- **Accessibility**: Skip-to-content link, aria-current="page", global focus-visible ring, lang-aware aria-label'lar.
 
 ## Sprint durumu
 
-- [x] **Sprint 0** — Kurulum, Filament+Shield, brand palette
-- [x] **Sprint 1** — Layout, ana sayfa, hakkımızda, sponsor/team/timeline
-- [x] **Sprint 2** — Ar-Ge proje portfolyo + team_captain RBAC izolasyonu
-- [x] **Sprint 3** — Dinamik form motoru + Excel export
-- [x] **Sprint 4** — Event/News CMS + i18n stack swap + locale switcher
-- [x] **Sprint 4.5** — Mevcut modellerin i18n retrofit'i (full bilingual)
-- [x] **Sprint 5** — SEO, sitemap, KVKK, error pages, performans, deploy kılavuzu
+- [x] **Sprint 0–5** — MVP'nin tamamı (kurulum → SEO/KVKK)
+- [x] **Sprint 6** — Mobile menu, iletişim sayfası, form mail bildirimi, detay sayfa i18n cleanup
+- [x] **Sprint 7** — Alumni Registry + SiteMetric
+- [x] **Sprint 8** — Sponsor Lead Gen (Faz 2 tamam)
+- [x] **Sprint 9** — Site-wide search
+- [x] **Sprint 10** — 47-test feature suite + 2 production bug fix
+- [x] **Sprint 11** — Pint format pass + accessibility + back-to-top
+- [x] **Sprint 12** — Admin dashboard widget'ları
 
 ## SRS özeti
 
@@ -93,65 +97,59 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 **Ar-Ge sayfaları**: teknik inovasyon özeti, spec tablosu, takım şeması (LinkedIn'li), medya/rapor PDF galerisi.
 **Form sistemi**: üyelik, komisyon, Ar-Ge takım alımları — admin'den aç/kapat, CV upload, Excel export.
 
-## Faz 2 vizyon (planlı, henüz başlanmadı)
-
-- **Mezunlar Ağı** (Alumni Registry): mezunların sektörel haritası, mentorluk eşleştirmesi
-- **Sponsor Lead Gen**: PDF sponsorluk dosyası indirme + lead form
-
 ## Notlar / Bilinen pürüzler
 
 - Tailwind v4 değil v3 — Filament 3 uyumluluğu için
-- Original SRS dökümanında `gemtek.com` typo'ları var; doğru domain `gemdtek.com`
 - Filament Select::make options hâlâ TR — admin TR locale'de açılır (LocaleSwitcher ile EN'e geçilebilir)
-- Detay sayfalarındaki bazı bölüm başlıkları (Spesifikasyonlar, Takım yapısı) hâlâ TR — temizleme Faz 2'ye bırakıldı
-- Closure-based route'lar `route:cache` ile uyumsuz — DEPLOY.md'de not düşülmüş
-- `public/images/og-default.png` (1200×630) deploy öncesi eklenmeli
-- KVKK metni şablon halinde — canlıya çıkmadan avukat revizyonu önerilir
-
-## Deploy
-
-Detaylı adımlar için `DEPLOY.md`. Özet:
-1. SSH'la repo clone et
-2. `.env.production.example` → `.env` doldur + `php artisan key:generate`
-3. `composer install --no-dev`
-4. Yerelde `npm run build`, `public/build`'i SCP'le
-5. `php artisan migrate --force && db:seed --force`
-6. `php artisan storage:link`
-7. `php artisan config:cache view:cache event:cache`  (route:cache ATLA — closure route'lar uyumsuz)
-8. cPanel Document Root → `public/`
-9. AutoSSL + smoke test
+- KVKK metni şablon halinde — production öncesi avukat revizyonu önerilir
+- `public/images/og-default.png` (1200×630) ve `public/docs/sponsorship-kit.pdf` admin tarafından sonradan yüklenecek
 
 ## Dosya/klasör haritası
 
 ```
 app/
-├─ Filament/Resources/         # 7 resource: Sponsor, TeamMember, TimelineEvent,
-│                              #             Project, Form, Event, NewsPost
-├─ Http/Controllers/           # ApplicationFormController
+├─ Filament/Resources/         # 10 resource: Sponsor, TeamMember, TimelineEvent,
+│                              #              Project, Form, Event, NewsPost,
+│                              #              Alumni, SiteMetric, SponsorLead
+├─ Filament/Widgets/           # Dashboard KPI + table widget'ları
+├─ Http/Controllers/           # ApplicationForm, Contact, SponsorLead, Search
 ├─ Http/Middleware/            # SetLocaleFromSession
-├─ Models/                     # 11 model (+ User, ProjectSpec, ProjectMember, FormField, FormSubmission)
+├─ Models/                     # 15 model
 ├─ Policies/ProjectPolicy.php  # Captain izolasyonu
+├─ Mail/                       # Contact, FormSubmission, SponsorLead Mailable
 └─ Exports/                    # FormSubmissionsExport (Maatwebsite)
 
 resources/views/
 ├─ layouts/app.blade.php       # OG/Twitter meta, nav+switcher, footer, cookie banner
-├─ partials/cookie-banner.blade.php
+├─ partials/                   # cookie-banner, back-to-top
 ├─ home.blade.php              # Hero, metrics, countdown, sponsor strip
-├─ about.blade.php             # Mission/vision, team, timeline
+├─ about.blade.php             # Mission/vision, team, timeline, alumni CTA
 ├─ projects/{index,show}.blade.php
 ├─ events/{index,show,_card}.blade.php
 ├─ news/{index,show}.blade.php
 ├─ forms/{index,show}.blade.php
+├─ alumni/index.blade.php
+├─ sponsor/show.blade.php
+├─ contact/show.blade.php
 ├─ legal/privacy.blade.php     # KVKK
 ├─ errors/{404,500,503}.blade.php
+├─ search/index.blade.php
+├─ emails/{contact,form-submission,sponsor-lead}.blade.php
 └─ sitemap.blade.php           # XML
 
 lang/{tr,en}/
 ├─ site.php   # nav, footer, common CTA
-├─ pages.php  # page heros, sections, KVKK, errors, cookie banner
-└─ models.php # categories, statuses, tiers
+├─ pages.php  # page heros, sections, KVKK, errors, cookie banner, contact, sponsor, alumni, search
+└─ models.php # categories, statuses, tiers, alumni sectors
 
 database/
-├─ migrations/                 # 14 migration (forms timestamp'ları manuel ayarlandı)
-└─ seeders/                    # 6 seeder, idempotent (firstOrCreate)
+├─ migrations/                 # 17 migration
+└─ seeders/                    # 8 seeder, idempotent
+
+tests/Feature/                 # 47 test, in-memory SQLite, ~2s
+├─ PublicSmokeTest.php         # 23 testleri: tüm route'lar 200
+├─ FormSubmissionTest.php      # 5 testleri: validation + honeypot + closed form
+├─ ContactFlowTest.php         # 3 testleri: mail queue + validation
+├─ SponsorLeadFlowTest.php     # 3 testleri: DB + mail + invalid tier
+└─ AdminAccessTest.php         # 9 testleri: RBAC + captain isolation
 ```
