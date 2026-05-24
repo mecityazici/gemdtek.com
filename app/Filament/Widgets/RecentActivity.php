@@ -23,7 +23,7 @@ class RecentActivity extends BaseWidget
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Zaman')
                     ->since()
-                    ->tooltip(fn ($r) => $r->created_at?->format('d M Y H:i:s')),
+                    ->tooltip(fn (Activity $record) => $record->created_at?->format('d M Y H:i:s')),
                 Tables\Columns\TextColumn::make('event')
                     ->label('Olay')
                     ->badge()
@@ -35,12 +35,12 @@ class RecentActivity extends BaseWidget
                     }),
                 Tables\Columns\TextColumn::make('subject_label')
                     ->label('Kayıt')
-                    ->getStateUsing(fn ($r) => ($r->subject_type ? class_basename($r->subject_type) : '—').' #'.$r->subject_id)
+                    ->getStateUsing(fn (Activity $record) => ($record->subject_type ? class_basename($record->subject_type) : '—').' #'.$record->subject_id)
                     ->fontFamily('mono')
                     ->size('xs'),
                 Tables\Columns\TextColumn::make('causer_label')
                     ->label('Kim')
-                    ->getStateUsing(fn ($r) => $r->causer?->name ?? 'Sistem'),
+                    ->getStateUsing(fn (Activity $record) => $record->causer?->name ?? 'Sistem'),
             ])
             ->paginated(false)
             ->emptyStateHeading('Henüz aktivite yok')
