@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             FormSeeder::class,
             EventAndNewsSeeder::class,
             AlumniSeeder::class,
+            EditorRolePermissionsSeeder::class,
         ]);
     }
 }
