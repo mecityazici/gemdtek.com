@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SponsorLeadController;
 use App\Http\Middleware\SetLocaleFromSession;
 use App\Models\Alumni;
 use App\Models\Event;
+use App\Models\EventRegistration;
 use App\Models\Form;
 use App\Models\NewsPost;
 use App\Models\Project;
@@ -85,11 +87,27 @@ Route::get('/etkinlikler/rss', function () {
         ->header('Content-Type', 'application/rss+xml; charset=utf-8');
 })->name('events.rss');
 
+Route::get('/etkinlikler/kayit/onay/{token}', [EventRegistrationController::class, 'confirm'])
+    ->where('token', '[A-Za-z0-9]{48}')
+    ->name('events.registrations.confirm');
+Route::get('/etkinlikler/kayit/iptal/{token}', [EventRegistrationController::class, 'cancel'])
+    ->where('token', '[A-Za-z0-9]{48}')
+    ->name('events.registrations.cancel');
+
 Route::get('/etkinlikler/{event:slug}', function (Event $event) {
     abort_unless($event->is_active, 404);
+    $event->loadCount(['registrations as confirmed_registrations_count' => function ($q) {
+        $q->where('status', EventRegistration::STATUS_CONFIRMED);
+    }]);
 
     return view('events.show', ['event' => $event]);
 })->name('events.show');
+
+Route::get('/etkinlikler/{event:slug}/ics', [EventRegistrationController::class, 'ics'])
+    ->name('events.ics');
+Route::post('/etkinlikler/{event:slug}/kayit', [EventRegistrationController::class, 'register'])
+    ->middleware('throttle:5,1')
+    ->name('events.registrations.store');
 
 Route::get('/haberler', function (Request $request) {
     $cat = $request->string('cat')->toString();

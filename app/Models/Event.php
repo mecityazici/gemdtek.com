@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Concerns\LogsFillableActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use App\Concerns\LogsFillableActivity;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
@@ -28,13 +29,62 @@ class Event extends Model implements HasMedia
     protected $fillable = [
         'slug', 'title', 'summary', 'description', 'event_date',
         'location', 'category', 'registration_url', 'is_active', 'order',
+        'capacity', 'registration_enabled', 'registration_deadline',
     ];
 
     protected $casts = [
         'event_date' => 'datetime',
         'is_active' => 'boolean',
         'order' => 'integer',
+        'capacity' => 'integer',
+        'registration_enabled' => 'boolean',
+        'registration_deadline' => 'datetime',
     ];
+
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
+    public function confirmedRegistrationsCount(): int
+    {
+        return $this->registrations()->where('status', EventRegistration::STATUS_CONFIRMED)->count();
+    }
+
+    public function pendingOrConfirmedCount(): int
+    {
+        return $this->registrations()->whereIn('status', [
+            EventRegistration::STATUS_PENDING,
+            EventRegistration::STATUS_CONFIRMED,
+        ])->count();
+    }
+
+    public function isRegistrationOpen(): bool
+    {
+        if (! $this->registration_enabled) {
+            return false;
+        }
+
+        if ($this->registration_deadline && now()->greaterThan($this->registration_deadline)) {
+            return false;
+        }
+
+        return $this->event_date === null || $this->event_date->isFuture();
+    }
+
+    public function isFull(): bool
+    {
+        return $this->capacity !== null && $this->pendingOrConfirmedCount() >= $this->capacity;
+    }
+
+    public function remainingSeats(): ?int
+    {
+        if ($this->capacity === null) {
+            return null;
+        }
+
+        return max(0, $this->capacity - $this->pendingOrConfirmedCount());
+    }
 
     public function getRouteKeyName(): string
     {

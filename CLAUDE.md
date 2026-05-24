@@ -95,6 +95,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 17** — Bulk CSV import (Sponsor + Alumni, TR/EN translatable)
 - [x] **Sprint 18** — Newsletter (double opt-in subscribe + Filament campaign sender)
 - [x] **Sprint 19** — Admin bildirim merkezi (Filament database notifications, 3 trigger)
+- [x] **Sprint 20** — Etkinlik kayıt sistemi (RSVP + kapasite + iCal + admin bildirim)
 
 ## SRS özeti
 
@@ -115,10 +116,11 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 
 ```
 app/
-├─ Filament/Resources/         # 12 resource: Sponsor, TeamMember, TimelineEvent,
+├─ Filament/Resources/         # 13 resource: Sponsor, TeamMember, TimelineEvent,
 │                              #              Project, Form, Event, NewsPost,
 │                              #              Alumni, SiteMetric, SponsorLead,
-│                              #              NewsletterSubscriber, NewsletterCampaign
+│                              #              NewsletterSubscriber, NewsletterCampaign,
+│                              #              EventRegistration
 ├─ Filament/Widgets/           # Dashboard KPI + table widget'ları
 ├─ Filament/Imports/           # SponsorImporter, AlumniImporter (CSV bulk import)
 ├─ Http/Controllers/           # ApplicationForm, Contact, SponsorLead, Search
@@ -126,11 +128,13 @@ app/
 ├─ Http/Middleware/            # SetLocaleFromSession, SetApiLocale
 ├─ Http/Resources/             # 5 JSON Resource (Event, News, Project, Alumni, Sponsor)
 ├─ Concerns/                   # LogsFillableActivity trait
-├─ Models/                     # 17 model
+├─ Models/                     # 18 model
 ├─ Policies/ProjectPolicy.php  # Captain izolasyonu
-├─ Mail/                       # Contact, FormSubmission, SponsorLead, Newsletter (confirm+campaign) Mailable
-├─ Notifications/              # NewSponsorLead, NewFormSubmission, NewNewsletterSubscriber (Filament DB)
-├─ Support/                    # AdminNotifier (sends to super_admin + editor)
+├─ Mail/                       # Contact, FormSubmission, SponsorLead, Newsletter (confirm+campaign),
+│                              # EventRegistration (confirmation+confirmed-with-ics) Mailable
+├─ Notifications/              # NewSponsorLead, NewFormSubmission, NewNewsletterSubscriber,
+│                              # NewEventRegistration (Filament DB)
+├─ Support/                    # AdminNotifier (sends to super_admin + editor), IcsGenerator
 └─ Exports/                    # FormSubmissionsExport (Maatwebsite)
 
 public/templates/              # sponsors-template.csv, alumni-template.csv (import örnekleri)
@@ -162,7 +166,7 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 94 test, in-memory SQLite, ~4s
+tests/Feature/                 # 104 test, in-memory SQLite, ~4.5s
 ├─ PublicSmokeTest.php
 ├─ FormSubmissionTest.php
 ├─ ContactFlowTest.php
@@ -174,5 +178,6 @@ tests/Feature/                 # 94 test, in-memory SQLite, ~4s
 ├─ ApiTest.php
 ├─ ImporterTest.php            # Sponsor + Alumni CSV import + TR/EN translatable
 ├─ NewsletterTest.php          # Double opt-in subscribe + campaign dispatch
-└─ NotificationsTest.php       # Admin DB notification triggers
+├─ NotificationsTest.php       # Admin DB notification triggers
+└─ EventRegistrationTest.php   # RSVP + capacity + iCal + admin notification
 ```

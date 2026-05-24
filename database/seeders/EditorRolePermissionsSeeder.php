@@ -23,6 +23,7 @@ class EditorRolePermissionsSeeder extends Seeder
         $fullCrud = [
             'news::post',
             'event',
+            'event::registration',
             'timeline::event',
             'alumni',
             'newsletter::campaign',

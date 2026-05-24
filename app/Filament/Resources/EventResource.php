@@ -91,9 +91,26 @@ class EventResource extends Resource
                                 ->label('Lokasyon')
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('registration_url')
-                                ->label('Kayıt URL')
+                                ->label('Harici kayıt URL')
                                 ->url()
-                                ->helperText('Boş bırakılırsa CTA gizlenir.'),
+                                ->helperText('Site-dışı bir kayıt sayfası kullanılacaksa buraya yaz. Boşsa dahili RSVP açılabilir.'),
+                            Forms\Components\Section::make('Site içi RSVP')
+                                ->description('Açıkken ziyaretçiler etkinlik sayfasından doğrudan kayıt olabilir.')
+                                ->schema([
+                                    Forms\Components\Grid::make(3)->schema([
+                                        Forms\Components\Toggle::make('registration_enabled')->label('RSVP aç')->default(false),
+                                        Forms\Components\TextInput::make('capacity')
+                                            ->label('Kapasite')
+                                            ->numeric()
+                                            ->minValue(1)
+                                            ->helperText('Boş = sınırsız'),
+                                        Forms\Components\DateTimePicker::make('registration_deadline')
+                                            ->label('Son kayıt tarihi')
+                                            ->seconds(false)
+                                            ->native(false),
+                                    ]),
+                                ])
+                                ->collapsed(fn ($record) => ! ($record?->registration_enabled)),
                             Forms\Components\Grid::make(2)->schema([
                                 Forms\Components\TextInput::make('order')->label('Sıra')->numeric()->default(0),
                                 Forms\Components\Toggle::make('is_active')->label('Aktif')->default(true),
