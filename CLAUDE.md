@@ -97,6 +97,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 19** — Admin bildirim merkezi (Filament database notifications, 3 trigger)
 - [x] **Sprint 20** — Etkinlik kayıt sistemi (RSVP + kapasite + iCal + admin bildirim)
 - [x] **Sprint 21** — Görsel pipeline: MediaLibrary conversions (thumb/web/og) + WebP + responsive img
+- [x] **Sprint 22** — Public etkinlik takvimi (`/etkinlikler/takvim`, ay görünümü, locale-aware)
 
 ## SRS özeti
 
@@ -146,7 +147,7 @@ resources/views/
 ├─ home.blade.php              # Hero, metrics, countdown, sponsor strip
 ├─ about.blade.php             # Mission/vision, team, timeline, alumni CTA
 ├─ projects/{index,show}.blade.php
-├─ events/{index,show,_card}.blade.php
+├─ events/{index,show,_card,calendar,registration-feedback}.blade.php
 ├─ news/{index,show}.blade.php
 ├─ forms/{index,show}.blade.php
 ├─ alumni/index.blade.php
@@ -167,7 +168,7 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 110 test, in-memory SQLite, ~9s
+tests/Feature/                 # 116 test, in-memory SQLite, ~9s
 ├─ PublicSmokeTest.php
 ├─ FormSubmissionTest.php
 ├─ ContactFlowTest.php

@@ -21,7 +21,7 @@
 </section>
 
 <section class="container-tight py-10">
-    <div class="flex flex-wrap gap-2">
+    <div class="flex flex-wrap items-center gap-2">
         <a href="{{ route('events.index') }}"
            class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ $activeCat === '' ? 'bg-navy-800 text-cream' : 'bg-cream text-navy-800 hover:bg-navy-100' }}">
             {{ __('site.cta.all') }}
@@ -32,6 +32,12 @@
                 {{ $label }}
             </a>
         @endforeach
+        <a href="{{ route('events.calendar') }}"
+           class="ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-petrol text-cream hover:bg-navy-800 transition-colors"
+           aria-label="{{ __('pages.events.calendar.view_calendar') }}">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            {{ __('pages.events.calendar.view_calendar') }}
+        </a>
     </div>
 </section>
 

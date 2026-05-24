@@ -18,6 +18,7 @@ use App\Models\Sponsor;
 use App\Models\TeamMember;
 use App\Models\TimelineEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -86,6 +87,35 @@ Route::get('/etkinlikler/rss', function () {
         ->view('feeds.events', ['events' => $events])
         ->header('Content-Type', 'application/rss+xml; charset=utf-8');
 })->name('events.rss');
+
+Route::get('/etkinlikler/takvim', function (Request $request) {
+    $monthInput = $request->string('month')->toString();
+    try {
+        $cursor = $monthInput
+            ? Carbon::createFromFormat('Y-m', $monthInput)->startOfMonth()
+            : Carbon::now()->startOfMonth();
+    } catch (Throwable) {
+        $cursor = Carbon::now()->startOfMonth();
+    }
+
+    $rangeStart = $cursor->copy()->startOfWeek();
+    $rangeEnd = $cursor->copy()->endOfMonth()->endOfWeek();
+
+    $events = Event::active()
+        ->whereBetween('event_date', [$rangeStart, $rangeEnd])
+        ->orderBy('event_date')
+        ->get()
+        ->groupBy(fn (Event $e) => $e->event_date->toDateString());
+
+    return view('events.calendar', [
+        'cursor' => $cursor,
+        'rangeStart' => $rangeStart,
+        'rangeEnd' => $rangeEnd,
+        'eventsByDay' => $events,
+        'prevMonth' => $cursor->copy()->subMonth()->format('Y-m'),
+        'nextMonth' => $cursor->copy()->addMonth()->format('Y-m'),
+    ]);
+})->name('events.calendar');
 
 Route::get('/etkinlikler/kayit/onay/{token}', [EventRegistrationController::class, 'confirm'])
     ->where('token', '[A-Za-z0-9]{48}')
@@ -240,6 +270,7 @@ Route::get('/sitemap.xml', function () {
     $urls->push(['loc' => route('contact'),       'changefreq' => 'yearly', 'priority' => '0.4']);
     $urls->push(['loc' => route('sponsor.show'),  'changefreq' => 'monthly', 'priority' => '0.7']);
     $urls->push(['loc' => route('newsletter.show'), 'changefreq' => 'monthly', 'priority' => '0.5']);
+    $urls->push(['loc' => route('events.calendar'), 'changefreq' => 'weekly', 'priority' => '0.6']);
     $urls->push(['loc' => route('news.rss'),      'changefreq' => 'daily',   'priority' => '0.4']);
     $urls->push(['loc' => route('events.rss'),    'changefreq' => 'weekly',  'priority' => '0.4']);
 

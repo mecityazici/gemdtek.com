@@ -76,6 +76,22 @@ return [
         'date_label' => 'Tarih',
         'location_label' => 'Lokasyon',
         'add_to_calendar' => 'Takvime ekle (.ics)',
+        'calendar' => [
+            'eyebrow' => 'Takvim',
+            'title' => 'Etkinlik Takvimi',
+            'meta' => 'GEMDTEK etkinliklerini ay görünümünde keşfet.',
+            'subline' => 'Yaklaşan zirve, atölye ve panellerin ay görünümü. Bir güne tıklayıp detay sayfasına git.',
+            'today' => 'Bu ay',
+            'prev' => 'Önceki ay',
+            'next' => 'Sonraki ay',
+            'list_view' => 'Liste görünümü',
+            'view_calendar' => 'Takvim görünümü',
+            'more' => 'daha',
+            'weekdays' => [
+                'mon' => 'Pzt', 'tue' => 'Sal', 'wed' => 'Çar',
+                'thu' => 'Per', 'fri' => 'Cum', 'sat' => 'Cmt', 'sun' => 'Paz',
+            ],
+        ],
         'rsvp' => [
             'eyebrow' => 'Etkinlik Kaydı',
             'title' => 'Yerini şimdiden ayır',

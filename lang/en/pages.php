@@ -76,6 +76,22 @@ return [
         'date_label' => 'Date',
         'location_label' => 'Location',
         'add_to_calendar' => 'Add to calendar (.ics)',
+        'calendar' => [
+            'eyebrow' => 'Calendar',
+            'title' => 'Event Calendar',
+            'meta' => 'Explore GEMDTEK events in month view.',
+            'subline' => 'Monthly view of upcoming summits, workshops, and panels. Click a day to open its detail page.',
+            'today' => 'This month',
+            'prev' => 'Previous month',
+            'next' => 'Next month',
+            'list_view' => 'List view',
+            'view_calendar' => 'Calendar view',
+            'more' => 'more',
+            'weekdays' => [
+                'mon' => 'Mon', 'tue' => 'Tue', 'wed' => 'Wed',
+                'thu' => 'Thu', 'fri' => 'Fri', 'sat' => 'Sat', 'sun' => 'Sun',
+            ],
+        ],
         'rsvp' => [
             'eyebrow' => 'Event RSVP',
             'title' => 'Reserve your spot',
