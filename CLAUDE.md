@@ -88,6 +88,11 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 10** — 47-test feature suite + 2 production bug fix
 - [x] **Sprint 11** — Pint format pass + accessibility + back-to-top
 - [x] **Sprint 12** — Admin dashboard widget'ları
+- [x] **Sprint 13** — Spatie Activitylog + ActivityResource + RecentActivityWidget
+- [x] **Sprint 14** — Editör rolü permissions + RBAC testleri
+- [x] **Sprint 15** — RSS feeds (haberler + etkinlikler)
+- [x] **Sprint 16** — Public REST API v1 (5 endpoint, throttle 60/min)
+- [x] **Sprint 17** — Bulk CSV import (Sponsor + Alumni, TR/EN translatable)
 
 ## SRS özeti
 
@@ -112,12 +117,18 @@ app/
 │                              #              Project, Form, Event, NewsPost,
 │                              #              Alumni, SiteMetric, SponsorLead
 ├─ Filament/Widgets/           # Dashboard KPI + table widget'ları
+├─ Filament/Imports/           # SponsorImporter, AlumniImporter (CSV bulk import)
 ├─ Http/Controllers/           # ApplicationForm, Contact, SponsorLead, Search
-├─ Http/Middleware/            # SetLocaleFromSession
+├─ Http/Controllers/Api/       # 5 read-only API controller (v1)
+├─ Http/Middleware/            # SetLocaleFromSession, SetApiLocale
+├─ Http/Resources/             # 5 JSON Resource (Event, News, Project, Alumni, Sponsor)
+├─ Concerns/                   # LogsFillableActivity trait
 ├─ Models/                     # 15 model
 ├─ Policies/ProjectPolicy.php  # Captain izolasyonu
 ├─ Mail/                       # Contact, FormSubmission, SponsorLead Mailable
 └─ Exports/                    # FormSubmissionsExport (Maatwebsite)
+
+public/templates/              # sponsors-template.csv, alumni-template.csv (import örnekleri)
 
 resources/views/
 ├─ layouts/app.blade.php       # OG/Twitter meta, nav+switcher, footer, cookie banner
@@ -146,10 +157,15 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 47 test, in-memory SQLite, ~2s
-├─ PublicSmokeTest.php         # 23 testleri: tüm route'lar 200
-├─ FormSubmissionTest.php      # 5 testleri: validation + honeypot + closed form
-├─ ContactFlowTest.php         # 3 testleri: mail queue + validation
-├─ SponsorLeadFlowTest.php     # 3 testleri: DB + mail + invalid tier
-└─ AdminAccessTest.php         # 9 testleri: RBAC + captain isolation
+tests/Feature/                 # 79 test, in-memory SQLite, ~3s
+├─ PublicSmokeTest.php
+├─ FormSubmissionTest.php
+├─ ContactFlowTest.php
+├─ SponsorLeadFlowTest.php
+├─ AdminAccessTest.php         # super_admin + team_captain isolation
+├─ EditorAccessTest.php        # editor rol kısıtlamaları
+├─ ActivityLogTest.php
+├─ RssFeedTest.php
+├─ ApiTest.php
+└─ ImporterTest.php            # Sponsor + Alumni CSV import + TR/EN translatable
 ```

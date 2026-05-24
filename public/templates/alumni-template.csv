@@ -1,0 +1,7 @@
+name,position,position_en,graduation_year,sector,company,city,linkedin_url,order,is_public
+"Ahmet Yılmaz","Tasarım Mühendisi","Design Engineer",2018,tasarim-ofisi,"Delta Marine","İstanbul","https://linkedin.com/in/ahmetyilmaz",1,1
+"Zeynep Kaya","Üretim Müdürü","Production Manager",2015,tersane,"Sefine Tersanesi","Yalova","https://linkedin.com/in/zeynepkaya",2,1
+"Mehmet Demir","Klas Sörveyörü","Class Surveyor",2012,klas,"Türk Loydu","İstanbul","https://linkedin.com/in/mehmetdemir",3,1
+"Elif Çelik","Armatör Temsilcisi","Owner Representative",2017,armator,"YK Shipping","İstanbul","https://linkedin.com/in/elifcelik",4,1
+"Burak Şahin","Akademisyen","Academic",2010,akademik,"İTÜ","İstanbul","https://linkedin.com/in/buraksahin",5,1
+"Selin Arslan","Yazılım Geliştirici","Software Developer",2020,yazilim,"Lloyd's Register","İstanbul","https://linkedin.com/in/selinarslan",6,1

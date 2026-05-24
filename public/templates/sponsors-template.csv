@@ -1,0 +1,6 @@
+name,name_en,url,tier,order,is_active
+"Tersane İstanbul","Istanbul Shipyard","https://tersaneistanbul.com",platinum,1,1
+"Sefine Tersanesi","Sefine Shipyard","https://sefine.com.tr",gold,2,1
+"DESAN Tersane","DESAN Shipyard","https://desan.com.tr",silver,3,1
+"Çeksan Tersanesi","Ceksan Shipyard","https://ceksan.com.tr",bronze,4,1
+"ITÜ ARI Teknokent","ITU ARI Technopark","https://ariteknokent.com.tr",destek,5,1

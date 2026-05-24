@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\AlumniResource\Pages;
 
+use App\Filament\Imports\AlumniImporter;
 use App\Filament\Resources\AlumniResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
@@ -17,6 +18,10 @@ class ListAlumnis extends ListRecords
     {
         return [
             Actions\LocaleSwitcher::make(),
+            Actions\ImportAction::make()
+                ->importer(AlumniImporter::class)
+                ->label('CSV ile içe aktar')
+                ->icon('heroicon-o-arrow-up-tray'),
             Actions\CreateAction::make(),
         ];
     }

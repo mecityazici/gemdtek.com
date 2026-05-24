@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SponsorResource\Pages;
 
+use App\Filament\Imports\SponsorImporter;
 use App\Filament\Resources\SponsorResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
@@ -17,6 +18,10 @@ class ListSponsors extends ListRecords
     {
         return [
             Actions\LocaleSwitcher::make(),
+            Actions\ImportAction::make()
+                ->importer(SponsorImporter::class)
+                ->label('CSV ile içe aktar')
+                ->icon('heroicon-o-arrow-up-tray'),
             Actions\CreateAction::make(),
         ];
     }
