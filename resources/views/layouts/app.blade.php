@@ -45,6 +45,14 @@
 
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
+    {{-- PWA --}}
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#0B2545">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GEMDTEK">
+    <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon.png') }}">
+
     {{-- RSS feed auto-discovery --}}
     <link rel="alternate" type="application/rss+xml" title="GEMDTEK — Haberler" href="{{ route('news.rss') }}">
     <link rel="alternate" type="application/rss+xml" title="GEMDTEK — Etkinlikler" href="{{ route('events.rss') }}">
@@ -234,6 +242,16 @@
 
     @include('partials.back-to-top')
     @include('partials.cookie-banner')
+
+    @production
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                });
+            }
+        </script>
+    @endproduction
 
 </body>
 </html>

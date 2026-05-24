@@ -98,6 +98,7 @@ Fontlar Google Fonts: **Inter** (gövde), **Space Grotesk** (başlık), **JetBra
 - [x] **Sprint 20** — Etkinlik kayıt sistemi (RSVP + kapasite + iCal + admin bildirim)
 - [x] **Sprint 21** — Görsel pipeline: MediaLibrary conversions (thumb/web/og) + WebP + responsive img
 - [x] **Sprint 22** — Public etkinlik takvimi (`/etkinlikler/takvim`, ay görünümü, locale-aware)
+- [x] **Sprint 23** — PWA: manifest, service worker (network-first + offline), brand ikon üretici
 
 ## SRS özeti
 
@@ -140,6 +141,8 @@ app/
 └─ Exports/                    # FormSubmissionsExport (Maatwebsite)
 
 public/templates/              # sponsors-template.csv, alumni-template.csv (import örnekleri)
+public/icons/                  # PWA ikonları (192/512/maskable/apple-touch) — `php artisan app:generate-pwa-icons`
+public/{manifest.json,sw.js}   # PWA manifest + service worker (production-only register)
 
 resources/views/
 ├─ layouts/app.blade.php       # OG/Twitter meta, nav+switcher, footer, cookie banner
@@ -168,7 +171,7 @@ database/
 ├─ migrations/                 # 17 migration
 └─ seeders/                    # 8 seeder, idempotent
 
-tests/Feature/                 # 116 test, in-memory SQLite, ~9s
+tests/Feature/                 # 122 test, in-memory SQLite, ~9s
 ├─ PublicSmokeTest.php
 ├─ FormSubmissionTest.php
 ├─ ContactFlowTest.php

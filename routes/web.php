@@ -175,6 +175,7 @@ Route::get('/lang/{locale}', function (string $locale, Request $request) {
 })->name('lang.switch');
 
 Route::view('/kvkk', 'legal.privacy')->name('legal.privacy');
+Route::view('/offline', 'offline')->name('offline');
 
 Route::get('/iletisim', [ContactController::class, 'show'])->name('contact');
 Route::post('/iletisim', [ContactController::class, 'submit'])
