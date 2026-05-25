@@ -2,24 +2,27 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class EditorRolePermissionsSeeder extends Seeder
 {
     /**
-     * Editor: içerik üreten ekip. Haber/etkinlik/timeline/alumni'de tam yetki,
-     * kurumsal liste ve başvuru verilerinde sadece görüntüleme,
-     * sistem ayarlarına (SiteMetric, Activity, Role) erişim yok.
+     * Editor rolünün permission haritası.
+     * Editor: içerik üreten ekip. Haber/etkinlik/timeline/alumni/newsletter
+     * kampanyada tam yetki; kurumsal liste ve başvuru verilerinde sadece
+     * görüntüleme; sistem ayarlarına (SiteMetric, Activity, Role, User,
+     * SiteSettings) erişim yok.
+     *
+     * NOT: Bu seeder hiç user yaratmaz. Production'da editor kullanıcıları
+     * super_admin tarafından admin panelden eklenir (Sistem → Kullanıcılar).
+     * Local geliştirme için test editor: DemoContentSeeder içinde tanımlı.
      */
     public function run(): void
     {
         $editor = Role::firstOrCreate(['name' => 'editor', 'guard_name' => 'web']);
 
-        // Resource slug eşleştirmesi: Shield permission'ları like '%{slug}' formatında biter
         $fullCrud = [
             'news::post',
             'event',
@@ -48,7 +51,6 @@ class EditorRolePermissionsSeeder extends Seeder
         $names = collect();
 
         foreach ($fullCrud as $slug) {
-            // Tüm action'lar (view, view_any, create, update, delete vb.)
             $names = $names->merge(
                 Permission::query()
                     ->where('name', 'like', '%_'.$slug)
@@ -75,27 +77,10 @@ class EditorRolePermissionsSeeder extends Seeder
                 ->pluck('name')
         );
 
-        // Sadece var olan permission'lar
         $valid = Permission::whereIn('name', $names->unique())->pluck('name')->all();
 
         $editor->syncPermissions($valid);
 
         $this->command->line('Editor rolüne '.count($valid).' permission atandı.');
-
-        // Test editor kullanıcısı
-        $user = User::firstOrCreate(
-            ['email' => 'editor@gemdtek.com'],
-            [
-                'name' => 'Editor Test',
-                'password' => Hash::make('Editor!2026'),
-                'email_verified_at' => now(),
-            ],
-        );
-
-        if (! $user->hasRole('editor')) {
-            $user->assignRole('editor');
-        }
-
-        $this->command->line('Test editör: editor@gemdtek.com / Editor!2026');
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Local + staging için örnek içerik. PRODUCTION'da çağırma.
@@ -18,6 +20,8 @@ use Illuminate\Database\Seeder;
  *   - 3 başvuru formu (üyelik, komisyon, Ar-Ge takım)
  *   - 4 etkinlik + 4-5 haber
  *   - 8-12 mezun
+ *   - Test kullanıcı: editor@gemdtek.com (Editor!2026)
+ *     [kaptan@gemdtek.com Captain!2026 — ProjectSeeder içinde]
  */
 class DemoContentSeeder extends Seeder
 {
@@ -32,5 +36,22 @@ class DemoContentSeeder extends Seeder
             EventAndNewsSeeder::class,
             AlumniSeeder::class,
         ]);
+
+        // Test editor user — sadece local geliştirme/test için.
+        // Production'da editor user'ları admin paneli üzerinden yaratılır.
+        $editor = User::firstOrCreate(
+            ['email' => 'editor@gemdtek.com'],
+            [
+                'name' => 'Editor Test',
+                'password' => Hash::make('Editor!2026'),
+                'email_verified_at' => now(),
+            ],
+        );
+
+        if (! $editor->hasRole('editor')) {
+            $editor->assignRole('editor');
+        }
+
+        $this->command->line('Test editor (local-only): editor@gemdtek.com / Editor!2026');
     }
 }
