@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventRegistrationController;
+use App\Http\Controllers\HealthController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SponsorLeadController;
@@ -176,6 +177,9 @@ Route::get('/lang/{locale}', function (string $locale, Request $request) {
 
 Route::view('/kvkk', 'legal.privacy')->name('legal.privacy');
 Route::view('/offline', 'offline')->name('offline');
+
+// External monitoring (UptimeRobot vb.) — sayfa indexlenmez, hızlı JSON
+Route::get('/health', HealthController::class)->name('health');
 
 Route::get('/iletisim', [ContactController::class, 'show'])->name('contact');
 Route::post('/iletisim', [ContactController::class, 'submit'])
