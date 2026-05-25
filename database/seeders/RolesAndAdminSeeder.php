@@ -25,32 +25,49 @@ class RolesAndAdminSeeder extends Seeder
         Role::firstOrCreate(['name' => 'editor', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'team_captain', 'guard_name' => 'web']);
 
-        // super_admin: tüm permissions — Shield bypass'ı + explicit grant
-        // (Spatie Permission Gate::before, izin atanmamışsa false döner;
-        //  Shield bypass'ı ondan sonra çalışmadığı için tüm izinleri açıkça verelim)
+        // super_admin: tüm permissions — Shield bypass + explicit grant
         $superAdmin->syncPermissions(Permission::all());
 
         $email = env('ADMIN_EMAIL', 'admin@gemdtek.com');
-        $password = env('ADMIN_PASSWORD', 'ChangeMe!2026');
+        $existing = User::where('email', $email)->first();
 
-        // updateOrCreate: mevcut user'sa şifreyi de günceller; firstOrCreate sadece
-        // ilk seferinde yarattığı için .env'deki ADMIN_PASSWORD değişiminin
-        // hash'e yansımıyordu — bu sürüm her seed'de password'u .env ile senkron tutar.
-        $user = User::updateOrCreate(
-            ['email' => $email],
-            [
-                'name' => env('ADMIN_NAME', 'GEMDTEK Admin'),
-                'password' => Hash::make($password),
-                'email_verified_at' => now(),
-            ],
-        );
+        if ($existing) {
+            // User var → şifreye DOKUNMA. Sadece role'ü ve verified flag'i garantile.
+            // (Production'da seeder yeniden çalıştırıldığında admin'in panelden değiştirdiği
+            //  şifre korunsun. Şifre sıfırlamak için Filament panel veya tinker kullanılır.)
+            if (! $existing->hasRole('super_admin')) {
+                $existing->assignRole($superAdmin);
+            }
+            if (! $existing->email_verified_at) {
+                $existing->forceFill(['email_verified_at' => now()])->save();
+            }
 
-        if (! $user->hasRole('super_admin')) {
-            $user->assignRole($superAdmin);
+            $this->command->info('Admin user var, dokunulmadı.');
+            $this->command->line("  Email:    {$email}");
+            $this->command->line('  Password: (mevcut şifre korundu)');
+
+            return;
         }
 
-        $this->command->info('Admin user ready.');
+        // İlk kurulum: yeni admin yarat
+        $password = env('ADMIN_PASSWORD');
+        if (empty($password)) {
+            $this->command->error('İlk kurulum için .env\'de ADMIN_PASSWORD ZORUNLU. Lütfen doldur ve seed\'i tekrar çalıştır.');
+
+            return;
+        }
+
+        $user = User::create([
+            'name' => env('ADMIN_NAME', 'GEMDTEK Admin'),
+            'email' => $email,
+            'password' => Hash::make($password),
+            'email_verified_at' => now(),
+        ]);
+
+        $user->assignRole($superAdmin);
+
+        $this->command->info('Admin user oluşturuldu.');
         $this->command->line("  Email:    {$email}");
-        $this->command->line("  Password: {$password}  (ilk girişte değiştir!)");
+        $this->command->line("  Password: {$password}  (panelden hemen değiştir!)");
     }
 }
