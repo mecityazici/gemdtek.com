@@ -8,7 +8,7 @@
     @php
         $pageTitle       = trim($__env->yieldContent('title', 'GEMDTEK — ' . __('site.footer.tagline')));
         $pageDescription = trim($__env->yieldContent('meta_description', __('pages.home.subline')));
-        $ogImage         = trim($__env->yieldContent('og_image', url('/images/og-default.png')));
+        $ogImage         = trim($__env->yieldContent('og_image', setting('site.og_default') ?: url('/images/og-default.png')));
         $ogType          = trim($__env->yieldContent('og_type', 'website'));
         $canonical       = url()->current();
     @endphp
@@ -80,8 +80,12 @@
     <div x-data="{ open: false }" @keydown.escape.window="open = false">
         <header class="bg-navy-900 text-cream sticky top-0 z-40">
             <div class="container-tight flex items-center justify-between py-5">
-                <a href="{{ route('home') }}" class="font-display text-xl tracking-wide">
-                    GEMDTEK
+                <a href="{{ route('home') }}" class="font-display text-xl tracking-wide flex items-center gap-2">
+                    @if ($logoUrl = setting('site.logo'))
+                        <img src="{{ $logoUrl }}" alt="{{ setting('site.name', 'GEMDTEK') }}" class="h-8 w-auto" decoding="async">
+                    @else
+                        {{ setting('site.name', 'GEMDTEK') }}
+                    @endif
                 </a>
 
                 {{-- Desktop nav --}}
@@ -152,7 +156,7 @@
                    x-transition:leave-end="translate-x-full"
                    class="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-navy-900 text-cream shadow-2xl flex flex-col">
                 <div class="flex items-center justify-between p-5 border-b border-cream/10">
-                    <span class="font-display text-lg">GEMDTEK</span>
+                    <span class="font-display text-lg">{{ setting('site.name', 'GEMDTEK') }}</span>
                     <button @click="open = false"
                             class="p-2 -mr-2 text-cream/70 hover:text-cream"
                             aria-label="Menüyü kapat">
@@ -229,7 +233,7 @@
             @endif
         </div>
         <div class="container-tight py-6 text-sm flex flex-col md:flex-row items-center justify-between gap-4">
-            <p>&copy; {{ date('Y') }} GEMDTEK — {{ __('site.footer.rights') }}.</p>
+            <p>&copy; {{ date('Y') }} {{ setting('site.name', 'GEMDTEK') }} — {{ __('site.footer.rights') }}.</p>
             <div class="flex flex-wrap items-center gap-6">
                 <a href="{{ route('sponsor.show') }}" class="hover:text-cream">{{ __('pages.sponsor.eyebrow') }}</a>
                 <a href="{{ route('alumni.index') }}" class="hover:text-cream">{{ __('pages.alumni.eyebrow') }}</a>
