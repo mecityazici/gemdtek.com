@@ -28,10 +28,13 @@ RETENTION_DAYS="${RETENTION_DAYS:-30}"
 mkdir -p "$BACKUP_DIR"
 cd "$APP_DIR"
 
-# .env'den credentials oku
-DB_NAME=$(grep -E '^DB_DATABASE=' .env | head -1 | cut -d '=' -f2-)
-DB_USER=$(grep -E '^DB_USERNAME=' .env | head -1 | cut -d '=' -f2-)
-DB_PASS=$(grep -E '^DB_PASSWORD=' .env | head -1 | cut -d '=' -f2-)
+# .env'den credentials oku (boşlukları + tırnakları trim et)
+env_value() {
+    grep -E "^$1=" .env | head -1 | cut -d '=' -f2- | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//"
+}
+DB_NAME=$(env_value DB_DATABASE)
+DB_USER=$(env_value DB_USERNAME)
+DB_PASS=$(env_value DB_PASSWORD)
 
 if [ -z "$DB_NAME" ] || [ -z "$DB_USER" ]; then
     echo "ERROR: .env'de DB_DATABASE veya DB_USERNAME bulunamadı."
