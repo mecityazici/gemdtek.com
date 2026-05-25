@@ -33,6 +33,15 @@ class SiteSettings extends Page implements HasForms
 
     public ?array $data = [];
 
+    /**
+     * Sadece super_admin görsün — editör/kaptan sol nav'da bile bu sayfayı görmez,
+     * URL'i yazıp gelirse 403 alır.
+     */
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('super_admin') ?? false;
+    }
+
     public function mount(): void
     {
         $this->form->fill([
