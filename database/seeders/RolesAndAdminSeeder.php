@@ -33,7 +33,10 @@ class RolesAndAdminSeeder extends Seeder
         $email = env('ADMIN_EMAIL', 'admin@gemdtek.com');
         $password = env('ADMIN_PASSWORD', 'ChangeMe!2026');
 
-        $user = User::firstOrCreate(
+        // updateOrCreate: mevcut user'sa şifreyi de günceller; firstOrCreate sadece
+        // ilk seferinde yarattığı için .env'deki ADMIN_PASSWORD değişiminin
+        // hash'e yansımıyordu — bu sürüm her seed'de password'u .env ile senkron tutar.
+        $user = User::updateOrCreate(
             ['email' => $email],
             [
                 'name' => env('ADMIN_NAME', 'GEMDTEK Admin'),

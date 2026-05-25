@@ -29,6 +29,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile()
+            ->passwordReset()
             ->brandName('GEMDTEK')
             ->colors([
                 'primary' => Color::hex('#0B2545'),
