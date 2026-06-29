@@ -15,6 +15,12 @@ class RecentSubmissions extends BaseWidget
 
     protected int|string|array $columnSpan = 'full';
 
+    /** Başvuru e-postaları (KVKK) — yalnızca super_admin görür. */
+    public static function canView(): bool
+    {
+        return auth()->user()?->hasRole('super_admin') ?? false;
+    }
+
     public function table(Table $table): Table
     {
         return $table

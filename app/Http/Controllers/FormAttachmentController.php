@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\FormSubmission;
-use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -20,7 +19,8 @@ class FormAttachmentController extends Controller
     public function show(Request $request, Media $media): BinaryFileResponse
     {
         $user = $request->user();
-        abort_unless($user && $user->canAccessPanel(Filament::getPanel('admin')), 403);
+        // Ekler form-görüntüleme yetkisine bağlı; team_captain (form izni yok) erişemez.
+        abort_unless($user && $user->can('view_any_form'), 403);
 
         abort_unless(
             $media->collection_name === 'attachments'

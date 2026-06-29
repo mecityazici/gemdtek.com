@@ -11,6 +11,7 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Models\Activity;
 
 class ActivityResource extends Resource
@@ -31,6 +32,17 @@ class ActivityResource extends Resource
     public static function canCreate(): bool
     {
         return false;
+    }
+
+    /** Audit log hassastır — yalnızca super_admin görür (editor/team_captain değil). */
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasRole('super_admin') ?? false;
+    }
+
+    public static function canView(Model $record): bool
+    {
+        return auth()->user()?->hasRole('super_admin') ?? false;
     }
 
     public static function form(Form $form): Form

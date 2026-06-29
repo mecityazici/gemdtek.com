@@ -15,6 +15,12 @@ class RecentActivity extends BaseWidget
 
     protected int|string|array $columnSpan = 'full';
 
+    /** Audit log hassastır — yalnızca super_admin görür. */
+    public static function canView(): bool
+    {
+        return auth()->user()?->hasRole('super_admin') ?? false;
+    }
+
     public function table(Table $table): Table
     {
         return $table
