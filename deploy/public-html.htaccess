@@ -18,10 +18,13 @@ Options -Indexes -MultiViews
     RewriteRule ^(\.env|\.git|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|\.user\.ini|CLAUDE\.md|DEPLOY\.md)$ - [F,L]
 
     # 2) Laravel kök klasörleri — direkt erişim yasak
-    #    NOT: "lang" bilerek listede DEĞİL — /lang/{locale} dil değiştirme route'u
-    #    ile çakışıyordu (EN seçince 403). Gerçek lang/ klasörü zaten 4. kuraldaki
-    #    public/ ön-eki ile korunuyor (public/lang/... mevcut değil → Laravel 404).
-    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor|deploy)(/|$) - [F,L]
+    #    NOT: "lang" ve "storage" bilerek listede DEĞİL:
+    #    - /lang/{locale} dil değiştirme route'u ile çakışıyordu (EN seçince 403).
+    #    - /storage/... yüklenen TÜM medyanın public URL'idir; bu kural onu da
+    #      403'lüyordu (sitede hiçbir görsel görünmüyordu). Asıl framework storage/
+    #      klasörü güvende: public/storage symlink'i yalnızca storage/app/public'i
+    #      açar; hassas log/cache/.env bu yoldan erişilemez (ayrıca 1. kural korur).
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|tests|vendor|deploy)(/|$) - [F,L]
 
     # 3) Earsiv / api01 / pm gibi var olan başka projeler — Laravel'e gitmesin
     # (Aktif kullanıyorsan bu satırları aç:)
