@@ -1,0 +1,35 @@
+# ==============================================================================
+# GEMDTEK — public_html root .htaccess (shared hosting / locked doc-root)
+#
+# Bu dosyayı sunucuda /home/gemdtekc/public_html/ klasörüne
+# .htaccess  (başında nokta, uzantısız)  adıyla yükle.
+#
+# Görevi: Document Root cPanel'den değiştirilemediği için, public_html'e gelen
+# tüm istekleri Laravel'in public/ alt klasörüne yönlendirir; .env, app/,
+# vendor/ gibi hassas dosyalara direkt erişimi engeller.
+# ==============================================================================
+
+Options -Indexes -MultiViews
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1) Hassas dosyalar — direkt erişim yasak
+    RewriteRule ^(\.env|\.git|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|\.user\.ini|CLAUDE\.md|DEPLOY\.md)$ - [F,L]
+
+    # 2) Laravel kök klasörleri — direkt erişim yasak
+    #    NOT: "lang" bilerek listede DEĞİL — /lang/{locale} dil değiştirme route'u
+    #    ile çakışıyordu (EN seçince 403). Gerçek lang/ klasörü zaten 4. kuraldaki
+    #    public/ ön-eki ile korunuyor (public/lang/... mevcut değil → Laravel 404).
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor|deploy)(/|$) - [F,L]
+
+    # 3) Earsiv / api01 / pm gibi var olan başka projeler — Laravel'e gitmesin
+    # (Aktif kullanıyorsan bu satırları aç:)
+    # RewriteRule ^earsiv(/|$) - [L]
+    # RewriteRule ^api01(/|$) - [L]
+    # RewriteRule ^pm(/|$) - [L]
+
+    # 4) Diğer her şeyi Laravel'in public/ klasörüne aktar
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
