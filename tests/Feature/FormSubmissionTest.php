@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Filament\Resources\FormResource\Pages\EditForm;
 use App\Filament\Resources\FormResource\RelationManagers\SubmissionsRelationManager;
+use App\Filament\Widgets\RecentSubmissions;
 use App\Mail\FormSubmissionReceived;
 use App\Models\Form;
 use App\Models\FormSubmission;
@@ -176,6 +177,43 @@ class FormSubmissionTest extends TestCase
         } finally {
             File::deleteDirectory($root);
         }
+    }
+
+    public function test_recent_submissions_widget_renders_for_non_translatable_form(): void
+    {
+        // Form/FormField translatable DEĞİL — widget getTranslation() çağırırsa
+        // dashboard 500 verir. Bir başvuru varken widget hatasız render olmalı.
+        $form = Form::where('slug', 'uyelik')->first();
+        FormSubmission::create([
+            'form_id' => $form->id,
+            'data' => ['email' => 'aday@example.com'],
+        ]);
+
+        $admin = User::where('email', 'admin@gemdtek.com')->first();
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        Livewire::actingAs($admin)
+            ->test(RecentSubmissions::class)
+            ->assertSuccessful()
+            ->assertSee($form->title);
+    }
+
+    public function test_form_submission_mail_builds_for_non_translatable_form(): void
+    {
+        // envelope() form->title, content() field->label kullanır — Form/FormField
+        // translatable olmadığı için getTranslation() çağrısı fatal olurdu.
+        $form = Form::where('slug', 'ar-ge-basvuru')->first();
+        $submission = FormSubmission::create([
+            'form_id' => $form->id,
+            'data' => ['ad_soyad' => 'Aday', 'email' => 'a@b.com'],
+        ]);
+
+        $mailable = new FormSubmissionReceived($submission);
+        $subject = $mailable->envelope()->subject;   // form->title
+        $content = $mailable->content();              // field->label + formTitle
+
+        $this->assertStringContainsString($form->title, $subject);
+        $this->assertSame('emails.form-submission', $content->markdown);
     }
 
     public function test_invalid_select_option_fails_validation(): void

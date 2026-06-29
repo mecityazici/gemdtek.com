@@ -28,7 +28,7 @@ class RecentSubmissions extends BaseWidget
                 Tables\Columns\TextColumn::make('id')->label('#')->size('xs')->color('gray'),
                 Tables\Columns\TextColumn::make('form.title')
                     ->label('Form')
-                    ->formatStateUsing(fn ($state, $record) => $record->form?->getTranslation('title', 'tr') ?? '—')
+                    ->formatStateUsing(fn ($state, $record) => $record->form?->title ?? '—')
                     ->weight('bold'),
                 Tables\Columns\TextColumn::make('email')
                     ->label('E-posta')

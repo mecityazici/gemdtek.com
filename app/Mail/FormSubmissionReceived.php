@@ -21,7 +21,7 @@ class FormSubmissionReceived extends Mailable implements ShouldQueue
 
     public function envelope(): Envelope
     {
-        $formTitle = $this->submission->form?->getTranslation('title', 'tr') ?? 'Form';
+        $formTitle = $this->submission->form?->title ?? 'Form';
 
         return new Envelope(
             subject: "[GEMDTEK Başvuru] {$formTitle} — #{$this->submission->id}",
@@ -41,7 +41,7 @@ class FormSubmissionReceived extends Mailable implements ShouldQueue
             }
 
             return [
-                'label' => $field->getTranslation('label', 'tr'),
+                'label' => $field->label,
                 'value' => $value !== null && $value !== '' ? $value : '—',
             ];
         });
@@ -55,7 +55,7 @@ class FormSubmissionReceived extends Mailable implements ShouldQueue
         return new Content(
             markdown: 'emails.form-submission',
             with: [
-                'formTitle' => $form?->getTranslation('title', 'tr') ?? 'Form',
+                'formTitle' => $form?->title ?? 'Form',
                 'submission' => $this->submission,
                 'rows' => $rows,
                 'attachments' => $attachments,
