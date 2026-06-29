@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.news.eyebrow') . ' — GEMDTEK')
+@section('title', __('pages.news.eyebrow') . ' — '.setting('site.name', 'GEMDTEK'))
 
 @php
     $categories = \App\Models\NewsPost::CATEGORIES;

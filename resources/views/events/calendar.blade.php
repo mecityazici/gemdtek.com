@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.events.calendar.title') . ' — GEMDTEK')
+@section('title', __('pages.events.calendar.title') . ' — '.setting('site.name', 'GEMDTEK'))
 @section('meta_description', __('pages.events.calendar.meta'))
 
 @section('content')

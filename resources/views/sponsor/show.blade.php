@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.sponsor.eyebrow') . ' — GEMDTEK')
+@section('title', __('pages.sponsor.eyebrow') . ' — '.setting('site.name', 'GEMDTEK'))
 @section('meta_description', __('pages.sponsor.subline'))
 
 @php

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $post->title . ' — GEMDTEK')
+@section('title', $post->title . ' — '.setting('site.name', 'GEMDTEK'))
 @section('meta_description', $post->excerpt)
 @section('og_type', 'article')
 @if ($post->og_image_url)

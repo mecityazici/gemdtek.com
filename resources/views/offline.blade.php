@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Çevrimdışı — GEMDTEK')
+@section('title', 'Çevrimdışı — '.setting('site.name', 'GEMDTEK'))
 @section('meta_description', 'Şu anda çevrimdışısın. Bağlantı geri geldiğinde sayfa yenilenecek.')
 
 @section('content')

@@ -80,7 +80,7 @@ class ApplicationFormController extends Controller
             }
         }
 
-        $to = env('FORM_NOTIFICATION_EMAIL', config('mail.from.address'));
+        $to = setting('notifications.email', env('FORM_NOTIFICATION_EMAIL', config('mail.from.address')));
         if ($to) {
             Mail::to($to)->queue(new FormSubmissionReceived($submission));
         }

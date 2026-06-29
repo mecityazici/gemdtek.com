@@ -15,17 +15,26 @@ class ContactFlowTest extends TestCase
     {
         // Admin "Site Ayarları"ndan kaydedilen değerler iletişim sayfasına yansımalı.
         SiteSetting::set('contact.email', 'yeni-iletisim@gemdtek.com', 'contact', 'email');
+        SiteSetting::set('contact.phone', '+90 555 000 11 22', 'contact', 'text');
         SiteSetting::set('contact.campus', 'Yeni Kampüs Adresi 42', 'contact', 'textarea');
+        SiteSetting::set('contact.address', 'Test Mah. Deniz Cad. No:3', 'contact', 'textarea');
         SiteSetting::set('contact.response_note', 'Aynı gün dönüyoruz.', 'contact', 'textarea');
         SiteSetting::set('social.linkedin', 'https://linkedin.com/company/yeni-gemdtek', 'social', 'url');
+        SiteSetting::set('social.youtube', 'https://youtube.com/@yenigemdtek', 'social', 'url');
+        SiteSetting::set('social.github', 'https://github.com/yenigemdtek', 'social', 'url');
 
         $this->get('/iletisim')
             ->assertOk()
             ->assertSee('yeni-iletisim@gemdtek.com')
             ->assertSee('mailto:yeni-iletisim@gemdtek.com')
+            ->assertSee('+90 555 000 11 22')
+            ->assertSee('tel:+905550001122')
             ->assertSee('Yeni Kampüs Adresi 42')
+            ->assertSee('Test Mah. Deniz Cad. No:3')
             ->assertSee('Aynı gün dönüyoruz.')
-            ->assertSee('https://linkedin.com/company/yeni-gemdtek');
+            ->assertSee('https://linkedin.com/company/yeni-gemdtek')
+            ->assertSee('https://youtube.com/@yenigemdtek')
+            ->assertSee('https://github.com/yenigemdtek');
     }
 
     public function test_contact_page_falls_back_to_defaults_without_settings(): void

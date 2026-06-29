@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.newsletter.eyebrow') . ' — GEMDTEK')
+@section('title', __('pages.newsletter.eyebrow') . ' — '.setting('site.name', 'GEMDTEK'))
 @section('meta_description', __('pages.newsletter.subline'))
 
 @php

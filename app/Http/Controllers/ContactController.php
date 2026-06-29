@@ -27,7 +27,7 @@ class ContactController extends Controller
             'message' => 'required|string|max:4000',
         ]);
 
-        $to = env('FORM_NOTIFICATION_EMAIL', config('mail.from.address'));
+        $to = setting('notifications.email', env('FORM_NOTIFICATION_EMAIL', config('mail.from.address')));
 
         Mail::to($to)
             ->queue(new ContactMessageReceived(

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $form->title . ' — ' . __('pages.forms.eyebrow') . ' — GEMDTEK')
+@section('title', $form->title . ' — ' . __('pages.forms.eyebrow') . ' — '.setting('site.name', 'GEMDTEK'))
 
 @php
     $hasFileFields = $form->fields->contains(fn ($f) => $f->type === 'file');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.newsletter.feedback.'.$state.'.title') . ' — GEMDTEK')
+@section('title', __('pages.newsletter.feedback.'.$state.'.title') . ' — '.setting('site.name', 'GEMDTEK'))
 @section('meta_description', __('pages.newsletter.feedback.'.$state.'.body'))
 
 @section('content')

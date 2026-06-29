@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $project->name . ' — GEMDTEK')
+@section('title', $project->name . ' — '.setting('site.name', 'GEMDTEK'))
 @section('meta_description', $project->summary)
 @section('og_type', 'article')
 @if ($project->og_image_url)

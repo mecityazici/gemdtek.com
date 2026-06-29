@@ -254,8 +254,10 @@ return [
         'subline' => 'Reach us for sponsorship, event participation, press, or student application questions through the channels below.',
         'info' => [
             'email' => 'Email',
+            'phone' => 'Phone',
             'social' => 'Social media',
             'campus' => 'Campus',
+            'address' => 'Address',
             'campus_value' => 'Istanbul Technical University, Maslak Campus — Naval Architecture Dept.',
             'response_note' => 'We reply to messages within 1-2 business days.',
         ],

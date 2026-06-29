@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.events.eyebrow') . ' — GEMDTEK')
+@section('title', __('pages.events.eyebrow') . ' — '.setting('site.name', 'GEMDTEK'))
 
 @php
     $categories = \App\Models\Event::CATEGORIES;

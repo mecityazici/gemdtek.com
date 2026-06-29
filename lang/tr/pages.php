@@ -254,8 +254,10 @@ return [
         'subline' => 'Sponsorluk, etkinlik katılımı, basın ya da öğrenci başvuru sorularınız için aşağıdaki kanallardan ulaşabilirsiniz.',
         'info' => [
             'email' => 'E-posta',
+            'phone' => 'Telefon',
             'social' => 'Sosyal medya',
             'campus' => 'Kampüs',
+            'address' => 'Adres',
             'campus_value' => 'İstanbul Teknik Üniversitesi, Maslak Kampüsü — Gemi İnşaatı Bölümü',
             'response_note' => 'Mesajlarınıza 1-2 iş günü içinde dönüş yapıyoruz.',
         ],

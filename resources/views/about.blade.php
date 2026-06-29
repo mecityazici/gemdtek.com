@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.about.eyebrow') . ' — GEMDTEK')
+@section('title', __('pages.about.eyebrow') . ' — '.setting('site.name', 'GEMDTEK'))
 
 @section('content')
 

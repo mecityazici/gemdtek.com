@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.errors.503.title') . ' — GEMDTEK')
+@section('title', __('pages.errors.503.title') . ' — '.setting('site.name', 'GEMDTEK'))
 @section('no_index', true)
 
 @section('content')

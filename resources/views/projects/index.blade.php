@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.projects.eyebrow') . ' — GEMDTEK')
+@section('title', __('pages.projects.eyebrow') . ' — '.setting('site.name', 'GEMDTEK'))
 
 @section('content')
 
@@ -29,7 +29,7 @@
                             <img src="{{ $project->hero_thumb_url }}" srcset="{{ $project->hero_thumb_url }} 400w, {{ $project->hero_web_url }} 1280w" sizes="(max-width: 768px) 100vw, 33vw" alt="{{ $project->name }}" loading="lazy" decoding="async" width="400" height="225" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                         @else
                             <div class="w-full h-full bg-gradient-to-br from-navy-800 to-petrol flex items-center justify-center">
-                                <span class="font-display text-5xl text-brass-400/40 font-bold">GEMDTEK</span>
+                                <span class="font-display text-5xl text-brass-400/40 font-bold">{{ setting('site.name', 'GEMDTEK') }}</span>
                             </div>
                         @endif
                         <span @class([

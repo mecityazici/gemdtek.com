@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.search.heading') . ' — GEMDTEK')
+@section('title', __('pages.search.heading') . ' — '.setting('site.name', 'GEMDTEK'))
 @section('no_index', true)
 
 @php

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $event->title . ' — GEMDTEK')
+@section('title', $event->title . ' — '.setting('site.name', 'GEMDTEK'))
 @section('meta_description', $event->summary)
 @section('og_type', 'event')
 @if ($event->og_image_url)

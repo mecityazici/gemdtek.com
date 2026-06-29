@@ -1,7 +1,7 @@
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>'."\n"; ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
-        <title>GEMDTEK — Haberler</title>
+        <title>{{ setting('site.name', 'GEMDTEK') }} — Haberler</title>
         <link>{{ route('news.index') }}</link>
         <atom:link href="{{ route('news.rss') }}" rel="self" type="application/rss+xml"/>
         <description>Gemi İnşaatı ve Deniz Teknolojileri Kulübü duyuru, blog ve basın yansımaları.</description>

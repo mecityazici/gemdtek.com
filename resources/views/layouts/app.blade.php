@@ -6,8 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @php
-        $pageTitle       = trim($__env->yieldContent('title', 'GEMDTEK — ' . __('site.footer.tagline')));
-        $pageDescription = trim($__env->yieldContent('meta_description', __('pages.home.subline')));
+        $pageTitle       = trim($__env->yieldContent('title', setting('site.name', 'GEMDTEK') . ' — ' . setting('site.tagline', __('site.footer.tagline'))));
+        $pageDescription = trim($__env->yieldContent('meta_description', setting('site.description') ?: __('pages.home.subline')));
         $ogImage         = trim($__env->yieldContent('og_image', setting('site.og_default') ?: url('/images/og-default.png')));
         $ogType          = trim($__env->yieldContent('og_type', 'website'));
         $canonical       = url()->current();
@@ -15,10 +15,12 @@
 
     <title>{{ $pageTitle }}</title>
     <meta name="description" content="{{ $pageDescription }}">
+    @if ($metaKeywords = setting('seo.keywords'))<meta name="keywords" content="{{ $metaKeywords }}">@endif
+    @if ($metaAuthor = setting('seo.author'))<meta name="author" content="{{ $metaAuthor }}">@endif
     <link rel="canonical" href="{{ $canonical }}">
 
     {{-- Open Graph --}}
-    <meta property="og:site_name"   content="GEMDTEK">
+    <meta property="og:site_name"   content="{{ setting('site.name', 'GEMDTEK') }}">
     <meta property="og:locale"      content="{{ app()->getLocale() === 'en' ? 'en_US' : 'tr_TR' }}">
     <meta property="og:locale:alternate" content="{{ app()->getLocale() === 'en' ? 'tr_TR' : 'en_US' }}">
     <meta property="og:type"        content="{{ $ogType }}">
@@ -43,19 +45,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ setting('site.favicon') ?: asset('favicon.ico') }}">
 
     {{-- PWA --}}
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="theme-color" content="#0B2545">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="GEMDTEK">
+    <meta name="apple-mobile-web-app-title" content="{{ setting('site.name', 'GEMDTEK') }}">
     <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon.png') }}">
 
     {{-- RSS feed auto-discovery --}}
-    <link rel="alternate" type="application/rss+xml" title="GEMDTEK — Haberler" href="{{ route('news.rss') }}">
-    <link rel="alternate" type="application/rss+xml" title="GEMDTEK — Etkinlikler" href="{{ route('events.rss') }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ setting('site.name', 'GEMDTEK') }} — Haberler" href="{{ route('news.rss') }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ setting('site.name', 'GEMDTEK') }} — Etkinlikler" href="{{ route('events.rss') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
