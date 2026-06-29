@@ -43,7 +43,8 @@ class SponsorImporter extends Importer
 
     public function resolveRecord(): ?Sponsor
     {
-        $sponsor = new Sponsor;
+        // Aynı TR isimli sponsor varsa güncelle; CSV yeniden import'unda duplicate olmasın.
+        $sponsor = Sponsor::query()->where('name->tr', $this->data['name'])->first() ?? new Sponsor;
         $sponsor->setTranslation('name', 'tr', $this->data['name']);
 
         if (! empty($this->data['name_en'])) {

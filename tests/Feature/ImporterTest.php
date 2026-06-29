@@ -121,6 +121,39 @@ class ImporterTest extends TestCase
         $this->assertTrue($alumni->is_public);
     }
 
+    public function test_sponsor_reimport_updates_instead_of_duplicating(): void
+    {
+        $this->makeImporter(SponsorImporter::class, ['name' => 'Tekrar Sponsor', 'tier' => 'gold'])
+            ->resolveRecord()->save();
+
+        // Aynı TR isimle ikinci import → yeni satır açmamalı, mevcut kaydı güncellemeli.
+        $second = $this->makeImporter(SponsorImporter::class, ['name' => 'Tekrar Sponsor', 'tier' => 'silver'])
+            ->resolveRecord();
+        $second->save();
+
+        $this->assertSame(1, Sponsor::query()->where('name->tr', 'Tekrar Sponsor')->count());
+        $this->assertSame('silver', Sponsor::query()->where('name->tr', 'Tekrar Sponsor')->first()->tier);
+    }
+
+    public function test_alumni_reimport_matches_on_linkedin_url(): void
+    {
+        $first = $this->makeImporter(AlumniImporter::class, [
+            'name' => 'Tekrar Mezun', 'position' => 'Mühendis', 'sector' => 'tersane',
+            'linkedin_url' => 'https://linkedin.com/in/tekrar',
+        ])->resolveRecord();
+        $first->save();
+
+        $second = $this->makeImporter(AlumniImporter::class, [
+            'name' => 'Tekrar Mezun (güncel)', 'position' => 'Mühendis', 'sector' => 'klas',
+            'linkedin_url' => 'https://linkedin.com/in/tekrar',
+        ])->resolveRecord();
+        $second->save();
+
+        $this->assertSame(1, Alumni::query()->where('linkedin_url', 'https://linkedin.com/in/tekrar')->count());
+        $this->assertSame($first->id, $second->id);
+        $this->assertSame('Tekrar Mezun (güncel)', $first->fresh()->name);
+    }
+
     public function test_csv_templates_are_published(): void
     {
         $sponsorTemplate = public_path('templates/sponsors-template.csv');

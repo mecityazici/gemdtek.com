@@ -57,7 +57,15 @@ class AlumniImporter extends Importer
 
     public function resolveRecord(): ?Alumni
     {
-        $alumni = new Alumni;
+        // Doğal anahtarla eşleştir; CSV yeniden import'unda duplicate olmasın:
+        // önce linkedin_url, yoksa ad + mezuniyet yılı.
+        $alumni = (! empty($this->data['linkedin_url'])
+            ? Alumni::query()->where('linkedin_url', $this->data['linkedin_url'])->first()
+            : Alumni::query()
+                ->where('name', $this->data['name'])
+                ->where('graduation_year', $this->data['graduation_year'] ?? null)
+                ->first())
+            ?? new Alumni;
         $alumni->name = $this->data['name'];
         $alumni->setTranslation('position', 'tr', $this->data['position']);
 

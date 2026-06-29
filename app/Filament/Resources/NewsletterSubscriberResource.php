@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\NewsletterSubscriberResource\Pages;
 use App\Models\NewsletterSubscriber;
+use App\Support\CsvSafe;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -73,6 +74,7 @@ class NewsletterSubscriberResource extends Resource
                     ->label('CSV indir')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
+                    ->visible(fn () => auth()->user()?->hasRole('super_admin'))
                     ->action(function () {
                         $filename = 'bulten-aboneleri-'.now()->format('Ymd-Hi').'.csv';
 
@@ -81,7 +83,7 @@ class NewsletterSubscriberResource extends Resource
                             fputcsv($out, ['#', 'E-posta', 'Ad', 'Dil', 'Durum', 'Onay', 'Çıkış', 'Kaynak', 'Kayıt']);
                             NewsletterSubscriber::orderByDesc('created_at')->chunk(200, function ($rows) use ($out) {
                                 foreach ($rows as $s) {
-                                    fputcsv($out, [
+                                    fputcsv($out, array_map([CsvSafe::class, 'cell'], [
                                         $s->id,
                                         $s->email,
                                         $s->name,
@@ -91,7 +93,7 @@ class NewsletterSubscriberResource extends Resource
                                         $s->unsubscribed_at?->format('Y-m-d H:i'),
                                         $s->source,
                                         $s->created_at?->format('Y-m-d H:i'),
-                                    ]);
+                                    ]));
                                 }
                             });
                             fclose($out);

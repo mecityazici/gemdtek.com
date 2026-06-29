@@ -147,6 +147,10 @@ class SiteSettings extends Page implements HasForms
 
     public function save(): void
     {
+        // getState() form validasyon kurallarını (required/email/url/maxLength)
+        // server-side çalıştırır — doğrudan $this->data okumak bunu bypass ederdi.
+        $data = $this->form->getState();
+
         $map = [
             'site_name' => ['key' => 'site.name', 'group' => 'general'],
             'site_tagline' => ['key' => 'site.tagline', 'group' => 'general'],
@@ -169,7 +173,7 @@ class SiteSettings extends Page implements HasForms
         foreach ($map as $field => $meta) {
             SiteSetting::set(
                 $meta['key'],
-                $this->data[$field] ?? null,
+                $data[$field] ?? null,
                 $meta['group'],
                 $meta['type'] ?? 'text',
             );

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SponsorLeadResource\Pages;
 use App\Models\SponsorLead;
+use App\Support\CsvSafe;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -72,6 +73,7 @@ class SponsorLeadResource extends Resource
                     ->label('CSV indir')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
+                    ->visible(fn () => auth()->user()?->hasRole('super_admin'))
                     ->action(function () {
                         $filename = 'sponsor-leadleri-'.now()->format('Ymd-Hi').'.csv';
 
@@ -80,7 +82,7 @@ class SponsorLeadResource extends Resource
                             fputcsv($out, ['#', 'Tarih', 'Şirket', 'Kişi', 'Görev', 'E-posta', 'Seviye', 'Mesaj', 'IP', 'Kaynak']);
                             SponsorLead::orderByDesc('created_at')->chunk(200, function ($leads) use ($out) {
                                 foreach ($leads as $l) {
-                                    fputcsv($out, [
+                                    fputcsv($out, array_map([CsvSafe::class, 'cell'], [
                                         $l->id,
                                         $l->created_at?->format('Y-m-d H:i'),
                                         $l->company_name,
@@ -91,7 +93,7 @@ class SponsorLeadResource extends Resource
                                         $l->message,
                                         $l->ip_address,
                                         $l->source,
-                                    ]);
+                                    ]));
                                 }
                             });
                             fclose($out);

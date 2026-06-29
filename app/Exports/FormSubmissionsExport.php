@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Form as FormModel;
+use App\Support\CsvSafe;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -42,6 +43,6 @@ class FormSubmissionsExport implements FromCollection, WithHeadings, WithMapping
             $row[] = $value;
         }
 
-        return $row;
+        return array_map([CsvSafe::class, 'cell'], $row);
     }
 }

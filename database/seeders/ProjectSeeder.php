@@ -155,12 +155,16 @@ class ProjectSeeder extends Seeder
 
             if ($project->specs()->doesntExist()) {
                 foreach ($specs as $i => $spec) {
+                    // key/value artık tek-dilli (TR) — seed verisi {tr,en} ise TR'ye düzleştir.
+                    $spec['key'] = is_array($spec['key']) ? ($spec['key']['tr'] ?? '') : $spec['key'];
+                    $spec['value'] = is_array($spec['value']) ? ($spec['value']['tr'] ?? '') : $spec['value'];
                     $project->specs()->create($spec + ['order' => $i * 10]);
                 }
             }
 
             if ($project->members()->doesntExist()) {
                 foreach ($members as $i => $member) {
+                    $member['role'] = is_array($member['role']) ? ($member['role']['tr'] ?? '') : $member['role'];
                     $project->members()->create($member + ['order' => $i * 10]);
                 }
             }
