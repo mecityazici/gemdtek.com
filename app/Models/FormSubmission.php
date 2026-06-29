@@ -25,7 +25,10 @@ class FormSubmission extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('attachments');
+        // Private disk: başvuru ekleri (CV vb. kişisel veri) web'den doğrudan
+        // erişilemez; yalnızca FormAttachmentController üzerinden, panel girişi
+        // olan kullanıcılara sunulur (KVKK).
+        $this->addMediaCollection('attachments')->useDisk('local');
     }
 
     public function attachmentFor(string $fieldName): ?Media

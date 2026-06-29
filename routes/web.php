@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventRegistrationController;
+use App\Http\Controllers\FormAttachmentController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SearchController;
@@ -64,6 +65,10 @@ Route::get('/basvuru/{form:slug}', [ApplicationFormController::class, 'show'])->
 Route::post('/basvuru/{form:slug}', [ApplicationFormController::class, 'submit'])
     ->middleware('throttle:5,1')
     ->name('forms.submit');
+
+// Admin-only secure download for form-submission attachments (KVKK: not public).
+Route::get('/basvuru-eki/{media}', [FormAttachmentController::class, 'show'])
+    ->name('forms.attachment');
 
 Route::get('/etkinlikler', function (Request $request) {
     $cat = $request->string('cat')->toString();

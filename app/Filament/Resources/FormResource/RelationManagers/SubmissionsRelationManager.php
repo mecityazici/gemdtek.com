@@ -9,6 +9,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubmissionsRelationManager extends RelationManager
@@ -35,6 +36,25 @@ class SubmissionsRelationManager extends RelationManager
 
         foreach ($fields as $field) {
             $name = $field->name;
+
+            if ($field->type === 'file') {
+                $columns[] = Tables\Columns\TextColumn::make("data.{$name}")
+                    ->label($field->label)
+                    ->formatStateUsing(fn ($state) => filled($state) ? (string) $state : '—')
+                    ->icon(fn ($record) => $record->attachmentFor($name) ? 'heroicon-m-paper-clip' : null)
+                    ->color(fn ($record) => $record->attachmentFor($name) ? 'primary' : 'gray')
+                    ->url(
+                        fn ($record) => ($m = $record->attachmentFor($name))
+                            ? route('forms.attachment', $m)
+                            : null,
+                        shouldOpenInNewTab: true,
+                    )
+                    ->limit(40)
+                    ->toggleable();
+
+                continue;
+            }
+
             $columns[] = Tables\Columns\TextColumn::make("data.{$name}")
                 ->label($field->label)
                 ->formatStateUsing(function ($state) {
@@ -52,6 +72,7 @@ class SubmissionsRelationManager extends RelationManager
 
         return $table
             ->recordTitleAttribute('id')
+            ->modifyQueryUsing(fn (Builder $query) => $query->with('media'))
             ->columns($columns)
             ->defaultSort('created_at', 'desc')
             ->headerActions([
@@ -71,6 +92,19 @@ class SubmissionsRelationManager extends RelationManager
                     ->infolist(function ($record) use ($fields) {
                         $entries = [];
                         foreach ($fields as $field) {
+                            if ($field->type === 'file') {
+                                $media = $record->attachmentFor($field->name);
+                                $entries[] = TextEntry::make("attachment_{$field->name}")
+                                    ->label($field->label)
+                                    ->state($media?->file_name ?? '—')
+                                    ->icon($media ? 'heroicon-m-arrow-down-tray' : null)
+                                    ->color($media ? 'primary' : 'gray')
+                                    ->url($media ? route('forms.attachment', $media) : null)
+                                    ->openUrlInNewTab();
+
+                                continue;
+                            }
+
                             $value = $record->data[$field->name] ?? null;
                             if (is_array($value)) {
                                 $value = implode(', ', $value);
