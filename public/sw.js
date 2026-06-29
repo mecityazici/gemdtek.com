@@ -1,5 +1,7 @@
 // GEMDTEK Service Worker — network-first with offline fallback
-const VERSION = 'v1';
+// v2: yalnızca başarılı (ok) cevaplar cache'lenir; sürüm artışı eski
+// (htaccess /storage 403 döneminde zehirlenmiş) runtime cache'ini temizler.
+const VERSION = 'v2';
 const SHELL_CACHE = `gemdtek-shell-${VERSION}`;
 const RUNTIME_CACHE = `gemdtek-runtime-${VERSION}`;
 const OFFLINE_URL = '/offline';
@@ -50,8 +52,10 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const copy = response.clone();
-          caches.open(RUNTIME_CACHE).then((cache) => cache.put(request, copy)).catch(() => {});
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(RUNTIME_CACHE).then((cache) => cache.put(request, copy)).catch(() => {});
+          }
           return response;
         })
         .catch(() =>
@@ -67,8 +71,10 @@ self.addEventListener('fetch', (event) => {
       caches.match(request).then((cached) =>
         cached ||
         fetch(request).then((response) => {
-          const copy = response.clone();
-          caches.open(RUNTIME_CACHE).then((cache) => cache.put(request, copy)).catch(() => {});
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(RUNTIME_CACHE).then((cache) => cache.put(request, copy)).catch(() => {});
+          }
           return response;
         })
       )
